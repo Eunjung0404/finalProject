@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.mybatis.mapper.MemberMapper">
+	<insert id="addMember" parameterType="com.test.finalproject.vo.MemberVo">
+		insert into member_m values(#{mid}, #{mpwd}, #{mname}, #{memail}, #{maddr}, #{mphone}, #{birth}, 1, '1', sysdate)
+	</insert>
+</mapper>
