@@ -9,21 +9,23 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet" href="/finalproject/resources/css/common.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css"
+	href="/finalproject/resources/css/common.css">
 <title><tiles:insertAttribute name="title" /></title>
 </head>
 
 <body>
-	<div id="wrap">
-		<div id="header">
+	<div id="wrap" class="Container">
+		<div id="header" class="row" style="background-color:black;">
 			<!-- tiles_member.xml의 <defintion>의 하위 태그인
 				<put-attribute>태그의 name이 header인 JSP를 표시하겠다 -->
 			<tiles:insertAttribute name="header" />
 		</div>
-		<div id="content">
+		<div id="content" class="row">
 			<tiles:insertAttribute name="body" />
 		</div>
-		<div id="footer">
+		<div id="footer" class="row">
 			<tiles:insertAttribute name="footer" />
 		</div>
 	</div>
