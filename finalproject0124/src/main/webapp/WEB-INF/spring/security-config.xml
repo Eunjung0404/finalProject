@@ -9,9 +9,11 @@
 <bean id="passwordEncoding" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 <!-- 요청에 따른 권한 설정 -->
 <sec:http>
-    <sec:intercept-url pattern="/**" access="permitAll"/>
+  <sec:intercept-url pattern="/**" access="permitAll"/>
   <sec:form-login login-page="/login"/>
-  
+
+  <sec:csrf disabled="true" />
+
 </sec:http>
 <!-- 인증매니져 설정 -->
 <sec:authentication-manager>
