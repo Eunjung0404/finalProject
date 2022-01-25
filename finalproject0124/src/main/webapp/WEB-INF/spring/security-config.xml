@@ -11,6 +11,7 @@
 <sec:http>
     <sec:intercept-url pattern="/**" access="permitAll"/>
   <sec:form-login login-page="/login"/>
+  
 </sec:http>
 <!-- 인증매니져 설정 -->
 <sec:authentication-manager>

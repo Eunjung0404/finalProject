@@ -6,7 +6,7 @@
 	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
-	
+
 	<bean id="dataSource"
 		class="org.apache.commons.dbcp2.BasicDataSource"
 		destroy-method="close">
@@ -27,8 +27,14 @@
 
 	<mybatis-spring:scan
 		base-package="data.mybatis.mapper" />
-	
+
 	<context:component-scan
-		base-package="com.test.finalproject.service"/>
+		base-package="com.test.finalproject.service" />
 		
+	<context:component-scan
+		base-package="com.test.finalproject">
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
+	</context:component-scan>
+
 </beans>
