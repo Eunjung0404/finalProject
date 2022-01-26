@@ -12,13 +12,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class HomeController {
+
 	@Autowired ServletContext seco;
+	@Autowired
+	private ServletContext sc;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Model model) {
 		seco.setAttribute("cp", seco.getContextPath());
 
 		return "hometest.tiles";
+		sc.setAttribute("cp", sc.getContextPath());
+		
+		return "home.tiles";
 	}
 	
 }

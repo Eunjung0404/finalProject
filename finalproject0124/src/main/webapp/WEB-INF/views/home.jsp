@@ -412,3 +412,7 @@
 		YoutubeModal.style.display = 'none';
 	}
 </script>
+</div>
+<div style="height: 700px; background-color: yellow;">
+공지사항 등등..
+</div>

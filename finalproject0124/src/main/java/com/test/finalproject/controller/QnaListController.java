@@ -37,6 +37,6 @@ public class QnaListController {
 	    model.addAttribute("keyword", keyword);
 	    model.addAttribute("list", list);
 	    model.addAttribute("pu", pu);
-		return "qna/list";
+		return "qna/list.tiles";
 	}
 }

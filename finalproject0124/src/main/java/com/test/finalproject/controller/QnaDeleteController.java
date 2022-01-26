@@ -13,6 +13,6 @@ public class QnaDeleteController {
 	@GetMapping("/qna/delete")
 	public String delete(int qnacode) {
 		service.delete(qnacode);
-		return "redirct:/qna/list";
+		return "redirct:/qna/list.tiles";
 	}
 }

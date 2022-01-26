@@ -17,7 +17,7 @@ public class QnaUpdateController {
 	public String insertForm(int num, Model model) {
 		QnaVo vo = service.detail(num);
 		model.addAttribute("vo", vo);
-		return "qna/update";
+		return "qna/update.tiles";
 	}
 	@PostMapping("/qna/update")
 	public String update(QnaVo vo, Model model) {
@@ -28,6 +28,6 @@ public class QnaUpdateController {
 			e.printStackTrace();
 			model.addAttribute("result","fail");
 		}
-		return "qna/result";
+		return "qna/result.tiles";
 	}
 }

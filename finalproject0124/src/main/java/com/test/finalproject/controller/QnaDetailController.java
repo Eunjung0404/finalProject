@@ -25,6 +25,6 @@ public class QnaDetailController {
 		model.addAttribute("prev", service.prev(num));
 		// 다음글
 		model.addAttribute("next", service.next(num));
-		return "qna/detail";
+		return "qna/detail.tiles";
 	}
 }

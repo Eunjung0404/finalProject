@@ -15,7 +15,7 @@ public class QnaInsertController {
 	
 	@GetMapping("/qna/insert")
 	public String form() {
-		return "qna/insert";
+		return "qna/insert.tiles";
 	}
 	
 	@PostMapping("/qna/insert")
