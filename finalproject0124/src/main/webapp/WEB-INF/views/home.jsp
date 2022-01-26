@@ -381,6 +381,7 @@ background:linear-gradient(to left, rgba(255, 255, 255, 1), rgba(0, 0, 0, 0));
 
 </div>
 
+<<<<<<< HEAD
 <script type="text/javascript">
 	//나중에에 ajax로 처리해주기
 	var srcs = [ "/finalproject/resources/images/detail/경관의피.jpg",
