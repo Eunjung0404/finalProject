@@ -380,11 +380,7 @@ background:linear-gradient(to left, rgba(255, 255, 255, 1), rgba(0, 0, 0, 0));
 	</div>
 
 </div>
-<<<<<<< HEAD
 
-=======
-
->>>>>>> branch 'master' of https://github.com/Eunjung0404/finalproject.git
 <script type="text/javascript">
 	//나중에에 ajax로 처리해주기
 	var srcs = [ "/finalproject/resources/images/detail/경관의피.jpg",
@@ -439,13 +435,5 @@ background:linear-gradient(to left, rgba(255, 255, 255, 1), rgba(0, 0, 0, 0));
 		iframe.src = "";
 		YoutubeModal.style.display = 'none';
 	}
-<<<<<<< HEAD
-</script>
-</div>
-<div style="height: 700px; background-color: yellow;">
-공지사항 등등..
-</div>
-=======
 
 </script>
->>>>>>> branch 'master' of https://github.com/Eunjung0404/finalproject.git
