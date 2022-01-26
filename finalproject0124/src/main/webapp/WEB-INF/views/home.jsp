@@ -139,6 +139,30 @@
 	background: black;
 	opacity: 50%;
 }
+
+.carousel::before {
+display: block;
+content: "";
+width:250px;
+height: 700px;
+position:absolute;
+top:-225px;
+left:0;
+z-index:1;
+background:  linear-gradient(to right, rgba(255, 255, 255, 1), rgba(0, 0, 0, 0));
+}
+.carousel::after {
+display: block;
+content: "";
+width:250px;
+height: 700px;
+position:absolute;
+top:-225px;
+right:0;
+z-index:1;
+background:linear-gradient(to left, rgba(255, 255, 255, 1), rgba(0, 0, 0, 0));
+
+}
 </style>
 
 
@@ -255,9 +279,9 @@
 		<li class="col-1 text-black fw-bold">박스오피스</li>
 		<li class="col-1 text-black fw-bold">영화제영화</li>
 	</ul>
-	<div class="carousel slide">
+	<div class="carousel slide" >
 		<button class="carousel-control-prev" type="button" id="prevbtn"
-			onclick=" PrevPoster()">
+			onclick=" PrevPoster()" style="z-index:2;">
 			<img style="width: 70px;"
 				src="/finalproject/resources/images/icon/arrow2.png">
 		</button>
@@ -330,7 +354,7 @@
 		</div>
 
 		<button class="carousel-control-next" type="button" id="nextbtn"
-			onclick="nextPoster()">
+			onclick="nextPoster()" style="z-index:2;">
 			<img style="width: 70px;"
 				src="/finalproject/resources/images/icon/arrow.png">
 		</button>
@@ -356,7 +380,11 @@
 	</div>
 
 </div>
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> branch 'master' of https://github.com/Eunjung0404/finalproject.git
 <script type="text/javascript">
 	//나중에에 ajax로 처리해주기
 	var srcs = [ "/finalproject/resources/images/detail/경관의피.jpg",
@@ -411,8 +439,13 @@
 		iframe.src = "";
 		YoutubeModal.style.display = 'none';
 	}
+<<<<<<< HEAD
 </script>
 </div>
 <div style="height: 700px; background-color: yellow;">
 공지사항 등등..
 </div>
+=======
+
+</script>
+>>>>>>> branch 'master' of https://github.com/Eunjung0404/finalproject.git

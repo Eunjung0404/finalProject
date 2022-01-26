@@ -17,6 +17,6 @@ public class MovieDetailController_hj {
 		Movie_MVo vo=service.detail(Moviecode);
 		
 		model.addAttribute("vo", vo);
-		return "movie/detail";
+		return "movie/detail.tiles";
 	}
 }

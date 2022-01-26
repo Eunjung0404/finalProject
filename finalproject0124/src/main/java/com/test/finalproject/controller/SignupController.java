@@ -33,7 +33,7 @@ public class SignupController {
 			e.printStackTrace();
 			model.addAttribute("code", "fail");
 		}
-		return "result.tiles";
+		return "member/result.tiles";
 	}
 	
 	
