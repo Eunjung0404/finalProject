@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.mybatis.mapper.MovieMDetailMapper">
+	<insert id="insert" parameterType="com.test.finalproject.vo.Movie_MVo">
+		insert into movie_m values(seq_movie_m.nextval, #{moviename}, #{runtime}, #{director}, #{genre}, #{rating}, #{country},
+		#{actorinfo}, #{movieimg}, sysdate, #{state}, #{video})
+	</insert>
+	
+	<select id="detail" parameterType="int" resultType="com.test.finalproject.vo.Movie_MVo">
+		select * from movie_m where Moviecode=#{Moviecode}
+	</select>
+	
+	<!-- 이게 필요한가,,,? -->
+	<select id="selectAll" resultType="com.test.finalproject.vo.Movie_MVo">
+		select * from movie_m
+	</select>
+</mapper>

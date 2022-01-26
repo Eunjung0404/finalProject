@@ -254,6 +254,7 @@
 		<li class="col-1  text-black fw-bold">개봉예정작</li>
 		<li class="col-1 text-black fw-bold">박스오피스</li>
 		<li class="col-1 text-black fw-bold">영화제영화</li>
+		<li><a href="${cp }/movie/movieinsert">영화제영화</a></li>
 	</ul>
 	<div class="carousel slide">
 		<button class="carousel-control-prev" type="button" id="prevbtn"
@@ -412,7 +413,3 @@
 		YoutubeModal.style.display = 'none';
 	}
 </script>
-</div>
-<div style="height: 700px; background-color: yellow;">
-공지사항 등등..
-</div>
