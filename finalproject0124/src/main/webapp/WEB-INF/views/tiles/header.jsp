@@ -26,6 +26,8 @@
 
 </style>
 
+<%@taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <nav class="py-1 bg-dark ">
 	<div class="container d-flex flex-wrap">
 		<ul class="nav me-auto">
@@ -39,6 +41,26 @@
 				class="nav-link text-white px-2">마이페이지</a></li>
 			<li class="nav-item"><a href="#"
 				class="nav-link text-white px-2">고객센터</a></li>
+			<sec:authorize access="isAnonymous()">
+				<li class="nav-item"><a href="${cp }/login" class="nav-link text-white px-2">Login</a></li>
+			</sec:authorize>
+			<li class="nav-item"><a href="${cp}/signup" class="nav-link text-white px-2">Signup</a></li>
+			<sec:authorize access="isAuthenticated()">
+				<sec:authentication property="principal.username" var="username" />님 반갑습니다.
+					  <script>
+					  	function logout(){
+					  		var f = document.Frm;
+					  		f.action = "${cp}/logout";
+					  		f.method = "post";
+					  		f.submit();
+					  	}
+					  </script>
+					<form:form method="post" name="Frm" id="Frm" >
+						<li class="nav-item"><a href="javascript:logout()" class="nav-link text-white px-2">Logout</a></li>
+					</form:form>
+					
+			</sec:authorize>
+					<li class="nav-item"><a href="${cp }/member/mypage?mid=${username}"  class="nav-link text-white px-2">Mypage</a></li>
 		</ul>
 	</div>
 </nav>

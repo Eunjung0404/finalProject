@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,3 +10,12 @@
 상태 ${msg }
 </body>
 </html>
+<input type="button" value="홈으로" onclick="home()">
+${code}
+${result}
+<script>
+	function home() {
+		location.href = "${cp}/";
+	}
+</script>
+

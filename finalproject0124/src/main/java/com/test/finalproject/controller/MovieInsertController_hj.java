@@ -23,36 +23,35 @@ public class MovieInsertController_hj {
 	@Autowired private Movie_MService_hj service;
 	@Autowired private ServletContext sc;
 	
-	@GetMapping("/movieinsert")
+	@GetMapping("/movie/movieinsert")
 	public String movieForm() {
-		return "movieinsert.tiles";
+		return "movie/movieinsert.tiles";
 	}
 	
-	@PostMapping("/movieinsert")
+	@PostMapping("/movie/movieinsert")
 	public String movieinsert(String moviename, int runtime, String director, String genre, String rating,
 							String country, String actorinfo, Date opendate, int state, String video,
-							MultipartFile file1,
+							MultipartFile moviefile,
 							Model model) {
-		String path=sc.getRealPath("/resources/imgtest"); //업로드 할 경로 얻어오기
-		String movieimg=file1.getOriginalFilename(); //전송된 파일명
+		String path=sc.getRealPath("/resources/images/movieupload"); //업로드 할 경로 얻어오기
+		String movieimg=moviefile.getOriginalFilename();
 		//중복 파일명은 없는 걸로
 		try {
-			InputStream is=file1.getInputStream();
-			File f=new File(path + "\\");
+			InputStream is=moviefile.getInputStream();
+			File f=new File(path + "\\" + movieimg);
 			FileOutputStream fos=new FileOutputStream(f);
 			FileCopyUtils.copy(is, fos);
 			is.close();
 			fos.close();
 			
-			//DB저장
 			Movie_MVo vo=new Movie_MVo(0, moviename, runtime, director, genre, rating, country, actorinfo, movieimg, null, state, video);
 			service.insert(vo);
-			model.addAttribute("msg", "정상적으로 등록되었습니다");
+			model.addAttribute("msg", "success");
 		}catch(Exception e) {
 			e.printStackTrace();
-			model.addAttribute("msg", "등록 실패!");
+			model.addAttribute("msg", "fail");
 		}
-		return "result.tiles";
+		return "movie/result.tiles";
 		
 	}
 }
