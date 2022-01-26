@@ -3,7 +3,40 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="data.mybatis.mapper.MemberMapper">
+	<resultMap type="com.test.finalproject.security.CustomUserDetail" id="userDetail">
+		<id property="mid" column="mid"/>
+		<result property="mpwd" column="mpwd"/>
+		<result property="enabled" column="enabled"/>
+		<collection property="authList" ofType="com.test.finalproject.vo.AuthoritiesVo">
+			<result property="mid" column="mid"/>
+			<result property="authority" column="authority"/>
+		</collection>
+	</resultMap>
+
+
 	<insert id="addMember" parameterType="com.test.finalproject.vo.MemberVo">
 		insert into member_m values(#{mid}, #{mpwd}, #{mname}, #{memail}, #{maddr}, #{mphone}, #{birth}, 1, '1', sysdate)
 	</insert>
+	
+	<insert id="addAuth" parameterType="hashmap">
+		insert into member_authorities values(#{mid}, #{authority})
+	</insert>	
+	
+	<select id="getAuths" parameterType="string" resultMap="userDetail">
+		select * from member_m m, member_authorities a
+		where m.mid = a.mid and m.mid = #{mid}
+	</select>
+	
+	<select id="idCheck" parameterType="string" resultType="com.test.finalproject.vo.MemberVo">
+		select * from member_m where mid=#{mid}
+	</select>	
+	
+	<select id="myInfo" parameterType="string" resultType="com.test.finalproject.vo.MemberVo" >
+		select * from member_m where mid=#{mid}
+	</select>
+	
+	<update id="myInfoEdit" parameterType="com.test.finalproject.vo.MemberVo">
+		update member_m set mpwd=#{mpwd}, mname=#{mname}, memail=#{memail}, maddr=#{maddr}, mphone=#{mphone}
+		where mid=#{mid} 
+	</update>
 </mapper>
