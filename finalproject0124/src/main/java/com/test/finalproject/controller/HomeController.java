@@ -18,7 +18,7 @@ public class HomeController {
 	public String home(Model model) {
 		seco.setAttribute("cp", seco.getContextPath());
 
-		return "hometest.tiles";
+		return "home.tiles";
 	}
 	
 }
