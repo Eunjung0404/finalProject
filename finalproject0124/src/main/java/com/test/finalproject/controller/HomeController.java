@@ -23,7 +23,7 @@ public class HomeController {
 
 		seco.setAttribute("cp", seco.getContextPath());
 
-		return "home.tiles";
+		return "member/tiket.tiles";
 
 	}
 	
