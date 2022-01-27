@@ -42,7 +42,7 @@
 				<th>비밀번호</th>
 				<td>
 					<input type="password" title="비밀번호" name="mpwd" id="mpwd" placeholder="PASSWORD" class="chk" >
-					<div class="valid">비밀번호를 입력하세요.(영문 대/소문자, 숫자를 모두 포함)</div>
+					<div class="valid">비밀번호를 입력하세요.(8~16글자, 영문 대/소문자, 숫자를 모두 포함)</div>
 				</td>
 			<tr>
 			<tr>
@@ -55,7 +55,13 @@
 			<tr>
 				<th>이메일</th>
 				<td>
-					<input type="text" title="이메일" id="memail" name="memail" class="chk" placeholder="EMAIL" onclick="passConfirm()">
+					<input type="text" title="이메일" id="memail" name="memail" class="chk" placeholder="EMAIL" >@
+					<select>
+						<option value="naver.com">naver.com</option>
+						<option value="gmail.com">gmail.com</option>
+						<option value="daum.net">daum.net</option>
+						<option value="kakao.com">kakao.com</option>
+					</select>
 					<div class="valid">이메일을 입력하세요.</div>
 				</td>
 			</tr>			
@@ -77,9 +83,7 @@
 			<tr>
 				<th>전화번호</th>
 				<td>					
-					<input type="text" id="mphone" name="mphone" value="010" maxlength="3" size="3"> -
-					<input type="text" name="mphone" maxlength="4" size="4"> -
-					<input type="text" name="mphone" maxlength="4" size="4">
+					<input type="text" id="mphone" name="mphone" maxlength="11"  placeholder="-없이 숫자만 입력">
 <!-- 					<input type="text" name="tel"> -->
 				</td>
 			</tr>
@@ -96,6 +100,7 @@
 
 
 		<input type="submit" value="회원가입" onclick="validation()">
+		<input type="button" value="취소" id="cancle" onclick="cancl()">
 	</form:form>
 
 <!-- <script>
@@ -145,7 +150,7 @@
  		var id = form.mid.value;
  		var pwd = form.mpwd.value;
  		var name = form.mname.value;
- 		var phone = form.mphone.value + "-" + form.mphone2.value + "-" + form.phone3.value;
+//  		var phone = form.mphone.value;
 //  		var email = form.memail.value;
 
  		if (id == ""){
@@ -236,6 +241,14 @@
 // 			}
 // 		});
 // 	});
+
+	function cancl(){
+		console.log(document.getElementById(cancle));
+		if (document.getElementById(cancle) == null){
+			alert("가입을 취소하시겠습니까?");
+			location.href = "${cp}/";
+		}
+	}
 </script>
 
 
