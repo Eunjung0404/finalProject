@@ -4,12 +4,42 @@
 .nonePadding {
 	padding: 0px;
 }
+.centerPosition{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.centerTopPosition
+{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+#daytable
+{
+text-align:center;
+
+}
+
+#daytable th
+{
+padding:5px;
+
+}
+
+#daytable #nextDate
+{
+color:#D5D5D5;
+
+}
 </style>
 
-<div class="row ">
+<div class="row centerPosition">
 	<!-- 영화선택창 -->
 	<div class="col-3 nonePadding"
-		style="margin-left: 250px; margin-top: 100px;">
+		style="margin-top: 100px;">
 		영화선택
 		<div class="accordion accordion-flush" id="accordionFlushExample"
 			style="border: 1px solid gray; height: 500px;">
@@ -81,22 +111,24 @@
 		극장선택
 		<div style="height: 500px; border: 1px solid gray;">
 			극장<br>
+			<div class="centerPosition" style="height: 95%;">
 			<div
-				style="float: left; width: 100px; border: 1px solid gray; height: 95%;">
-				<ul>
-					<li><a href="">서울</a></li>
-					<li><a href="">경기</a></li>
+				style="width:35%; border: 1px solid gray; height: 100%;">
+				<ul id="areas">
+					<li><a href="">서울<span></span></a></li>
+					<li><a href="">경기<span></span></a></li>
 				</ul>
 
 			</div>
 
 			<div
-				style="float: left; width: 320px; border: 1px solid gray; height: 95%;">
-				<ul>
+				style="width: 65%; border: 1px solid gray; height: 100%;">
+				<ul id="theaterList">
 					<li><a href="">강남구</a></li>
 					<li><a href="">종로구..등등</a></li>
 				</ul>
 
+			</div>
 			</div>
 		</div>
 	</div>
@@ -106,7 +138,7 @@
 
 		관람일 선택
 
-		<div id="Calendar"
+		<div id="Calendar" class="centerTopPosition"
 			style="width: 250px; height: 300px; border: 1px solid gray; height: 500px;">
 			<span id="text-year">2022</span>
 			<p>
@@ -147,10 +179,39 @@
 	var th = tr[0].getElementsByTagName("th").length;
 	var tbody = document.getElementById("week");
 
+	//극장정보 불러오기
+	let ul = document.getElementById("areas");
+	let areas=ul.getElementsByTagName("li");
+	//정보불러오기
+	function getTheaterCount(area) {
+		let xhr = new XMLHttpRequest();
+		if(area=="") return;
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				let data = xhr.responseText;
+				let json = JSON.parse(data);
+				//지역별 극장수 
+				let count=json.count;
+				//지역별 극장리스트
+				let list
+				let span=area.firstChild.childNodes[1];
+				span.id="count";
+				span.innerText="("+count+")";
+			}
+		}
+		xhr.open('get','/finalproject/tiket-theater/'+area.innerText, true);
+		xhr.send();
+		
+	}
 	//로드 될때 달력그리기.
 	window.onload = function() {
 
 		drawCerrentCalendar(year,month);
+		for(var i=0;i<areas.length;i++)
+			{
+			getTheaterCount(areas[i]);
+			console.log(getTheaterCount(areas[i]));
+			}
 
 	}
 	//이전달 달력그리기
@@ -166,9 +227,9 @@
 		let getstartday = date.getDay();
 
 		var getlastday = getLastday(getyear, getMonth, getstartday);
-		console.log("월:"+getMonth);
-		console.log("시작일:"+getstartday);
-		console.log("끝일:"+getlastday);
+		//console.log("월:"+getMonth);
+		//console.log("시작일:"+getstartday);
+		//console.log("끝일:"+getlastday);
 		//table tr/td생성
 		for (var i = 0; i < 6; i++) {
 			//tr생성
@@ -185,14 +246,15 @@
 
 					tdDate.innerText = date.getDate();
 					//날짜 ++
-					if (date.getDate() < getlastday) {
-						date.setDate(date.getDate() + 1);
-						getstartday = date.getDay();
+					if ((getMonth-1) == date.getMonth()) {
+						tdDate.id="currentDate"
 
 					} else {
 
-						return;
+						tdDate.id="nextDate"
 					}
+					date.setDate(date.getDate() + 1);
+					getstartday = date.getDay();
 
 				}
 
@@ -200,11 +262,7 @@
 
 		}
 	}
-	//다음달달력그리기
-	//이전달 달력그리기
-	function drawnextCalendar(year,month) {
-		
-	}
+	
 	//마지막 일수 가져오기 
 	function getLastday(year, month, startday) {
 		let lastdays = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
@@ -217,4 +275,7 @@
 			return lastdays[month - 1];
 		}
 	}
+	
+
+
 </script>
