@@ -173,6 +173,11 @@
 			form.mpwd.select();
 			return false;
  		}
+ 		if (pwd != document.signupForm.pw_ck.value) {
+ 			alert("비밀번호가 일치하지 않습니다.");
+ 			form.pw_ck.select();
+ 			return false;
+ 		}
  		
  		
 //  		if (!regExpId.test(id)) {
