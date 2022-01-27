@@ -143,8 +143,9 @@
  		var form = document.signupForm;
  		
  		var id = form.mid.value;
-//  		var name = form.mname.value;
-//  		var phone = form.mphone.value + "-" + form.mphone2.value + "-" + form.phone3.value;
+ 		var pwd = form.mpwd.value;
+ 		var name = form.mname.value;
+ 		var phone = form.mphone.value + "-" + form.mphone2.value + "-" + form.phone3.value;
 //  		var email = form.memail.value;
 
  		if (id == ""){
@@ -157,40 +158,43 @@
 			form.mid.select();
 			return false;
  		}
-//  		if (signupForm.mpwd.value == ""){
-// 			alert("비밀번호를 입력하세요.");
-//  			document.signupForm.mpwd.focus();
-//  			return;
-//  		}
-//  		if (document.signupForm.mpwd.value.length < 5 || document.signupForm.mid.value.length > 12) {
-// 			alert("비밀번호를 5~12자 이내로 입력하세요.");
-// 			document.signupForm.mpwd.select();
-// 			return;
-//  		}
-//  		if (!isNaN(document.signupForm.mname.value.substr(0,1))){
+ 		if (pwd == ""){
+			alert("비밀번호를 입력하세요.");
+ 			form.mpwd.focus();
+ 			return false;
+ 		}
+ 		if (pwd.length < 5 || pwd.length > 12) {
+			alert("비밀번호를 5~12자 이내로 입력하세요.");
+			form.mpwd.select();
+			return false;
+ 		}
+ 		
+ 		
+//  		if (!regExpId.test(id)) {
+// 				alert("아이디는 문자로 시작해주세요!");
+// 				form.id.select();
+// 				return false;
+// 		}
+//  		if (!isNaN(name.substr(0,1))){
 //  			alert("이름은 숫자로 시작할 수 없습니다.");
-//  			document.signupForm.mname.select();
-//  		}	
-
- 		
- 		
- 		if (!regExpId.test(id)) {
-				alert("아이디는 문자로 시작해주세요!");
-				form.mid.select();
-				return false;
-		}
- 		if (!regExpName.test(name)){
- 			alert("이름은 한글만 입력해주세요!");
- 			return false;
- 		}
- 		if (!regExpPhone.test(phone)){
- 			alert("연락처 입력을 확인해주세요!");
- 			return false;
- 		}
- 		if (!regExpEmail.test(email)){
- 			alert("이메일 입력을 확인해주세요!");
- 			return false;
- 		}
+//  			form.mname.select();
+//  			return false;
+//  		} 	
+//  		if (!regExpName.test(name)){
+//  			alert("이름은 한글만 입력해주세요!");
+//  			form.mname.select();
+//  			return false;
+//  		}
+//  		if (!regExpPhone.test(phone)){
+//  			alert("연락처 입력을 확인해주세요!");
+//  			form.mphone.focus();
+//  			return false;
+//  		}
+//  		if (!regExpEmail.test(email)){
+//  			alert("이메일 입력을 확인해주세요!");
+//  			form.memail.focus();
+//  			return false;
+//  		}
  		
  		
 
