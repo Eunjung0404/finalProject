@@ -170,8 +170,7 @@
 //  		if (!isNaN(document.signupForm.mname.value.substr(0,1))){
 //  			alert("이름은 숫자로 시작할 수 없습니다.");
 //  			document.signupForm.mname.select();
-//  		}
- 		
+//  		}	
 
  		
  		
