@@ -21,10 +21,13 @@ public class TiketJsonController {
 	ChaTheaterService service;
 
 	@GetMapping(value = "/tiket-theater/{area}", produces = { MediaType.APPLICATION_JSON_VALUE })
-	public @ResponseBody HashMap<String, Object> selectid(@PathVariable("area") String area) {
+	public @ResponseBody HashMap<String, Object> selectid(@PathVariable("area") String area,String movieCode) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
+		HashMap<String, Object> map1 = new HashMap<String, Object>();
+		map1.put("moviecode", movieCode);
+		map1.put("area", area);
 		List<String> list=service.selectTheater(area);
-		int count=service.areaCount(area);
+		int count=service.areaCount(map1);
 		map.put("list", list);
 		map.put("count", count);
 		return map;

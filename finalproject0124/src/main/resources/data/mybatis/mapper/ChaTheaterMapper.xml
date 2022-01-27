@@ -3,10 +3,21 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="data.mybatis.mapper.ChaTheaterMapper">
- <select id="areaCount" parameterType="string" resultType="int">
- select count(*) from theater where area=#{area}
- </select>
- <select id="selectTheater" parameterType="string" resultType="hashmap">
- select theatername from theater where area=#{area}
- </select>
+
+	<sql id="movieselect">
+
+		<choose>
+			<when test="moviecode!=null and moviecode!=''">
+				and tm.moviecode=#{moviecode} and tm.theatercode=t.theatercode
+			</when>
+		</choose>
+	</sql>
+	<select id="areaCount" parameterType="hashmap" resultType="int">
+		select count(*) from theater t, theater_move tm where t.area=#{area}
+		<include refid="movieselect"/>
+	</select>
+	<select id="selectTheater" parameterType="string"
+		resultType="hashmap">
+		select theatername from theater where area=#{area}
+	</select>
 </mapper>
