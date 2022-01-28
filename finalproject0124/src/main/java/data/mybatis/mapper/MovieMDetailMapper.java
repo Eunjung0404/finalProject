@@ -7,7 +7,7 @@ import com.test.finalproject.vo.Movie_MVo;
 public interface MovieMDetailMapper {
 	int insert(Movie_MVo vo);
 	
-	Movie_MVo detail(int Moviecode);
+	Movie_MVo detail(int moviecode);
 	
 	List<Movie_MVo> selectAll();
 }

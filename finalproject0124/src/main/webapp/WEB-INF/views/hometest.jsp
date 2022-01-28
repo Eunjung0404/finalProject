@@ -203,7 +203,7 @@ background:linear-gradient(to left, rgba(255, 255, 255, 1), rgba(0, 0, 0, 0));
 						<img src="/finalproject/resources/images/detail/노웨이홈.jpg"
 							alt="경관의피" style="width: 150px; height: 200px;">
 						<figcaption>
-							<a href="">예매</a><br> <a href="">정보</a>
+							<a href="">예매</a><br> <a href="${cp }/movie/moviedetailpage">정보</a>
 						</figcaption>
 					</figure>
 				</li>
@@ -279,6 +279,7 @@ background:linear-gradient(to left, rgba(255, 255, 255, 1), rgba(0, 0, 0, 0));
 		<li class="col-1 text-black fw-bold">박스오피스</li>
 		<li class="col-1 text-black fw-bold">영화제영화</li>
 		<li class="col-1 text-black fw-bold"><a href="${cp }/movie/movieinsert">상세정보 insert 테스트</a></li>
+		<li class="col-1 text-black fw-bold"><a href="${cp }/movie/addmovieimg">이미지 여러장 저장되는지 테스트</a></li>
 	</ul>
 	<div class="carousel slide" >
 		<button class="carousel-control-prev" type="button" id="prevbtn"
@@ -310,7 +311,7 @@ background:linear-gradient(to left, rgba(255, 255, 255, 1), rgba(0, 0, 0, 0));
 						<img src="/finalproject/resources/images/detail/노웨이홈.jpg"
 							alt="경관의피" style="width: 300px; height: 400px;">
 						<figcaption>
-							<a href="">예매</a><br> <a href="">정보</a>
+							<a href="">예매</a><br> <a href="${cp }/movie/detail?moviecode=${moviecode}">정보</a>
 						</figcaption>
 					</figure>
 				</li>

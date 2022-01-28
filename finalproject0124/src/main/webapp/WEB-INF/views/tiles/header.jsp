@@ -32,7 +32,7 @@
 			<li class="nav-item"><a href="#"
 				class="nav-link link-light px-2 active" aria-current="page">Home</a></li>
 		</ul>
-
+ 
 		<ul class="nav">
 			<sec:authorize access="isAnonymous()">
 				<li class="nav-item"><a href="${cp }/login"
@@ -44,7 +44,7 @@
 			<li class="nav-item"><a href="${cp }/member/mypage?mid=${username}"
 				class="nav-link text-white px-2">마이페이지</a></li>
 
-				<li class="nav-item"><a href="#"
+				<li class="nav-item"><a href="${cp }/qna/qnahome"
 					class="nav-link text-white px-2">고객센터</a></li>
 
 			<sec:authorize access="isAuthenticated()">
