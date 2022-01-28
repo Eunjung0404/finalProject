@@ -26,7 +26,7 @@ table tr td input[name=maddr] {
 	/* {속성값 !important } 우선순위 지정 */
 }
 div .sign {
-	padding-left: 30%;
+	padding-left: 35%;
 }
 
 .ui-datepicker select {

@@ -44,7 +44,7 @@
 			<li class="nav-item"><a href="${cp }/member/mypage?mid=${username}"
 				class="nav-link text-white px-2">마이페이지</a></li>
 
-				<li class="nav-item"><a href="${cp }/qna/qnahome"
+				<li class="nav-item"><a href="#"
 					class="nav-link text-white px-2">고객센터</a></li>
 
 			<sec:authorize access="isAuthenticated()">
@@ -57,7 +57,7 @@
 									f.method = "post";
 									f.submit();
 								}
-						</script>
+							</script>
 				<form:form method="post" name="Frm" id="Frm">
 					<li class="nav-item"><a href="javascript:logout()"
 						class="nav-link text-white px-2">로그아웃</a></li>
