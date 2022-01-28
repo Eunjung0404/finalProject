@@ -32,7 +32,7 @@
 			<li class="nav-item"><a href="#"
 				class="nav-link link-light px-2 active" aria-current="page">Home</a></li>
 		</ul>
-
+ 
 		<ul class="nav">
 			<sec:authorize access="isAnonymous()">
 				<li class="nav-item"><a href="${cp }/login"
