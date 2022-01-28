@@ -48,16 +48,16 @@
 					class="nav-link text-white px-2">고객센터</a></li>
 
 			<sec:authorize access="isAuthenticated()">
-				<sec:authentication property="principal.username" var="username" />
+				<sec:authentication property="principal.username" var = "username" />
 				<sec:authentication property="principal.username" />님 반갑습니다.
 					  <script>
 								function logout() {
-									var f = document.Frm;
+									let f = document.Frm;
 									f.action = "${cp}/logout";
 									f.method = "post";
 									f.submit();
 								}
-							</script>
+						</script>
 				<form:form method="post" name="Frm" id="Frm">
 					<li class="nav-item"><a href="javascript:logout()"
 						class="nav-link text-white px-2">로그아웃</a></li>

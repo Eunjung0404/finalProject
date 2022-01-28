@@ -7,6 +7,16 @@
 <input type="button" value="홈으로" onclick="home()">
 ${code}
 ${result}
+
+<script>
+	for(){
+		
+	}
+</script>
+	
+
+
+
 <script>
 	function home() {
 		location.href = "${cp}/";
