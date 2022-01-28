@@ -15,4 +15,6 @@ public interface MemberMapper {
 	MemberVo myInfo(String mid);
 	
 	String myInfoEdit(MemberVo vo);
+	
+	MemberVo findId(String memail, String mname);
 } 

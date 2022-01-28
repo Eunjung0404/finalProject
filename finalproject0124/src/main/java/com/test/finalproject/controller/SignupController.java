@@ -22,7 +22,7 @@ public class SignupController {
 	public String singupForm() {
 		return "member/signup.tiles";
 	}
-	
+
 	@PostMapping("/signup")
 	public String singup(MemberVo vo, Model model) {
 		try {
@@ -35,22 +35,27 @@ public class SignupController {
 		}
 		return "member/result.tiles";
 	}
-	
-	
 
 	@GetMapping(value = "/idCheck", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public @ResponseBody HashMap<String, Object> idCheck(String mid) {
 		MemberVo vo = service.idCheck(mid);
-		HashMap<String, Object> map = new HashMap<String, Object>();		
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		if (vo != null) {
 			map.put("using", true);
-		} else {
+		} 
+		else {
 			map.put("using", false);
 		}
 		return map;
 	}
-
-
+	
+	@PostMapping("/test")
+	public String test(String mid, Model model) {
+		MemberVo vo = service.idCheck(mid);
+		model.addAttribute("vo", vo);
+		
+		return "member/result.tiles";
+	}
 
 }

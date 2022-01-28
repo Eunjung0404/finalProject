@@ -58,4 +58,8 @@ public class MemberService {
 		return mapper.myInfoEdit(vo);
 	}
 	
+	public MemberVo findId(String email, String mname) {
+		return mapper.findId(email, mname);
+	}
+	
 }

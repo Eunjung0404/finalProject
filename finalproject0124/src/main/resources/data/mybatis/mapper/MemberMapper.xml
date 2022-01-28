@@ -39,4 +39,10 @@
 		update member_m set mpwd=#{mpwd}, mname=#{mname}, memail=#{memail}, maddr=#{maddr}, mphone=#{mphone}
 		where mid=#{mid} 
 	</update>
+	
+	
+	<select id="findId" parameterType="string" resultType="com.test.finalproject.vo.MemberVo">
+		select * from member_m
+		where memai=#{memail} and mname=#{mname}
+	</select>
 </mapper>

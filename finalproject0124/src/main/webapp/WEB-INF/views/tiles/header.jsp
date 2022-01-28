@@ -38,15 +38,6 @@
 				<li class="nav-item"><a href="${cp }/login"
 					class="nav-link text-white px-2">로그인</a></li>
 			</sec:authorize>
-			<li class="nav-item"><a href="${cp}/signup"
-				class="nav-link text-white px-2">회원가입</a></li>
-
-			<li class="nav-item"><a href="${cp }/member/mypage?mid=${username}"
-				class="nav-link text-white px-2">마이페이지</a></li>
-
-				<li class="nav-item"><a href="${cp }/qna/qnahome"
-					class="nav-link text-white px-2">고객센터</a></li>
-
 			<sec:authorize access="isAuthenticated()">
 				<sec:authentication property="principal.username" var="username" />
 				<sec:authentication property="principal.username" />님 반갑습니다.
@@ -62,8 +53,17 @@
 					<li class="nav-item"><a href="javascript:logout()"
 						class="nav-link text-white px-2">로그아웃</a></li>
 				</form:form>
-
 			</sec:authorize>
+			<li class="nav-item"><a href="${cp}/signup"
+				class="nav-link text-white px-2">회원가입</a></li>
+
+			<li class="nav-item"><a href="${cp }/member/mypage?mid=${username}"
+				class="nav-link text-white px-2">마이페이지</a></li>
+
+				<li class="nav-item"><a href="${cp }/qna/qnahome"
+					class="nav-link text-white px-2">고객센터</a></li>
+
+
 		</ul>
 	</div>
 </nav>
