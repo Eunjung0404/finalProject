@@ -44,15 +44,15 @@
 			<li class="nav-item"><a href="${cp }/member/mypage?mid=${username}"
 				class="nav-link text-white px-2">마이페이지</a></li>
 
-				<li class="nav-item"><a href="#"
+				<li class="nav-item"><a href="${cp }/qna/qnahome"
 					class="nav-link text-white px-2">고객센터</a></li>
 
 			<sec:authorize access="isAuthenticated()">
-				<sec:authentication property="principal.username" var = "username" />
+				<sec:authentication property="principal.username" var="username" />
 				<sec:authentication property="principal.username" />님 반갑습니다.
 					  <script>
 								function logout() {
-									let f = document.Frm;
+									var f = document.Frm;
 									f.action = "${cp}/logout";
 									f.method = "post";
 									f.submit();
