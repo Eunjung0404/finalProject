@@ -22,4 +22,8 @@ public class ChaTheaterService {
 	{
 		return mapper.selectTheater(area);
 	}
+	public List<HashMap<String, Object>> getScreenDate(HashMap<String, Object> map)
+	{
+		return mapper.getScreenDate(map);
+	}
 }

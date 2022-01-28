@@ -7,4 +7,5 @@ public interface ChaTheaterMapper {
 
 	int areaCount(HashMap<String, Object> map);
     List<String> selectTheater(String area);
+    List<HashMap<String, Object>> getScreenDate(HashMap<String, Object> map);
 }
