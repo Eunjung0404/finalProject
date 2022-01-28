@@ -33,7 +33,6 @@
 		<input type="file" name="moviefile"><br>
 		<input type="submit" value="업로드" style="margin:6px; background-color: #196ab3; min-width: 70px; 
 			border: none; line-height: 30px; color: #ffffff; cursor: pointer;">
-			
 	</form>
 </div>
 </body>
