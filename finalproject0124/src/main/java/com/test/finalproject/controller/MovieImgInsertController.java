@@ -3,6 +3,8 @@ package com.test.finalproject.controller;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 
@@ -13,6 +15,7 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.test.finalproject.service.MovieImgService_hj;
 import com.test.finalproject.vo.MovieImgVo;
@@ -22,19 +25,21 @@ public class MovieImgInsertController {
 	@Autowired private MovieImgService_hj service;
 	@Autowired private ServletContext sc;
 	
-	@GetMapping("/movie/movieimginsert")
+	@GetMapping("/movie/addmovieimg")
 	public String movieimgForm() {
-		return "movie/movieimginsert.tiles";
+		return "movie/addmovieimg.tiles";
 	}
 	
-	@PostMapping("/movie/movieimginsert")
+	@PostMapping("/movie/addmovieimg")
 	public String movieimginsert(int moviecode,
-								MultipartFile file2,
+								MultipartFile photofile, //리스트로 받기
 								Model model) {
+		//List<MultipartFile> ?
 		String path=sc.getRealPath("/resources/images/movieupload");
-		String imgname=file2.getOriginalFilename();
+		System.out.println(path);
+		String imgname=photofile.getOriginalFilename();
 		try {
-			InputStream is=file2.getInputStream();
+			InputStream is=photofile.getInputStream();
 			File f=new File(path + "\\" + imgname);
 			FileOutputStream fos=new FileOutputStream(f);
 			FileCopyUtils.copy(is, fos);
