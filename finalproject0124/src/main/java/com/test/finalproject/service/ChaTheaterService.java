@@ -7,6 +7,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.test.finalproject.vo.TiketScreenTimeVo;
+
 import data.mybatis.mapper.ChaTheaterMapper;
 
 @Service
@@ -18,12 +20,20 @@ public class ChaTheaterService {
 	{
 		return mapper.areaCount(map);
 	}
-	public List<String> selectTheater(String area)
+	public List<String> selectTheater(HashMap<String, Object> map)
 	{
-		return mapper.selectTheater(area);
+		return mapper.selectTheater(map);
 	}
-	public List<HashMap<String, Object>> getScreenDate(HashMap<String, Object> map)
+	public List<TiketScreenTimeVo> getScreenDate(HashMap<String, Object> map)
 	{
 		return mapper.getScreenDate(map);
+	}
+	public List<HashMap<String, Object>> movielist()
+	{
+          return mapper.movielist();
+	}
+	public List<TiketScreenTimeVo> selectScreenTime(HashMap<String, Object> map)
+	{
+		return mapper.selectScreenTime(map);
 	}
 }

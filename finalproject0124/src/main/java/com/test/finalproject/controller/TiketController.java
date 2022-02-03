@@ -10,6 +10,13 @@ public class TiketController {
 	@GetMapping("/tiket")
 	public String tiketPage()
 	{
-		return "member/tiket.tiles";
+		return "tiket/tiket.tiles";
 	}
+	
+	@GetMapping("/seat")
+	public String seatPage()
+	{
+		return "tiket/seatSelect.tiles";
+	}
+	
 }

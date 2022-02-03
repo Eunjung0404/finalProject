@@ -14,6 +14,9 @@
 	</sql>
 	<sql id="choose">
 		<choose>
+		  <when test="moviecode!=null and moviecode!='' and theatercode!=null and theatercode!=''">
+				and st.moviecode=#{moviecode} and s.theatercode=#{theatercode}
+			</when>
 			<when test="moviecode!=null and moviecode!=''">
 				and st.moviecode=#{moviecode}
 			</when>
@@ -23,17 +26,34 @@
 		</choose>
 	</sql>
 	<select id="areaCount" parameterType="hashmap" resultType="int">
-		select count(*) from theater t, theater_move tm where t.area=#{area}
+		select count(*) from theater t
+		<if test="moviecode!=null and moviecode!=''">
+		, theater_move tm 
+		</if>
+		where t.area=#{area}
+		<include refid="moviechoose"/>
+		
+	</select>
+	<select id="selectTheater" parameterType="hashmap"
+		resultType="hashmap">
+		select t.theatername ,t.theatercode from theater t
+		<if test="moviecode!=null and moviecode!=''">
+		, theater_move tm 
+		</if>
+		 where area=#{area}
 		<include refid="moviechoose"/>
 	</select>
-	<select id="selectTheater" parameterType="string"
-		resultType="hashmap">
-		select theatername from theater where area=#{area}
-	</select>
 	<select id="getScreenDate" parameterType="hashmap"
-		resultType="hashmap">
+		resultType="com.test.finalproject.vo.TiketScreenTimeVo">
 		select st.screendate,st.screencode,s.theatercode from screen_time
 		st,screen s where s.screencode=st.screencode
 		<include refid="choose"/>
+	</select>
+	
+	<select id="movielist" resultType="hashmap">
+	select moviename,moviecode,movieimg from movie_m where state=1
+	</select>
+	<select id="selectScreenTime" parameterType="hashmap" resultType="com.test.finalproject.vo.TiketScreenTimeVo">
+	select st.*,s.name from screen_time st, screen s where s.theatercode=#{theatercode} and st.screendate=#{screendate} and st.moviecode=#{moviecode} and st.screencode=s.screencode
 	</select>
 </mapper>
