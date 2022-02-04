@@ -40,6 +40,8 @@ public class EmailAuthController {
 			throws IOException {
 		String email = (String) request.getParameter("memail");
 		String name = (String) request.getParameter("mname");
+		session.setAttribute("memail", email);
+		
 //		System.out.println("name: " + name);
 //		System.out.println("email: " + email);
 		HashMap<String, Object> map = new HashMap<String, Object>();

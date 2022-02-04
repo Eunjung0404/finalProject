@@ -6,9 +6,7 @@
 	<div class="textbox">
 		<input type="password" name="mpwd" id="mpwd">
 		<label>새 비밀번호</label>
-		<div class="error">
-			Invalid password
-		</div>		
+		
 	</div>
 	
 <!-- 	<div class="textbox"> -->
