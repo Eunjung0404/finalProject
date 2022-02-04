@@ -10,7 +10,7 @@ h3 {
 	padding-top: 5%;
 	margin-left: 35%;
 }
-form {
+#membercheck{
 	margin-left: 35%;
 }
 table tr td {	
@@ -58,6 +58,7 @@ div .sign {
 			<td><input type="text" title="아이디" id="mid" name="mid"
 				class="chk" placeholder="ID" maxlength="12"/> 
 				<input type="button" value="중복확인" onclick="idCheck()"><span id=id_check></span>
+				<input type="button" value="중복확인"><span id=id_check></span>
 				<div class="valid">아이디를 입력하세요.(5~12글자)</div></td>
 		</tr>
 		<tr>
@@ -74,12 +75,12 @@ div .sign {
 		</tr>
 		<tr>
 			<th>이메일</th>
-			<td><input type="text" title="이메일" id="memail" name="memail"
-				class="chk" placeholder="EMAIL">@ <select class="chk">
-					<option class="chk" value="naver.com">naver.com</option>
-					<option value="gmail.com">gmail.com</option>
-					<option value="daum.net">daum.net</option>
-					<option value="kakao.com">kakao.com</option>
+			<td><input type="text" title="이메일" id="memail" name="memail" class="chk" placeholder="EMAIL">@
+			<select class="chk" name="memail1">
+				<option class="chk" value="naver.com">naver.com</option>
+				<option value="gmail.com">gmail.com</option>
+				<option value="daum.net">daum.net</option>
+				<option value="kakao.com">kakao.com</option>
 			</select>
 				<div class="valid">이메일을 입력하세요.</div></td>
 		</tr>
@@ -123,10 +124,10 @@ div .sign {
 
 <script>
 	// 데이터 유효성 검사 정규식 표현
-	let regExpId = /^[a-zA-Z | ㄱ-ㅎ | ㅏ-ㅣ | 가-힣]/;
+	let regExpId = /^[a-zA-Z | ㄱ-ㅎ | ㅏ-ㅣ | 가-힣]/;		
 	let regExpName = /^[가-힣]*$/;
-	let regExpPhone = /^\d{3}-\d{3,4}-\d{4}$/;
-	let regExpEmail = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z](-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}&/i;
+	let regExpPhone = /^\d{3}\d{3,4}\d{4}$/;
+	let regExpEmail = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
  		
 
 		
@@ -186,33 +187,27 @@ div .sign {
  			form.pw_ck.select();
  			return false;
  		}
- 		if (!regExpEmail.test(email)){
+ 		if (!regExpEmail.test(document.signupForm.memail.value + "@" + document.signupForm.memail1.value)){
  			alert("이메일 입력을 확인해주세요!");
  			form.memail.focus();
  			return false;
  		}
- 		if (!isNaN(name.substr(0,1))){
+ 		if (!isNaN(document.signupForm.mname.value.substr(0,1))){
  			alert("이름은 숫자로 시작할 수 없습니다.");
  			form.mname.select();
  			return false;
  		} 	
- 		if (!regExpName.test(name)){
+ 		if (!regExpName.test(document.signupForm.mname.value)){
  			alert("이름은 한글만 입력해주세요!");
  			form.mname.select();
  			return false;
  		}
- 		if (!regExpPhone.test(phone)){
+ 		if (!regExpPhone.test(document.signupForm.mphone.value)){
  			alert("연락처 입력을 확인해주세요!");
  			form.mphone.focus();
  			return false;
  		}
-
- 		
- 		
-
 		document.signupForm.submit();
-
-// 		form.submit();
  	}
  
 
@@ -228,7 +223,6 @@ div .sign {
 // 			}
 // 		});
 // 	});
-
 	function cancl(){
 		console.log(document.getElementById(cancle));
 		if (document.getElementById(cancle) == null){
@@ -236,6 +230,22 @@ div .sign {
 			location.href = "${cp}/";
 		}
 	}
+</script>
+
+<script>
+	$(function(){
+		$("#id_check").click(function(){
+			let mid = $("input[name='mid']").val();
+			$.ajax({
+				url: '${cp}/signup?mid=' + mid,
+				type: 'post',
+				dataType: 'json',
+				success: function(data){
+					alert(data);
+				}
+			});
+		});
+	});
 </script>
 
 

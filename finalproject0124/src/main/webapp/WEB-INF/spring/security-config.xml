@@ -22,6 +22,8 @@
 		<sec:form-login login-page="/login" />
 		<sec:logout logout-url="/logout" invalidate-session="true"
 			logout-success-url="/"></sec:logout>
+		<!-- 자동 로그인 -->
+		<sec:remember-me data-source-ref="dataSource" token-validity-seconds="604800"/>
 		<!-- <sec:csrf disabled="true" /> -->
 	</sec:http>
 
