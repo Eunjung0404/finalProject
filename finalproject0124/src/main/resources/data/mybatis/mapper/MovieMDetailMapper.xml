@@ -8,12 +8,13 @@
 		#{actorinfo}, #{movieimg}, #{opendate}, #{state}, #{video})
 	</insert>
 	
+	<select id="selectAll" resultType="com.test.finalproject.vo.Movie_MVo">
+		select * from movie_m
+	</select>
+	
 	<select id="detail" parameterType="int" resultType="com.test.finalproject.vo.Movie_MVo">
 		select * from movie_m where moviecode=#{moviecode}
 	</select>
 	
-	<!-- 이게 필요한가,,,? -->
-	<select id="selectAll" resultType="com.test.finalproject.vo.Movie_MVo">
-		select * from movie_m
-	</select>
+	
 </mapper>

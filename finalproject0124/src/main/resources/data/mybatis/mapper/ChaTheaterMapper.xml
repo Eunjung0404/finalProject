@@ -3,10 +3,57 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="data.mybatis.mapper.ChaTheaterMapper">
- <select id="areaCount" parameterType="string" resultType="int">
- select count(*) from theater where area=#{area}
- </select>
- <select id="selectTheater" parameterType="string" resultType="hashmap">
- select theatername from theater where area=#{area}
- </select>
+
+	<sql id="moviechoose">
+		<choose>
+			<when test="moviecode!=null and moviecode!=''">
+				and tm.moviecode=#{moviecode} and
+				tm.theatercode=t.theatercode
+			</when>
+		</choose>
+	</sql>
+	<sql id="choose">
+		<choose>
+		  <when test="moviecode!=null and moviecode!='' and theatercode!=null and theatercode!=''">
+				and st.moviecode=#{moviecode} and s.theatercode=#{theatercode}
+			</when>
+			<when test="moviecode!=null and moviecode!=''">
+				and st.moviecode=#{moviecode}
+			</when>
+			<when test="theatercode!=null and theatercode!=''">
+				and s.theatercode=#{theatercode}
+			</when>
+		</choose>
+	</sql>
+	<select id="areaCount" parameterType="hashmap" resultType="int">
+		select count(*) from theater t
+		<if test="moviecode!=null and moviecode!=''">
+		, theater_move tm 
+		</if>
+		where t.area=#{area}
+		<include refid="moviechoose"/>
+		
+	</select>
+	<select id="selectTheater" parameterType="hashmap"
+		resultType="hashmap">
+		select t.theatername ,t.theatercode from theater t
+		<if test="moviecode!=null and moviecode!=''">
+		, theater_move tm 
+		</if>
+		 where area=#{area}
+		<include refid="moviechoose"/>
+	</select>
+	<select id="getScreenDate" parameterType="hashmap"
+		resultType="com.test.finalproject.vo.TiketScreenTimeVo">
+		select st.screendate,st.screencode,s.theatercode from screen_time
+		st,screen s where s.screencode=st.screencode
+		<include refid="choose"/>
+	</select>
+	
+	<select id="movielist" resultType="hashmap">
+	select moviename,moviecode,movieimg from movie_m where state=1
+	</select>
+	<select id="selectScreenTime" parameterType="hashmap" resultType="com.test.finalproject.vo.TiketScreenTimeVo">
+	select st.*,s.name from screen_time st, screen s where s.theatercode=#{theatercode} and st.screendate=#{screendate} and st.moviecode=#{moviecode} and st.screencode=s.screencode
+	</select>
 </mapper>

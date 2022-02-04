@@ -7,9 +7,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class TiketController {
 
 	
-	@GetMapping("/member/tiket")
+	@GetMapping("/tiket")
 	public String tiketPage()
 	{
-		return "member/tiket.tiles";
+		return "tiket/tiket.tiles";
 	}
+	
+	@GetMapping("/seat")
+	public String seatPage()
+	{
+		return "tiket/seatSelect.tiles";
+	}
+	
 }

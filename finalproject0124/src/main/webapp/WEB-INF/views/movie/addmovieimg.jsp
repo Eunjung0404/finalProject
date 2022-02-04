@@ -16,7 +16,10 @@
 <div id="movieimgform">
 	<h2>포토이미지 추가</h2>
 	<form method="post" action="${cp }/movie/addmovieimg?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
+	
+		<input type="hidden" name="moviecode" value="${vo.moviecode }"> <!-- value 속성의 vo.xxx -->
 		<input multiple="multiple" type="file" name="photofile"><br>
+		
 		<input type="submit" value="이미지 추가" style="margin:6px; background-color: #196ab3; min-width: 70px; 
 			border: none; line-height: 30px; color: #ffffff; cursor: pointer;">
 	</form>
