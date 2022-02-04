@@ -18,7 +18,7 @@ public class MovieImgService_hj {
 		return mapper.movieimginsert(vo);
 	}
 	
-	public List<MovieImgVo> movieimglist(){
-		return mapper.movieimglist();
+	public List<MovieImgVo> movieimglistall(){
+		return mapper.movieimglistall();
 	}
 }

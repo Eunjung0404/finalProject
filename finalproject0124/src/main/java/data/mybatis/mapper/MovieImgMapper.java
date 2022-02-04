@@ -7,5 +7,7 @@ import com.test.finalproject.vo.MovieImgVo;
 public interface MovieImgMapper {
 	int movieimginsert(MovieImgVo vo);
 	
-	List<MovieImgVo> movieimglist();
+	List<MovieImgVo> movieimglistall();
+	
+	MovieImgVo movieimglist(int moviecode);
 }
