@@ -29,7 +29,7 @@ public class MovieImgInsertController {
 	
 	@GetMapping("/movie/addmovieimg")
 	public String movieimgForm(int moviecode, Model model) { //모델객체에 영화정보를 담아서 movie/addmovieimg.tiles페이지로 보내기
-		//model.addAttribute("vo", service.movieimglistall(moviecode));
+		model.addAttribute("vo", service.movieimglist(moviecode));
 		return "movie/addmovieimg.tiles";
 	}
 	
