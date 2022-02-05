@@ -2,6 +2,8 @@
 
 
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,10 +34,11 @@ public class MyPageController {
 	}
 	
 	@GetMapping("/member/doMyinfo")
-	public String doMyInfo(String mid, String mphone, Model model) {
-		MemberVo vo = service.myInfo(mid ,mphone);
+	public String doMyInfo(String mid, String mpwd, Model model, HttpSession session) {
+		MemberVo vo = service.myInfo(mid ,mpwd);
 		System.out.println("id:" + mid);
-		System.out.println("phone:" + mphone);
+		System.out.println("mpwd:" + mpwd);
+		session.setAttribute("mid", mid);
 		model.addAttribute("vo", vo);
 		
 		return "member/myinfo.tiles";

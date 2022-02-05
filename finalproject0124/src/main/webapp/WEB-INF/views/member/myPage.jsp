@@ -29,12 +29,12 @@
 		<p><a href="#">예매/구매내역</a></p>
 		<p><a href="#">예매/구매내역</a></p>
 		<p><a href="#">예매/구매내역</a></p>
-		<p><button onclick="doMyinfo()">내 정보 보기</button></p>
+		<p><button onclick="myInfo()">내 정보 보기</button></p>
 	</div>
 </div>
 
 <script>
-	function doMyinfo(){
+	function myInfo(){
 		location.href="${cp}/member/myinfo";
 	}
 </script>

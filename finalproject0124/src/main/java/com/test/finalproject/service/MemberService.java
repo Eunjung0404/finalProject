@@ -54,8 +54,8 @@ public class MemberService {
 	}	
 	
 //	회원 정보 조회
-	public MemberVo myInfo(String mid, String mphone) {
-		return mapper.myInfo(mid, mphone);
+	public MemberVo myInfo(String mid, String mpwd) {
+		return mapper.myInfo(mid, mpwd);
 	}
 	
 //	회원 정보 변경

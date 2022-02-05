@@ -34,7 +34,7 @@
 
 	<!-- 회원 정보 조회 -->
 	<select id="myInfo" parameterType="string" resultType="com.test.finalproject.vo.MemberVo" >
-		select * from member_m where mid=#{mid} and mphone=#{mphone}
+		select * from member_m where mid=#{mid} and mpwd=#{mpwd}
 	</select>
 
 	<!-- 회원 정보 변경 -->

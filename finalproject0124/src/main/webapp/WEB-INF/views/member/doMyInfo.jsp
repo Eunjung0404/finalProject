@@ -3,8 +3,7 @@
     
     <div>
     	<form method="get" action="${cp }/member/doMyinfo?mid=${vo.mid }&mphone=${vo.mphone }">
-	    	<input type="text" name="mid" placeholder="아이디">
-	    	<input type="text" name="mphone" placeholder="전화번호">    	
+	    	<input type="password" name="mpwd" id="mpwd" placeholder="비밀번호를 입력하세요.">	
 	    	<input type="submit" value="확인">
     	</form>
     </div>

@@ -19,6 +19,6 @@
 	
 	<span id=same></span>
 	<br><br>
-	<input type="hidden" name="memail" value="${memail }">
+	<input type="hidden" name="memail" value="${requestScope.memail }">
 	<input type="submit" id="check" value="비밀번호 변경">
 </form:form>

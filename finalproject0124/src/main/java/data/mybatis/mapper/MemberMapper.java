@@ -20,7 +20,7 @@ public interface MemberMapper {
 	MemberVo idCheck(String mid);
 	
 //	회원 정보 조회
-	MemberVo myInfo(@Param("mid")String mid, @Param("mphone")String mphone);
+	MemberVo myInfo(@Param("mid")String mid, @Param("mpwd")String mpwd);
 	
 //	회원 정보 변경
 	String myInfoEdit(MemberVo vo);
