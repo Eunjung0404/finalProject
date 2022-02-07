@@ -24,13 +24,32 @@
 			value="classpath*:data/mybatis/mapper/*.xml"></property>
 	</bean>
 
+	<!-- 이메일 발송 설정 -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.naver.com"></property>
+		<property name="port" value="465"></property>
+		<property name="username" value="username"></property>
+		<property name="password" value="password"></property>
+		<property name="defaultEncoding" value="utf-8"></property>
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+				<prop key="mail.smtps.ssl.checkserveridentity">true</prop>
+				<prop key="mail.smtps.ssl.trust">*</prop>
+				<prop key="mail.debug">true</prop>
+				<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+			</props>
+		</property>		
+	</bean>
+
 
 	<mybatis-spring:scan
 		base-package="data.mybatis.mapper" />
 
 	<context:component-scan
 		base-package="com.test.finalproject.service" />
-		
+
 	<context:component-scan
 		base-package="com.test.finalproject">
 		<context:exclude-filter type="annotation"

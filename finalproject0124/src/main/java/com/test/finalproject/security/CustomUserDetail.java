@@ -61,8 +61,11 @@ public class CustomUserDetail implements UserDetails {
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
+		if (enabled.equals('0')) {
+			return false;
+		} else {
+			return true;
+		}		
 	}
 
 }

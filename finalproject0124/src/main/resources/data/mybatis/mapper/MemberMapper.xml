@@ -26,23 +26,54 @@
 		select * from member_m m, member_authorities a
 		where m.mid = a.mid and m.mid = #{mid}
 	</select>
-	
+
+	<!-- 아이디 중복검사 -->
 	<select id="idCheck" parameterType="string" resultType="com.test.finalproject.vo.MemberVo">
 		select * from member_m where mid=#{mid}
-	</select>	
-	
+	</select>
+
+	<!-- 회원 정보 조회 -->
 	<select id="myInfo" parameterType="string" resultType="com.test.finalproject.vo.MemberVo" >
-		select * from member_m where mid=#{mid}
+		select * from member_m where mid=#{mid} and mpwd=#{mpwd}
 	</select>
-	
-	<update id="myInfoEdit" parameterType="com.test.finalproject.vo.MemberVo">
+
+	<!-- 회원 정보 변경 -->
+	<update id="doMyinfo" parameterType="com.test.finalproject.vo.MemberVo">
 		update member_m set mpwd=#{mpwd}, mname=#{mname}, memail=#{memail}, maddr=#{maddr}, mphone=#{mphone}
-		where mid=#{mid} 
+		where mid=#{mid} and mphone=#{mphone}
 	</update>
-	
-	
-	<select id="findId" parameterType="string" resultType="com.test.finalproject.vo.MemberVo">
+
+	<!-- 이름과 전화번호로 아이디 찾기 -->
+	<select id="findId" parameterType="hashMap" resultType="com.test.finalproject.vo.MemberVo">
 		select * from member_m
-		where memai=#{memail} and mname=#{mname}
+		where mname=#{mname} and mphone=#{mphone}
 	</select>
+
+	<!-- 이름과 이메일로 아이디 찾기 -->
+	<select id="findId2" parameterType="hashMap" resultType="com.test.finalproject.vo.MemberVo">
+		select * from member_m
+		where mname=#{mname} and memail=#{memail}
+	</select>
+
+	<!-- 회원 탈퇴 -->
+	<update id="withdrawal" parameterType="com.test.finalproject.vo.MemberVo">
+		update * from member_m
+		set mstate=2
+		where mname=#{mname}
+	</update>
+
+	<!-- 새로운 비밀번호 입력(비밀번호 변경) -->
+	<update id="changePwd" parameterType="com.test.finalproject.vo.MemberVo">
+		update member_m
+		set mpwd=#{mpwd}
+		where memail=#{memail}
+	</update>
+
+	<!-- 회원 정보 조회 -->
+	<select id="selectMember" parameterType="String" resultType="com.test.finalproject.vo.MemberVo">
+		select *
+		from member_m
+		where mname=#{mname} and memail=#{memail}
+	</select>
+	
 </mapper>

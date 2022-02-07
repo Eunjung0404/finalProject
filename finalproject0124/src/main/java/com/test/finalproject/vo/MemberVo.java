@@ -17,7 +17,7 @@ public class MemberVo {
 	private String maddr;
 	private String mphone;
 	private Date birth;
-	private String mstate;
+	private int mstate;
 	private String enabled;
 	private Date regdate;
 }
