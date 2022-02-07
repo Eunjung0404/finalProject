@@ -12,8 +12,9 @@
 		<![CDATA[
 			select * from
 			(
-				
+				select aa.*. rownum rnum from(select * from movie_review where moviecode=#{moviecode} order by reviewcode desc)aa
 			)
+			where rnum>=#{startRowNum} and rnum<=#{endRowNum}
 		]]>
 	</select>
 </mapper>

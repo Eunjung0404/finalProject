@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,7 +46,7 @@
 
 배우정보: ${vo.actorinfo }<br>
 
-동영상<br>
+<h3>동영상</h3>
 <iframe width="1246" height="701" src="${vo.video }" title="YouTube video player" 
 frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
@@ -55,9 +56,8 @@ frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media
 </div>
 <!-- 기본정보 배우정보 및 영상, 스틸컷 등등 -->
 <div>
-	<hr>
-		<p>기본정보 배우정보 및 영상, 스틸컷 등등</p>
-	<hr>
+	<h3>스틸컷</h3>
+	
 </div>
 <!-- 평점 -->
 <div id="commentsForm">
@@ -67,28 +67,52 @@ frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media
 	<form action="commentWriteOk">
 	<span>나의 평점</span>
 		<p class="star_rating">
-		    <a href="#" class="on">★</a>
-		    <a href="#" class="on">★</a>
-		    <a href="#" class="on">★</a>
-		    <a href="#">★</a>
-		    <a href="#">★</a>
+		    <a href="#" class="on" id="1">★</a>
+		    <a href="#" class="on" id="2">★</a>
+		    <a href="#" class="on" id="3">★</a>
+		    <a href="#" id="4">★</a>
+		    <a href="#" id="5">★</a>
+		    <input type="hidden" id="score" name="score" value="3">
 		</p>
 		<div class="comment_cont">
-			<textarea placeholder="별점을 먼저 선택하신 후, 감상을 남겨주세요." rows="3" cols="40" id="reviewcomment"></textarea>
+			<textarea placeholder="별점을 먼저 선택하신 후, 감상을 남겨주세요." rows="5" cols="50" id="comments"></textarea>
 			<input type="button" value="등록" id="btnadd">
 		</div>
 	</form>
 	</div>
+	
 </div>
-</div>
+
 </body>
 <script type="text/javascript">
 	//별점 관련
 	$( ".star_rating a" ).click(function() {
 	    $(this).parent().children("a").removeClass("on");
 	    $(this).addClass("on").prevAll("a").addClass("on");
-	    return false;
-});
+	    var starscore=$(this).attr('id');
+	    $("#score").val(starscore);
+	    	return false;
+	});
 	
+	//리뷰 작성
+	$(function () {
+		$("#btnadd").click(function() {
+			//let mid=$("#mid").val();
+			let comments=$("#comments").val();
+			$.ajax({
+				url:'/review/insert',
+				data:{"score":score, "comments":comments},
+				dataType:'json',
+				success:function(data){
+					if(data.msg=='success'){
+						list(1);
+					}else{
+						alert("등록 실패!");
+					}
+				}
+			});
+		});
+		list(1);
+	});
 </script>
 </html>
