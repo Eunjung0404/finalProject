@@ -62,6 +62,22 @@
 .select-seat {
 	background-color: red;
 }
+
+.cant-select {
+	background: url(/finalproject/resources/images/icon/none.png) no-repeat
+		-3px -4px;
+	background-color: #cbcbcb;
+	width: 18px;
+	height: 15px;
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 10px;
+	border-radius: 5px 5px 0 0;
+	color: #cbcbcb;
+	cursor: pointer;
+}
 </style>
 <!-- 인원수 및 기타... -->
 <div class="row centerPosition">
@@ -71,7 +87,7 @@
 		인원수 선택
 		<div id="people">성인:</div>
 		<div id="theater-info">상영관/시간 정보:</div>
-		<div id="seat-info">선택한 좌석번호</div>
+		<div id="seat-info">선택한 좌석번호:<span id="seatname"></span></div>
 	</div>
 </div>
 <!-- 좌석 -->
@@ -116,11 +132,17 @@
 				if (selected) {
 					let result = confirm("선택된좌석이 있습니다 초기화하시겠습니까?");
 					if (result) {
+						let seatinfo = document.getElementById("seat-info");
+						seatinfo.innerHTML = "";
 						for (var z = 0; z < divs.length; z++) {
 							if (divs[z].classList.contains('select-seat')) {
 
 								divs[z].classList.remove('select-seat');
 
+							} else {
+								divs[z].classList.remove('cant-select');
+								divs[z].className = 'seat-list';
+								divs[z].innerHTML=divs[z].id.substr(1, 2);
 							}
 						}
 						selected = false;
@@ -144,7 +166,7 @@
 		}
 
 	}
-	//좌석생성
+	//좌석생성 ajax는 일단 보류..
 	function createSeat() {
 		let movetop = 20;
 		for (var i = 0; i < 10; i++) {
@@ -205,9 +227,25 @@
 				if (count > 0) {
 					console.log('좌석명 ' + event.target.id);
 					event.target.className += ' select-seat';
+					let seatinfo = document.getElementById("seat-info");
+					seatinfo.innerHTML += event.target.id;
 					selected = true;
 					count--;
+					if (count == 0) {
+						let seatArea = document.getElementById("seat");
+						let divs = seatArea.getElementsByTagName("div");
+						for (var z = 0; z < divs.length; z++) {
+							if (!divs[z].classList.contains('select-seat')) {
+
+								divs[z].className = 'cant-select';
+								divs[z].innerHTML = "";
+
+							}
+						}
+
+					}
 				}
+
 				console.log(count);
 
 			});
