@@ -1,16 +1,14 @@
- package com.test.finalproject.controller;
+package com.test.finalproject.controller;
 
-
-
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.test.finalproject.service.MemberService;
 import com.test.finalproject.vo.MemberVo;
@@ -18,31 +16,31 @@ import com.test.finalproject.vo.MemberVo;
 @Controller
 public class MyPageController {
 	@Autowired
-	private MemberService service;	
-
+	private MemberService service;
 	
 	@GetMapping("/member/mypage")
 	public String myPage() {
-				
+		
 		return "member/myPage.tiles";
 	}
 	
 	@GetMapping("/member/myinfo")
 	public String myinfo() {
 		
-		return "member/doMyInfo.tiles";
+		return "member/myInfo.tiles";
 	}
 	
-	@GetMapping("/member/doMyinfo")
-	public String doMyInfo(String mid, String mpwd, Model model, HttpSession session) {
-		MemberVo vo = service.myInfo(mid ,mpwd);
-		System.out.println("id:" + mid);
-		System.out.println("mpwd:" + mpwd);
-		session.setAttribute("mid", mid);
-		model.addAttribute("vo", vo);
+	@RequestMapping(value = "/member/doMyinfo")
+	public ModelAndView doMyinfo(String mname, String memail, HttpSession session) {
+		MemberVo vo = service.selectMember(mname, memail);
+		System.out.println(vo);
+		session.setAttribute("mname", mname);
+		session.setAttribute("memail", memail);
+		session.setAttribute("mpwd", vo);
 		
-		return "member/myinfo.tiles";
+		ModelAndView mv = new ModelAndView();
+		mv.setViewName("/member/doMyinfo");
+		mv.addObject("info", vo);
+		return mv;		
 	}
-	
-	
 }

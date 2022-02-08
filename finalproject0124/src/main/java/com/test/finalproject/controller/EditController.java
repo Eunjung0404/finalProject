@@ -28,7 +28,7 @@ public class EditController {
 		return "member/result.tiles";
 	}
 	
-	@PostMapping("/changePwd")
+	@PostMapping("/member/changePwd")
 	public String changePwd(MemberVo vo, Model model) {
 		try {
 			service.changePwd(vo);
@@ -40,5 +40,10 @@ public class EditController {
 		}
 		
 		return "member/result.tiles";
+	}	
+	
+	@GetMapping("/member/changePwdForm")
+	public String changePwdForm() {
+		return "member/changePwd.tiles";
 	}
 }

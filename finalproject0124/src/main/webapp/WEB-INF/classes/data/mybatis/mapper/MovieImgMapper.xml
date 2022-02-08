@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.mybatis.mapper.MovieImgMapper">
+	<select id="movieimglistall" resultType="com.test.finalproject.vo.MovieImgVo">
+		select * from movie_img
+	</select>
+	
+	<select id="movieimglist" parameterType="int" resultType="com.test.finalproject.vo.MovieImgVo">
+		select * from movie_img where moviecode=#{moviecode}
+	</select>
+	
+	<insert id="movieimginsert" parameterType="com.test.finalproject.vo.MovieImgVo">
+		insert into movie_img values(seq_movie_img.nextval, #{moviecode}, #{imgname})
+	</insert>
+	
+	<select id="movieimgdetail" parameterType="int" resultType="com.test.finalproject.vo.MovieImgVo">
+		select * from movie_img where minmgcode=#{mimgcode}
+	</select>
+
+</mapper>
