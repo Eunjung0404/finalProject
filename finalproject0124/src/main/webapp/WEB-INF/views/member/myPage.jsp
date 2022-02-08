@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="sec" 	uri="http://www.springframework.org/security/tags"%>
 
 <style>
 
@@ -23,18 +25,20 @@
  			
 	}
 </style>
+
+<sec:authorize access="isAuthenticated()">
+	<sec:authentication property="principal.username" var="username" />
+</sec:authorize>
+
+
 <div id=content>
 	<div class="infoBox">
-		<p><a href="${cp }/member/withdrawal">회원 탈퇴 테스트</a></p>
 		<p><a href="#">예매/구매내역</a></p>
 		<p><a href="#">예매/구매내역</a></p>
 		<p><a href="#">예매/구매내역</a></p>
-		<p><button onclick="myInfo()">내 정보 보기</button></p>
+		<p><a href="${cp }/member/myinfo">내 정보 보기</a></p>
+		<p>${username }</p>
 	</div>
 </div>
 
-<script>
-	function myInfo(){
-		location.href="${cp}/member/myinfo";
-	}
-</script>
+

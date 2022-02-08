@@ -29,7 +29,7 @@
 <nav class="py-1 bg-dark ">
 	<div class="container d-flex flex-wrap">
 		<ul class="nav me-auto">
-			<li class="nav-item"><a href="#"
+			<li class="nav-item"><a href="${cp }/"
 				class="nav-link link-light px-2 active" aria-current="page">Home</a></li>
 		</ul>
  
@@ -37,25 +37,25 @@
 			<sec:authorize access="isAnonymous()">
 				<li class="nav-item"><a href="${cp }/login"
 					class="nav-link text-white px-2">로그인</a></li>
+				<li class="nav-item"><a href="${cp}/signup"
+					class="nav-link text-white px-2">회원가입</a></li>
 			</sec:authorize>
 			<sec:authorize access="isAuthenticated()">
 				<sec:authentication property="principal.username" var="username" />
 				<sec:authentication property="principal.username" />님 반갑습니다.
 					  <script>
-								function logout() {
-									var f = document.Frm;
-									f.action = "${cp}/logout";
-									f.method = "post";
-									f.submit();
-								}
-							</script>
+						function logout() {
+							var f = document.Frm;
+							f.action = "${cp}/logout";
+							f.method = "post";
+							f.submit();
+						}
+					</script>
 				<form:form method="post" name="Frm" id="Frm">
 					<li class="nav-item"><a href="javascript:logout()"
 						class="nav-link text-white px-2">로그아웃</a></li>
 				</form:form>
 			</sec:authorize>
-			<li class="nav-item"><a href="${cp}/signup"
-				class="nav-link text-white px-2">회원가입</a></li>
 
 			<li class="nav-item"><a href="${cp }/member/mypage?mid=${username}"
 				class="nav-link text-white px-2">마이페이지</a></li>

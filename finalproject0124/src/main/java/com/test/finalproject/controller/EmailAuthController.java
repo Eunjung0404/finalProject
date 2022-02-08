@@ -49,6 +49,8 @@ public class EmailAuthController {
 		map.put("name", name);
 
 		MemberVo vo = service.selectMember(name, email);
+		
+		
 		System.out.println("aaaa: " + vo);
 		if (vo != null) {
 			Random r = new Random();

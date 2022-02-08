@@ -3,6 +3,7 @@ package data.mybatis.mapper;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
@@ -17,10 +18,7 @@ public interface MemberMapper {
 	CustomUserDetail getAuths(String mid);
 	
 //	아이디 중복검사
-	MemberVo idCheck(String mid);
-	
-//	회원 정보 조회
-	MemberVo myInfo(@Param("mid")String mid, @Param("mpwd")String mpwd);
+	int idCheck(String mid);
 	
 //	회원 정보 변경
 	String myInfoEdit(MemberVo vo);
@@ -33,10 +31,11 @@ public interface MemberMapper {
 //	회원 탈퇴
 	MemberVo withdrawal(String mname);
 	
-//	비밀번호 찾기 이메일 인증 테스트
+//	비밀번호 찾기 이메일 인증
 	MemberVo selectMember(@Param("mname")String mname, @Param("memail")String memail);
 	
 //	비밀번호 변경
 	int changePwd(MemberVo vo);
+	
 } 
 

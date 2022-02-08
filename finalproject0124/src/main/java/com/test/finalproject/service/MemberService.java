@@ -49,14 +49,9 @@ public class MemberService {
 	}
 	
 //	아이디 중복검사
-	public MemberVo idCheck(String mid) {
+	public int idCheck(String mid) {
 		return mapper.idCheck(mid);
-	}	
-	
-//	회원 정보 조회
-	public MemberVo myInfo(String mid, String mpwd) {
-		return mapper.myInfo(mid, mpwd);
-	}
+	}		
 	
 //	회원 정보 변경
 	public String myInfoEdit(MemberVo vo) {
@@ -88,5 +83,5 @@ public class MemberService {
 		vo.setMpwd(passwordEncoder.encode(mpwd));
 		return mapper.changePwd(vo);		
 	}
-	
+
 }
