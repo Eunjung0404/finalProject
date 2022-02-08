@@ -16,6 +16,8 @@
 	<sec:http>
 		<sec:intercept-url pattern="/member/**"
 			access="hasRole('ROLE_MEMBER')" />
+		<sec:intercept-url pattern="/qna/insert"
+			access="hasRole('ROLE_MEMBER')" />
 		<sec:intercept-url pattern="/admin/**"
 			access="hasRole('ROLE_ADMIN')" />
 		<sec:intercept-url pattern="/**" access="permitAll" />
@@ -24,9 +26,10 @@
 			logout-success-url="/"></sec:logout>
 
 		<!-- 자동 로그인 -->
-		<sec:remember-me data-source-ref="dataSource" token-validity-seconds="604800"/>
+		<sec:remember-me data-source-ref="dataSource"
+			token-validity-seconds="604800" />
 		<sec:csrf disabled="true" />
-		
+
 	</sec:http>
 
 	<!-- 인증매니져 설정 -->

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="sec"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,11 +10,16 @@
 </head>
 <body>
 	<h2>문의하기</h2>
-	<form method="post" action="${pageContext.request.contextPath }/qna/insert">
+	<form method="post"
+		action="${pageContext.request.contextPath }/qna/insert">
+		<input type="hidden" name="${_csrf.parameterName }"
+			value="${_csrf.token }">
 		<table>
 			<tr>
 				<th><label for="mid">작성자</label></th>
-				<td><input type="text" name="mid" id="mid" disabled="disabled" value="${vo.mid }"></td>
+				<td><input id="mid" name="mid"
+					value='<sec:authentication property="principal.username"/>'
+					readonly="readonly"></td>
 			</tr>
 			<tr>
 				<th><label for="title">문의제목</label></th>

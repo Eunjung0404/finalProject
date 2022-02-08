@@ -1,6 +1,9 @@
 package com.test.finalproject.controller;
 
+import java.sql.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,14 +17,21 @@ public class QnaInsertController {
 	@Autowired private QnaService service;
 	
 	@GetMapping("/qna/insert")
-	public String form() {
-		return "qna/insert.tiles";
+	@PreAuthorize("isAuthenticated()")
+	public void insert() {
+		//return "qna/insert.tiles";
 	}
 	
 	@PostMapping("/qna/insert")
-	public String insert(QnaVo vo, Model model) {
-		int n = service.insert(vo);
+	@PreAuthorize("isAuthenticated()")
+	public String insert(int qnacode, int theatercode,
+						 String mid, int pwd, String title,
+						 String content, Date regdate,
+						 Model model) {
+	
 		try {
+			QnaVo vo = new QnaVo(0, theatercode, mid, pwd, title, content, regdate);
+			service.insert(vo);
 			model.addAttribute("result","success");
 		}catch (Exception e) {
 			e.printStackTrace();
