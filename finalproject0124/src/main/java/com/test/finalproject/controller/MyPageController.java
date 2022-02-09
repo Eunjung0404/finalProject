@@ -1,13 +1,16 @@
 package com.test.finalproject.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import java.security.Principal;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.test.finalproject.service.MemberService;
@@ -19,14 +22,13 @@ public class MyPageController {
 	private MemberService service;
 	
 	@GetMapping("/member/mypage")
-	public String myPage() {
-		
+	public String myPage() {				
 		return "member/myPage.tiles";
-	}
+	}	
 	
-	@GetMapping("/member/myinfo")
+	@RequestMapping(value = "/member/myinfo", method = RequestMethod.GET)
+	@ResponseBody
 	public String myinfo() {
-		
 		return "member/myInfo.tiles";
 	}
 	
@@ -42,5 +44,16 @@ public class MyPageController {
 		mv.setViewName("/member/doMyinfo");
 		mv.addObject("info", vo);
 		return mv;		
+	}
+	
+	@RequestMapping(value = "/member/getInfo")
+	@ResponseBody
+	public String getIng(Principal principal, Model model) {		
+		String id = principal.getName();
+		MemberVo vo = service.getInfo(id);
+		
+		model.addAttribute("vo", vo);
+		
+		return "member/myPage";
 	}
 }

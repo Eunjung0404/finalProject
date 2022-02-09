@@ -56,20 +56,19 @@ div .sign {
 			<th>아이디</th>
 			<td><input type="text" title="아이디" id="mid" name="mid" placeholder="아이디를 입력하세요." maxlength="12"/> 				
 <!-- 				<button type="button" id="bntIdCheck" onclick="idCheck()"></button> -->
-				<input type="button" onclick="idCheck()" value="중복검사">
+				<input type="button" value="중복검사"  id="idCheck">
 				<div class="valid">아이디를 입력하세요.(5~12글자, 영문 소문자, 숫자만 입력 가능)</div>
 			</td>
 			
 		</tr>
 		<tr>
 			<th>비밀번호</th>
-			<td><input type="password" title="비밀번호" name="mpwd" id="mpwd" placeholder="비밀번호를 입력하세요." >
+			<td><input type="password" title="비밀번호" name="mpwd" id="mpwd" maxlength="16" placeholder="비밀번호를 입력하세요." >
 				<div class="valid">비밀번호를 입력하세요.(8~16글자, 영문 대/소문자, 숫자를 모두 포함)</div></td>
 		<tr>
 		<tr>
 			<th>비밀번호 확인</th>
-			<td><input type="password" title="비밀번호 확인" id="pw_ck"
-				name="pw_ck" class="chk">
+			<td><input type="password" title="비밀번호 확인" id="pw_ck" name="pw_ck" class="chk" maxlength="16">
 				<div class="vaild" id="confirmMsg"></div></td>
 		</tr>
 		<tr>
@@ -90,19 +89,16 @@ div .sign {
 		<tr>
 			<th>성명</th>
 			<td><input type="text" class="chk" title="이름" id="mname"
-				name="mname" placeholder="이름을 입력하세요.">
+				name="mname" placeholder="이름을 입력하세요."></td>
 		</tr>
 		<tr>
 			<th>생년월일</th>
-			<td><input type="text" name="birth" placeholder="생년월일을 입력하세요."> <span id="delete"
-				style="color: red; position: relative; right: 25px; display: none;"><i
-					class="fas fa-times font-img"></i></span>
+			<td><input type="text" name="birth" placeholder="생년월일을 입력하세요."> 
 				<div class="valid">ex)1999-01-01</div></td>
 		</tr>
 		<tr>
 			<th>전화번호</th>
-			<td><input type="text" id="mphone" name="mphone" maxlength="11"
-				placeholder="-없이 숫자만 입력"> <!-- 					<input type="text" name="tel"> -->
+			<td><input type="text" id="mphone" name="mphone" maxlength="11" placeholder="-없이 숫자만 입력">
 			</td>
 		</tr>
 		<tr>
@@ -117,7 +113,7 @@ div .sign {
 	<hr>
 	<div class="sign">
 		<input type="button" value="회원가입" onclick="validation()" style="width: 200pt;" name="signup">
-		<input type="button" value="취소" id="cancle" onclick="cancle()" style="width: 200pt;" name="clncle">
+		<input type="button" value="취소" id="cancle"  style="width: 200pt;" name="clncle">
 	</div>
 <!-- 	<input type="button" value="테스트" id="testButton"> -->
 	
@@ -125,6 +121,8 @@ div .sign {
 	// 데이터 유효성 검사 정규식 표현
 	let regExpName = /^[가-힣]*$/;
 	let regExpPhone = /^\d{3}\d{3,4}\d{4}$/;
+	let cnt = 0;
+	
 // 	let regExpEmail = /^[A-Za-z0-9_\\.\\-]+@[A-Za-z0-9\\-]+\\.[A-Za-z0-9\\-]+$/;	
 // 	let email = $("#memail1").val();
 // 	let middle = $("#middle").text();
@@ -135,32 +133,38 @@ div .sign {
 // 	});
 	
 	// 아이디 중복검사
-	function idCheck(){
+	$("#idCheck").click(function(){
 		$.ajax({
 			url: "${cp}/idCheck?mid=" + document.getElementById("mid").value,
 			type: "get",			
 			dataType: 'json',
 			success: function(n){
+// 				console.log(cnt);
+				cnt++;
+// 				console.log(cnt);
 				if(document.getElementById("mid").value == "") {
 					alert("아이디를 입력해주세요.");
 					document.signupForm.mid.focus();
+					cnt = 0;
 					return false;
 				}
 				if(document.getElementById("mid").value.length < 5 || document.getElementById("mid").value.length > 12) {
 					alert("아이디는 5~12자 이내로 입력하세요.");
+					cnt = 0;
 					return false;
 				}
 				if(n == 1){
 					alert("이미 사용중인 아이디 입니다.");
 					document.signupForm.mid.select();
+					cnt = 0;
 					return false;
 				} else {
 					alert("사용 가능한 아이디 입니다.");	
 					document.signupForm.mpwd.focus();
 				}
-		}
+			}		
 		});
-	}	
+	});
 	
 	// 이메일 선택 입력
 	$('#memail2').change(function(){
@@ -182,17 +186,18 @@ div .sign {
     	function validation(){ 		
  		if (document.signupForm.mid.value == ""){
  			alert("아이디를 입력하세요.");
- 			document.signupForm.mid.focus(); 		
+ 			document.signupForm.mid.focus();  			
  			return false;
  		}
- 		if (document.signupForm.mid.value.length < 5 || document.signupForm.mid.value.length > 12) {
-			alert("아이디를 5~12자 이내로 입력하세요.");
-			document.signupForm.mid.select();
-			return false;
- 		}
+//  		if (document.signupForm.mid.value.length < 5 || document.signupForm.mid.value.length > 12) {
+// 			alert("아이디를 5~12자 이내로 입력하세요.");
+// 			document.signupForm.mid.select();			
+// 			return false;
+//  		}
  		if (document.signupForm.mpwd.value == ""){
 			alert("비밀번호를 입력하세요.");
  			document.signupForm.mpwd.focus();
+ 			cnt = 0;
  			return false;
  		}
  		if (document.signupForm.mpwd.value.length < 8 || document.signupForm.mpwd.value.length > 16) {
@@ -205,14 +210,16 @@ div .sign {
  			document.singupForm.pw_ck.select();
  			return false;
  		}
- 		if (email != "" && address != "") {
- 			$("#totalEmail").val($("#memail1").val() + $("#middle").text() + $("#memail2").val());
- 			return true;
- 		} else {
- 			alert("이메일 입력을 확인해주세요!");
- 			document.signupForm.memail.focus();
- 			return false;
+ 		if ($("#memail1").val() == "" && $("#memail2").val() == "") {
+ 			alert("이메일을 입력해주세요."); 	
+ 			document.signupForm.memail1.focus();
+ 			return false; 			
  		}
+ 		if ($("#mname").val() == ""){
+ 			alert("이름을 입력해주세요.");
+ 			document.signupForm.mname.focus();
+ 			return false;
+ 		} 	
  		if (!isNaN(document.signupForm.mname.value.substr(0,1))){
  			alert("이름은 숫자로 시작할 수 없습니다.");
  			document.signupForm.mname.select();
@@ -228,17 +235,23 @@ div .sign {
  			document.signupForm.mphone.focus();
  			return false;
  		}
+ 		if (cnt == 0) {
+ 			alert("아이디 중복검사를 해주세요.");
+ 			return false;
+ 		}
+ 		$("#totalEmail").val($("#memail1").val() + $("#middle").text() + $("#memail2").val()); 		
 		document.signupForm.submit();
+		alert("회원이 되신 것을 축하합니다!");
  	} 
  
 
- 	function cancle(){
+ 	$("#cancle").click(function(){
 		console.log(document.getElementById(cancle));
 		if (document.getElementById(cancle) == null){
 			alert("회원 가입이 취소되었습니다.");
-			location.href = "${cp}/";
+			location.href = "${cp}/"; 		
 		}
-	} 	 
+ 	});
 </script>
 
 

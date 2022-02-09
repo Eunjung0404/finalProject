@@ -26,7 +26,6 @@ public class MemberService {
 		return mapper.getAuths(mid);
 	}
 	
-	
 	public int addMember(MemberVo vo) {
 		// 암호화 하여 저장
 		String mpwd = vo.getMpwd();
@@ -82,6 +81,11 @@ public class MemberService {
 		String mpwd = vo.getMpwd();
 		vo.setMpwd(passwordEncoder.encode(mpwd));
 		return mapper.changePwd(vo);		
+	}
+	
+	// 아이디와 일치하는 회원 정보 가져오기
+	public MemberVo getInfo(String mid) {		
+		return mapper.getInfo(mid);
 	}
 
 }

@@ -12,7 +12,6 @@
 <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"> -->
   
 <style>
-
 	#findId {
 		font-size: 13px;
 		padding-left: 0%;
@@ -48,6 +47,7 @@
 </style>
 
 
+
 <div class="main">
 	<form:form method="post" action="${cp }/login" onsubmit="return subm(this)" name="submitForm">
 		<table>
@@ -67,7 +67,7 @@
 		<label class="form-check-label" for="checkbox1" style="width: 150px;" id="stayLogin">로그인 상태 유지</label>	      
 	</div>
 	<div>
-		<input type="checkbox" class="form-check-input" id="checkbox2" name="optradio">
+		<input type="checkbox" class="form-check-input" id="checkbox2" name="checkbox2" >
 		<label class="form-check-label" for="checkbox2" id="saveId">아이디 저장</label>
 	</div>
 	
@@ -82,6 +82,10 @@
 
 
 <script>
+ 	if (document.getElementById("checkbox2").checkd) {
+ 		alert("체크박스 테스트");
+ 	}
+	
 	function findId(){
 		location.href="${cp}/findId";
 	}
@@ -92,5 +96,6 @@
 		document.submitForm.submit();
 	}	
 </script>
+
 
 

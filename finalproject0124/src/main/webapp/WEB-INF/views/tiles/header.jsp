@@ -57,7 +57,7 @@
 				</form:form>
 			</sec:authorize>
 
-			<li class="nav-item"><a href="${cp }/member/mypage?mid=${username}"
+			<li class="nav-item"><a href="${cp }/member/mypage"
 				class="nav-link text-white px-2">마이페이지</a></li>
 
 				<li class="nav-item"><a href="${cp }/qna/qnahome"
