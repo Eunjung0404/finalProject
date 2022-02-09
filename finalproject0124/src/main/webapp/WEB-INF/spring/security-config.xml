@@ -9,8 +9,11 @@
 	<!-- 암호화 객체 -->
 	<bean id="passwordEncoding"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+		
 	<bean id="customuserDetailService"
-		class="com.test.finalproject.security.CustomUserDetailService"></bean>
+		class="com.test.finalproject.security.CustomUserDetailService"/>
+	<bean id="loginSuccessHandler"
+		class="com.test.finalproject.security.LoginSuccessHandler"/>
 
 	<!-- 요청에 따른 권한 설정 -->
 	<sec:http>
@@ -21,7 +24,8 @@
 		<sec:intercept-url pattern="/admin/**"
 			access="hasRole('ROLE_ADMIN')" />
 		<sec:intercept-url pattern="/**" access="permitAll" />
-		<sec:form-login login-page="/login" />
+		<sec:form-login login-page="/login" 
+			authentication-success-handler-ref="loginSuccessHandler"/>
 		<sec:logout logout-url="/logout" invalidate-session="true"
 			logout-success-url="/"></sec:logout>
 

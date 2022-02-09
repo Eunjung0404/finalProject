@@ -21,4 +21,25 @@
 		<put-attribute name="body" value="/WEB-INF/views/{1}/{2}.jsp"/>
 		<put-attribute name="title" value="게시판" />
 	</definition>
+	
+	<definition name="admin-layout-tiles" template="/WEB-INF/views/tiles/admin/layout.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/tiles/header.jsp" />
+		<put-attribute name="sidebar" value="/WEB-INF/views/tiles/sidebar.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/views/tiles/footer.jsp" />
+	</definition>
+	
+	<definition name="admin/login.tiles" extends="admin-layout-tiles">
+		<put-attribute name="body" value="/WEB-INF/views/admin/login.jsp"/>
+		<put-attribute name="title" value="관리자 로그인" />
+		<put-attribute name="css" value="/WEB-INF/views/tiles/admin/login-css.jsp"/>
+		<put-attribute name="js" value="/WEB-INF/views/tiles/admin/login-js.jsp"/>
+	</definition>
+	
+	<definition name="admin/main.tiles" extends="admin-layout-tiles">
+		<put-attribute name="body" value="/WEB-INF/views/admin/test.jsp"/>
+		<put-attribute name="title" value="관리자 페이지" />
+		<put-attribute name="css" value="/WEB-INF/views/tiles/admin/main-css.jsp"/>
+		<put-attribute name="js" value="/WEB-INF/views/tiles/admin/main-js.jsp"/>
+	</definition>
 </tiles-definitions>
