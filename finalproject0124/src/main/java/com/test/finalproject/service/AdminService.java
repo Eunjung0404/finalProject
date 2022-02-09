@@ -1,5 +1,7 @@
 package com.test.finalproject.service;
 
+import java.util.Optional;
+
 import org.springframework.stereotype.Service;
 
 import com.test.finalproject.form.AdminLoginForm;
@@ -14,7 +16,7 @@ public class AdminService {
 
 	private final AdminMapper mapper;
 
-	public AdminVo login(AdminLoginForm form) {
+	public Optional<AdminVo> login(AdminLoginForm form) {
 		return mapper.login(form);
 	}
 }

@@ -1,6 +1,7 @@
 package com.test.finalproject.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,12 +14,14 @@ import com.test.finalproject.vo.QnaVo;
 public class QnaUpdateController {
 	@Autowired private QnaService service;
 	
+	@PreAuthorize("principa.username == #vo.mid")
 	@GetMapping("/qna/update")
 	public String insertForm(int num, Model model) {
 		QnaVo vo = service.detail(num);
 		model.addAttribute("vo", vo);
 		return "qna/update.tiles";
 	}
+	@PreAuthorize("principa.username == #vo.mid")
 	@PostMapping("/qna/update")
 	public String update(QnaVo vo, Model model) {
 		try {
