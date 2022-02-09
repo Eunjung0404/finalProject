@@ -19,22 +19,27 @@
 			<th>이메일</th>
 			<td><input type="email" name="memail" value="${info.memail }"></td>
 		</tr>
+		
 		<tr>
 			<th>성명</th>
 			<td><input type="text" name="mname" value="${info.mname }"></td>
 		</tr>
+		
 		<tr>
 			<th>생년월일</th>
 			<td><input type="text" name="birth" value="${info.birth }"></td>
 		</tr>
+		
 		<tr>
 			<th>전화번호</th>
 			<td><input type="text" name="mphone" value="${info.mphone }"></td>
 		</tr>
+		
 		<tr>
 			<th>주소</th>
 			<td><input type="text" name="maddr" value="${info.maddr }"></td>
 		</tr>
+		
 	</table><br>
 </form:form>
 

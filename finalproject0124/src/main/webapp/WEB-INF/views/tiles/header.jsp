@@ -30,7 +30,7 @@
 
 <!-- 검색창 -->
 </style>
-<script type="text/javascript" src="js/jquery-3.6.0.js"></script>
+<script type="text/javascript" src="${cp }/resources/js/jquery-3.6.0.js"></script>
 <nav class="py-1 bg-dark ">
 	<div class="container d-flex flex-wrap">
 		<ul class="nav me-auto">

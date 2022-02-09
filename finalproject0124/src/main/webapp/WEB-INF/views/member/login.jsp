@@ -47,7 +47,6 @@
 </style>
 
 
-
 <div class="main">
 	<form:form method="post" action="${cp }/login" onsubmit="return subm(this)" name="submitForm">
 		<table>
@@ -67,7 +66,7 @@
 		<label class="form-check-label" for="checkbox1" style="width: 150px;" id="stayLogin">로그인 상태 유지</label>	      
 	</div>
 	<div>
-		<input type="checkbox" class="form-check-input" id="checkbox2" name="checkbox2" >
+		<input type="checkbox" class="form-check-input" id="checkbox2" name="checkbox2" value="1" >
 		<label class="form-check-label" for="checkbox2" id="saveId">아이디 저장</label>
 	</div>
 	
@@ -82,9 +81,11 @@
 
 
 <script>
- 	if (document.getElementById("checkbox2").checkd) {
- 		alert("체크박스 테스트");
- 	}
+//  	$("#checkbox2").click(function(){
+//  		if (document.getElementById("checkbox2").value) {
+ 			
+//  		}
+//  	});
 	
 	function findId(){
 		location.href="${cp}/findId";

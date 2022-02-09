@@ -77,4 +77,5 @@
 		from member_m
 		where mid=#{mid}
 	</select>
+		
 </mapper>
