@@ -1,5 +1,6 @@
 package com.test.finalproject.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,14 @@ public class MovieListController {
 	@Autowired private Movie_MService_hj service;
 	
 	@RequestMapping("/movie/list")
-	public String movielist(Model model) {
-		List<Movie_MVo> list=service.selectAll();
+	public String movielist(String keyword, Model model) {
+		
+		HashMap<String, Object> map=new HashMap<String, Object>();
+		
+		map.put("keyword", keyword);
+		
+		List<Movie_MVo> list=service.selectAll(map);
+		model.addAttribute("keyword", keyword);
 		model.addAttribute("list", list);
 		
 		return "movie/movielist.tiles";

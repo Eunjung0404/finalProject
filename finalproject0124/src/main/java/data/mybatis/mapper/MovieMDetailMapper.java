@@ -1,5 +1,6 @@
 package data.mybatis.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.test.finalproject.vo.Movie_MVo;
@@ -9,5 +10,5 @@ public interface MovieMDetailMapper {
 	
 	Movie_MVo detail(int moviecode);
 	
-	List<Movie_MVo> selectAll();
+	List<Movie_MVo> selectAll(HashMap<String, Object> map);
 }

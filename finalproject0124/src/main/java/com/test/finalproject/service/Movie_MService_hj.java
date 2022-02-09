@@ -1,5 +1,6 @@
 package com.test.finalproject.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class Movie_MService_hj {
 		return mapper.detail(Moviecode);
 	}
 	
-	public List<Movie_MVo> selectAll(){
-		return mapper.selectAll();
+	public List<Movie_MVo> selectAll(HashMap<String, Object> map){
+		return mapper.selectAll(map);
 	}
 }

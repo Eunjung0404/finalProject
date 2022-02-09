@@ -80,7 +80,9 @@ frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media
 		</div>
 	</form>
 	</div>
+	<div id="commentsList">
 	
+	</div>
 </div>
 
 </body>
@@ -114,5 +116,25 @@ frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media
 		});
 		list(1);
 	});
+	
+	
+	//리뷰 리스트
+	function list() {
+		$("#commentsList").empty();
+		$.ajax({
+			url:'/movie/list',
+			dataType:'json',
+			success:function(data){
+				$(data.list).each(function(i,d){
+					let comments=d.comments;
+					let html="<div class='comm1'>";
+					html += comments + "<br>";
+					html += mid | regdate + "<br>";
+					html += "</div>";
+					$("#commentsList").append(html);
+				});
+			}
+		});
+	};
 </script>
 </html>

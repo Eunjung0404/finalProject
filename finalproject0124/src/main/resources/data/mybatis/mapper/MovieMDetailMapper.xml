@@ -8,8 +8,23 @@
 		#{actorinfo}, #{movieimg}, #{opendate}, #{state}, #{video})
 	</insert>
 	
-	<select id="selectAll" resultType="com.test.finalproject.vo.Movie_MVo">
-		select * from movie_m
+	<!-- 검색조건 -->
+	<sql id="sesarchMovie">
+		<if test="keyword != null and keyword!=''">
+			where moviename like '%'||#{keyword}||'%'
+		</if>
+	</sql>
+	
+	<select id="selectAll" parameterType="hashmap" resultType="com.test.finalproject.vo.Movie_MVo">
+		select * from
+		(
+		slelct b.*, rownum rnum
+		from(
+			select * from movie_m
+			<include refid="sesarchMovie"/>
+			order by moviecode desc
+		)b
+		)
 	</select>
 	
 	<select id="detail" parameterType="int" resultType="com.test.finalproject.vo.Movie_MVo">
