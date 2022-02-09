@@ -297,7 +297,10 @@ div .sign {
  		}
  		$("#totalEmail").val($("#memail1").val() + $("#middle").text() + $("#memail2").val()); 
  		document.getElementById("totalAddress").value = document.getElementById("roadAddress").value + document.getElementById("jibunAddress").value + " " + document.getElementById("detailAddress").value;
-		document.signupForm.submit();
+ 		
+ 		if (window.event.keyCode == 13){		// 엔터키
+			document.signupForm.submit(); 			
+ 		}
 		alert("회원이 되신 것을 축하합니다!");
  	} 
 
