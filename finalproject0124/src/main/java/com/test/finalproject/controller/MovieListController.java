@@ -16,16 +16,26 @@ public class MovieListController {
 	@Autowired private Movie_MService_hj service;
 	
 	@RequestMapping("/movie/list")
-	public String movielist(String keyword, Model model) {
+	public String movielist(Model model) {
+				
+		List<Movie_MVo> list=service.selectAll();
+		model.addAttribute("list", list);
+		
+		return "movie/movielist.tiles";
+	}
+	
+	
+	@RequestMapping("/movie/search")
+	public String searchlist(String keyword, Model model) {
 		
 		HashMap<String, Object> map=new HashMap<String, Object>();
 		
 		map.put("keyword", keyword);
 		
-		List<Movie_MVo> list=service.selectAll(map);
+		List<Movie_MVo> list=service.searchlist(map);
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("list", list);
 		
-		return "movie/movielist.tiles";
+		return "movie/searchpage.tiles";
 	}
 }

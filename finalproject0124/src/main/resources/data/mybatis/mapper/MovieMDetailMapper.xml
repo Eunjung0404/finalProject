@@ -9,22 +9,27 @@
 	</insert>
 	
 	<!-- 검색조건 -->
-	<sql id="sesarchMovie">
+	<sql id="searchMovie">
 		<if test="keyword != null and keyword!=''">
 			where moviename like '%'||#{keyword}||'%'
 		</if>
 	</sql>
 	
-	<select id="selectAll" parameterType="hashmap" resultType="com.test.finalproject.vo.Movie_MVo">
+	<!-- 영화검색 -->
+	<select id="searchlist" parameterType="hashmap" resultType="com.test.finalproject.vo.Movie_MVo">
 		select * from
 		(
-		slelct b.*, rownum rnum
+		select b.*, rownum rnum
 		from(
 			select * from movie_m
-			<include refid="sesarchMovie"/>
+			<include refid="searchMovie"/>
 			order by moviecode desc
 		)b
 		)
+	</select>
+	
+	<select id="selectAll" resultType="com.test.finalproject.vo.Movie_MVo">
+		select * from movie_m
 	</select>
 	
 	<select id="detail" parameterType="int" resultType="com.test.finalproject.vo.Movie_MVo">
