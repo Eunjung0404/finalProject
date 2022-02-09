@@ -113,9 +113,9 @@
 
 		</ul>
 		<!-- 서치아이콘 클릭  -->
-			<form class="col-12 col-lg-auto mb-3 mb-lg-0" method="post" action="${cp }/movie/serach?${_csrf.parameterName}=${_csrf.token}">
+			<form class="col-12 col-lg-auto mb-3 mb-lg-0" method="get" action="${cp }/movie/search">
 			<!-- <a href="#"><img src="/finalproject/resources/images/icon/search.png" id="searchbtn"></a> -->
-				<input type="text" id="searchbar" placeholder="검색어를 입력하세요" name="keyword" value="${keyword }" 
+				<input type="text" id="searchbar" placeholder="검색어를 입력하세요" name="keyword" 
 				style="border-style: solid; border-width: 0 0 2px 0; padding: 5px; word-break: break-all;
 					border-color: LightGray; background-color: transparent; color: white;">
 				

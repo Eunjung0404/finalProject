@@ -10,5 +10,7 @@ public interface MovieMDetailMapper {
 	
 	Movie_MVo detail(int moviecode);
 	
-	List<Movie_MVo> selectAll(HashMap<String, Object> map);
+	List<Movie_MVo> selectAll();
+	
+	List<Movie_MVo> searchlist(HashMap<String, Object> map);
 }
