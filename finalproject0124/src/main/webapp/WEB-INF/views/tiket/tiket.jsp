@@ -227,7 +227,10 @@
 				<div style="width: 35%; border: 1px solid gray; height: 100%;">
 					<ul id="areas">
 						<li id="서울">서울<span></span></li>
+						<li id="부산">부산<span></span></li>
 						<li id="경기">경기<span></span></li>
+						<li id="대전">대전<span></span></li>
+						<li id="대구">대구<span></span></li>
 					</ul>
 
 				</div>
@@ -304,7 +307,7 @@
 </div>
 <div>
 <img src="/finalproject/resources/images/icon/forword.png"  alt="다음페이지"
-			 id="nextpage">
+			 id="nextpage" onclick="">
 </div>
 <input type="hidden" value="" id="moviecode">
 <input type="hidden" value="" id="areaname">

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.mybatis.mapper.ChaSeatMapper">
+
+
+
+	<!-- 임시 데이터 넣기 좌석정보 -->
+	<insert id="insertseatList" parameterType="Hashmap">
+		insert into seat
+		values(SEQ_SEAT.nextval,#{screencode},#{seatrow},#{seatcol},#{code},#{state})
+	</insert>
+	<!-- 임시 데이터 넣기 -->
+	<insert id="insertseatinfo" parameterType="Hashmap">
+		insert into seat_info
+		values(SEQ_SEAT_INFO.nextval,#{seatcode},#{timecode},#{state})
+	</insert>
+	<!-- 임시데이터 넣기 -->
+	<select id="selectseatcode" parameterType="int" resultType="int">
+		select seatcode from seat where screencode=#{screencode}
+	</select>
+
+	<select id="seatLsit" parameterType="hashmap"
+		resultType="hashmap">
+		select s.code,s.state blank,si.state bookingstate from seat s,
+		seat_info si where
+		s.screencode=#{screencode} and
+		si.timecode=#{timecode} and s.seatcode=si.seatcode order by s.seatcode asc
+	</select>
+
+	<select id="getseatrow" resultType="int" parameterType="int">
+		select max(seatrow) from seat where screencode=#{screencode}
+	</select>
+
+	<select id="getseatcol" resultType="int">
+		select max(seatcol) from seat where screencode=#{screencode}
+	</select>
+</mapper>
