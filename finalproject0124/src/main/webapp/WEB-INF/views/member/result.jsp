@@ -9,6 +9,7 @@ ${code}
 ${result}
 ${msg}
 ${vo.mid }
+${LoginFailMessage }
 <script>
 	function home() {
 		location.href = "${cp}/";

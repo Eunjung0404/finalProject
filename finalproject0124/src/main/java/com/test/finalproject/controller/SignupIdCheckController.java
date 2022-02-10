@@ -21,7 +21,7 @@ public class SignupIdCheckController {
 	public int idCheck(@RequestParam("mid") String mid) {
 		System.out.println("id:" + mid);
 		int n = service.idCheck(mid);
-		System.out.println("n:" + n);
+//		System.out.println("n:" + n);
 		return n;
 		
 	}

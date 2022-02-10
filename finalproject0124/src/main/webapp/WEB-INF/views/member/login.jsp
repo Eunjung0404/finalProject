@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.6.0.js"></script>
 <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
 <!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script> -->
@@ -46,13 +46,12 @@
 	}
 </style>
 
-
 <div class="main">
 	<form:form method="post" action="${cp }/login" onsubmit="return subm(this)" name="submitForm">
 		<table>
 			<tr>
 				<th>아이디</th>
-				<td><input type="text" name="username" id="username"></td>
+				<td><input type="text" name="username" id="username" value="${id }"><span style="color: red; padding-left: 10px; font-size: 15px;"><strong>${requestScope.LoginFailMessage }</strong></span></td>
 			</tr>			
 			<tr>
 				<th>비밀번호</th>				
@@ -78,7 +77,7 @@
 		<input type="button" class="btn" id="findId" onclick="findId()" value="아이디 찾기">
 		<input type="button" class="btn" id="findPwd" onclick="findPwd()" value="비밀번호 찾기">
 </div>
-
+<button type="button" id="test">test</button>
 
 <script>
 //  	$("#checkbox2").click(function(){
@@ -86,16 +85,21 @@
  			
 //  		}
 //  	});
-	
+
+	// 아이치 찾기 페이지로 이동
 	function findId(){
 		location.href="${cp}/findId";
 	}
+	
+	// 비밀번호 찾기 페이지로 이동
 	function findPwd(){
 		location.href="${cp}/findPwd";
 	}
+	
+	// form 데이터 전송
 	function subm(){
-		document.submitForm.submit();
-	}	
+		document.submitForm.submit();		
+	}
 </script>
 
 
