@@ -37,7 +37,7 @@
 	</definition>
 	
 	<definition name="admin/main.tiles" extends="admin-layout-tiles">
-		<put-attribute name="body" value="/WEB-INF/views/admin/test.jsp"/>
+		<put-attribute name="body" value="/WEB-INF/views/admin/main.jsp"/>
 		<put-attribute name="title" value="관리자 페이지" />
 		<put-attribute name="css" value="/WEB-INF/views/tiles/admin/main-css.jsp"/>
 		<put-attribute name="js" value="/WEB-INF/views/tiles/admin/main-js.jsp"/>

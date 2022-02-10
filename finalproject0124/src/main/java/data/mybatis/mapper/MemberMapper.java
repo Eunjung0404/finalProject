@@ -37,5 +37,7 @@ public interface MemberMapper {
 //	비밀번호 변경
 	int changePwd(MemberVo vo);
 	
+// 아이디와 일치하는 회원의 정보 가져오기
+	MemberVo getInfo(String mid);
 } 
 

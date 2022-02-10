@@ -24,13 +24,14 @@ public class SignupController {
 	public String singup(MemberVo vo, Model model) {
 		try {
 			service.addMember(vo);
-			System.out.println("vo:" + vo);
-			model.addAttribute("code", "회원 가입을 축하드립니다.");
+//			System.out.println("vo:" + vo);
+//			System.out.println("id:" + vo.getMid());
+//			model.addAttribute("id", vo.getMid());
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("code", "fail");
 		}
-		return "member/result.tiles";
+		return "member/login.tiles";
 	}
 
 }

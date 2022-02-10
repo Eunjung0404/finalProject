@@ -59,6 +59,7 @@ public class CustomUserDetail implements UserDetails {
 		return true;
 	}
 
+	// enabled 값이 0인 회원은 탈퇴
 	@Override
 	public boolean isEnabled() {
 		if (enabled.equals('0')) {

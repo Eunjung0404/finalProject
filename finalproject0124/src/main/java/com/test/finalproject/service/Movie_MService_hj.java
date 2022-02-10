@@ -22,7 +22,11 @@ public class Movie_MService_hj {
 		return mapper.detail(Moviecode);
 	}
 	
-	public List<Movie_MVo> selectAll(HashMap<String, Object> map){
-		return mapper.selectAll(map);
+	public List<Movie_MVo> selectAll(){
+		return mapper.selectAll();
+	}
+	
+	public List<Movie_MVo> searchlist(HashMap<String, Object> map){
+		return mapper.searchlist(map);
 	}
 }

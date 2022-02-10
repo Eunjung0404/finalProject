@@ -3,6 +3,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <script type="text/javascript" src="${cp }/resources/js/jquery-3.6.0.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>		<!-- daum post API -->
 
 <style type="text/css">
 h3 {
@@ -56,20 +57,19 @@ div .sign {
 			<th>아이디</th>
 			<td><input type="text" title="아이디" id="mid" name="mid" placeholder="아이디를 입력하세요." maxlength="12"/> 				
 <!-- 				<button type="button" id="bntIdCheck" onclick="idCheck()"></button> -->
-				<input type="button" onclick="idCheck()" value="중복검사">
+				<input type="button" value="중복검사"  id="idCheck">
 				<div class="valid">아이디를 입력하세요.(5~12글자, 영문 소문자, 숫자만 입력 가능)</div>
 			</td>
 			
 		</tr>
 		<tr>
 			<th>비밀번호</th>
-			<td><input type="password" title="비밀번호" name="mpwd" id="mpwd" placeholder="비밀번호를 입력하세요." >
+			<td><input type="password" title="비밀번호" name="mpwd" id="mpwd" maxlength="16" placeholder="비밀번호를 입력하세요." >
 				<div class="valid">비밀번호를 입력하세요.(8~16글자, 영문 대/소문자, 숫자를 모두 포함)</div></td>
 		<tr>
 		<tr>
 			<th>비밀번호 확인</th>
-			<td><input type="password" title="비밀번호 확인" id="pw_ck"
-				name="pw_ck" class="chk">
+			<td><input type="password" title="비밀번호 확인" id="pw_ck" name="pw_ck" class="chk" maxlength="16">
 				<div class="vaild" id="confirmMsg"></div></td>
 		</tr>
 		<tr>
@@ -90,26 +90,28 @@ div .sign {
 		<tr>
 			<th>성명</th>
 			<td><input type="text" class="chk" title="이름" id="mname"
-				name="mname" placeholder="이름을 입력하세요.">
+				name="mname" placeholder="이름을 입력하세요."></td>
 		</tr>
 		<tr>
 			<th>생년월일</th>
-			<td><input type="text" name="birth" placeholder="생년월일을 입력하세요."> <span id="delete"
-				style="color: red; position: relative; right: 25px; display: none;"><i
-					class="fas fa-times font-img"></i></span>
+			<td><input type="text" name="birth" placeholder="생년월일을 입력하세요."> 
 				<div class="valid">ex)1999-01-01</div></td>
 		</tr>
 		<tr>
 			<th>전화번호</th>
-			<td><input type="text" id="mphone" name="mphone" maxlength="11"
-				placeholder="-없이 숫자만 입력"> <!-- 					<input type="text" name="tel"> -->
+			<td><input type="text" id="mphone" name="mphone" maxlength="11" placeholder="-없이 숫자만 입력">
 			</td>
 		</tr>
 		<tr>
 			<th>주소</th>
-			<td><a class="btn-fill-s" onclick="daum_post()">우편번호 찾기</a> <input type="text" name="post" class="w-px60" readonly="readonly"> 
-			<input type="text" name="maddr" readonly="readonly" > 
-				<input type="text" name="maddr"></td>
+			<td>
+				<input type="text" id="postcode" placeholder="우편번호" readonly="readonly">
+				<input type="button" id="execPostCode" value="우편번호 찾기"><br>
+				<input type="text" id="roadAddress" placeholder="도로명주소" readonly="readonly">
+				<input type="text" id="jibunAddress" placeholder="지번주소" readonly="readonly">
+				<span id="guide" style="color:#999;display:none"></span><br>
+				<input type="text" id="detailAddress" placeholder="상세주소">
+				<input type="hidden" name="maddr" id="totalAddress">
 		</tr>
 	</table><br>
 
@@ -117,7 +119,7 @@ div .sign {
 	<hr>
 	<div class="sign">
 		<input type="button" value="회원가입" onclick="validation()" style="width: 200pt;" name="signup">
-		<input type="button" value="취소" id="cancle" onclick="cancle()" style="width: 200pt;" name="clncle">
+		<input type="button" value="취소" id="cancle"  style="width: 200pt;" name="clncle">
 	</div>
 <!-- 	<input type="button" value="테스트" id="testButton"> -->
 	
@@ -125,42 +127,88 @@ div .sign {
 	// 데이터 유효성 검사 정규식 표현
 	let regExpName = /^[가-힣]*$/;
 	let regExpPhone = /^\d{3}\d{3,4}\d{4}$/;
-// 	let regExpEmail = /^[A-Za-z0-9_\\.\\-]+@[A-Za-z0-9\\-]+\\.[A-Za-z0-9\\-]+$/;	
-// 	let email = $("#memail1").val();
-// 	let middle = $("#middle").text();
-// 	let address = $("#memail2").val();
+	let cnt = 0;
 	
-// 	$("#testButton").click(function(){
-// 		alert(email);		
-// 	});
+	$("#execPostCode").click(function(){
+		new daum.Postcode({
+            oncomplete: function(data) {
+                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                // 도로명 주소의 노출 규칙에 따라 주소를 표시한다.
+                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                var roadAddr = data.roadAddress; // 도로명 주소 변수
+               var extraRoadAddr = ''; // 참고 항목 변수
+
+                // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+                    extraRoadAddr += data.bname;
+                }
+                // 건물명이 있고, 공동주택일 경우 추가한다.
+                if(data.buildingName !== '' && data.apartment === 'Y'){
+                   extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+                }
+                // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                if(extraRoadAddr !== ''){
+                    extraRoadAddr = ' (' + extraRoadAddr + ')';
+                }
+
+                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                document.getElementById('postcode').value = data.zonecode;
+                document.getElementById("roadAddress").value = roadAddr;
+                document.getElementById("jibunAddress").value = data.jibunAddress;                
+              
+
+                var guideTextBox = document.getElementById("guide");
+                // 사용자가 '선택 안함'을 클릭한 경우, 예상 주소라는 표시를 해준다.
+                if(data.autoRoadAddress) {
+                    var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
+                    guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+                    guideTextBox.style.display = 'block';
+
+                } else if(data.autoJibunAddress) {
+                    var expJibunAddr = data.autoJibunAddress;
+                    guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
+                    guideTextBox.style.display = 'block';
+                } else {
+                    guideTextBox.innerHTML = '';
+                    guideTextBox.style.display = 'none';
+                }
+            }
+        }).open();
+	});
 	
 	// 아이디 중복검사
-	function idCheck(){
+	$("#idCheck").click(function(){
 		$.ajax({
 			url: "${cp}/idCheck?mid=" + document.getElementById("mid").value,
 			type: "get",			
 			dataType: 'json',
 			success: function(n){
+				cnt++;
 				if(document.getElementById("mid").value == "") {
 					alert("아이디를 입력해주세요.");
 					document.signupForm.mid.focus();
+					cnt = 0;
 					return false;
 				}
 				if(document.getElementById("mid").value.length < 5 || document.getElementById("mid").value.length > 12) {
 					alert("아이디는 5~12자 이내로 입력하세요.");
+					cnt = 0;
 					return false;
 				}
 				if(n == 1){
 					alert("이미 사용중인 아이디 입니다.");
 					document.signupForm.mid.select();
+					cnt = 0;
 					return false;
 				} else {
 					alert("사용 가능한 아이디 입니다.");	
 					document.signupForm.mpwd.focus();
 				}
-		}
+			}		
 		});
-	}	
+	});
 	
 	// 이메일 선택 입력
 	$('#memail2').change(function(){
@@ -182,17 +230,18 @@ div .sign {
     	function validation(){ 		
  		if (document.signupForm.mid.value == ""){
  			alert("아이디를 입력하세요.");
- 			document.signupForm.mid.focus(); 		
+ 			document.signupForm.mid.focus();  			
  			return false;
  		}
- 		if (document.signupForm.mid.value.length < 5 || document.signupForm.mid.value.length > 12) {
-			alert("아이디를 5~12자 이내로 입력하세요.");
-			document.signupForm.mid.select();
-			return false;
- 		}
+//  		if (document.signupForm.mid.value.length < 5 || document.signupForm.mid.value.length > 12) {
+// 			alert("아이디를 5~12자 이내로 입력하세요.");
+// 			document.signupForm.mid.select();			
+// 			return false;
+//  		}
  		if (document.signupForm.mpwd.value == ""){
 			alert("비밀번호를 입력하세요.");
  			document.signupForm.mpwd.focus();
+ 			cnt = 0;
  			return false;
  		}
  		if (document.signupForm.mpwd.value.length < 8 || document.signupForm.mpwd.value.length > 16) {
@@ -205,14 +254,16 @@ div .sign {
  			document.singupForm.pw_ck.select();
  			return false;
  		}
- 		if (email != "" && address != "") {
- 			$("#totalEmail").val($("#memail1").val() + $("#middle").text() + $("#memail2").val());
- 			return true;
- 		} else {
- 			alert("이메일 입력을 확인해주세요!");
- 			document.signupForm.memail.focus();
- 			return false;
+ 		if ($("#memail1").val() == "" && $("#memail2").val() == "") {
+ 			alert("이메일을 입력해주세요."); 	
+ 			document.signupForm.memail1.focus();
+ 			return false; 			
  		}
+ 		if ($("#mname").val() == ""){
+ 			alert("이름을 입력해주세요.");
+ 			document.signupForm.mname.focus();
+ 			return false;
+ 		} 	
  		if (!isNaN(document.signupForm.mname.value.substr(0,1))){
  			alert("이름은 숫자로 시작할 수 없습니다.");
  			document.signupForm.mname.select();
@@ -228,17 +279,38 @@ div .sign {
  			document.signupForm.mphone.focus();
  			return false;
  		}
-		document.signupForm.submit();
+ 		if (document.getElementById("postcode").value == ""){
+ 			alert("주소를 입력해주세요.");
+ 			return false;
+ 		}
+ 		if (document.getElementById("roadAddress").value == "" && document.getElementById("jibunAddress").value == ""){
+ 			alert("주소를 입력해주세요.");
+ 			return false;
+ 		} 		
+ 		if (document.getElementById("detailAddress").value == ""){
+ 			alert("상세주소를 입력해주세요.");
+ 			return false;
+ 		} 		
+ 		if (cnt == 0) {
+ 			alert("아이디 중복검사를 해주세요.");
+ 			return false;
+ 		}
+ 		$("#totalEmail").val($("#memail1").val() + $("#middle").text() + $("#memail2").val()); 
+ 		document.getElementById("totalAddress").value = document.getElementById("roadAddress").value + document.getElementById("jibunAddress").value + " " + document.getElementById("detailAddress").value;
+ 		
+ 		if (window.event.keyCode == 13){		// 엔터키
+			document.signupForm.submit(); 			
+ 		}
+		alert("회원이 되신 것을 축하합니다!");
  	} 
- 
 
- 	function cancle(){
+ 	$("#cancle").click(function(){
 		console.log(document.getElementById(cancle));
 		if (document.getElementById(cancle) == null){
 			alert("회원 가입이 취소되었습니다.");
-			location.href = "${cp}/";
+			location.href = "${cp}/"; 
 		}
-	} 	 
+ 	});
 </script>
 
 
