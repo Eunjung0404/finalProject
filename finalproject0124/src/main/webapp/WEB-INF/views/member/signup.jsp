@@ -128,6 +128,7 @@ div .sign {
 	let regExpName = /^[가-힣]*$/;
 	let regExpPhone = /^\d{3}\d{3,4}\d{4}$/;
 	let cnt = 0;
+	let sw = 0;
 	
 	$("#execPostCode").click(function(){
 		new daum.Postcode({
@@ -296,13 +297,15 @@ div .sign {
  			return false;
  		}
  		$("#totalEmail").val($("#memail1").val() + $("#middle").text() + $("#memail2").val()); 
- 		document.getElementById("totalAddress").value = document.getElementById("roadAddress").value + document.getElementById("jibunAddress").value + " " + document.getElementById("detailAddress").value;
  		
- 		if (window.event.keyCode == 13){		// 엔터키
-			document.signupForm.submit(); 			
- 		}
+//  		if (document.getElementById("roadAddress").value != ""){
+//  			 document.getElementById("roadAddress").value = 1;
+//  		} else 
+ 		
+ 		document.getElementById("totalAddress").value = document.getElementById("roadAddress").value +  document.getElementById("detailAddress").value;
+		document.signupForm.submit();
 		alert("회원이 되신 것을 축하합니다!");
- 	} 
+ 	}
 
  	$("#cancle").click(function(){
 		console.log(document.getElementById(cancle));

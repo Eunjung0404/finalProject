@@ -8,12 +8,14 @@
 
 	<!-- 암호화 객체 -->
 	<bean id="passwordEncoding"
-		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
-		
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />		
 	<bean id="customuserDetailService"
 		class="com.test.finalproject.security.CustomUserDetailService"/>
 	<bean id="loginSuccessHandler"
 		class="com.test.finalproject.security.LoginSuccessHandler"/>
+ 	<bean id="loginFailHandler" class="com.test.finalproject.security.LoginFailHandler"> 
+	
+	</bean> 
 
 	<!-- 요청에 따른 권한 설정 -->
 	<sec:http>
@@ -25,13 +27,16 @@
 			access="hasRole('ROLE_ADMIN')" />
 		<sec:intercept-url pattern="/**" access="permitAll" />
 		<sec:form-login login-page="/login" 
-			authentication-success-handler-ref="loginSuccessHandler"/>
+			authentication-success-handler-ref="loginSuccessHandler"
+			authentication-failure-handler-ref="loginFailHandler" 
+			/>
+			
 		<sec:logout logout-url="/logout" invalidate-session="true"
 			logout-success-url="/"></sec:logout>
-
+			
 		<!-- 자동 로그인 -->
 		<sec:remember-me data-source-ref="dataSource"
-			token-validity-seconds="604800" />
+			token-validity-seconds="180" />		<!-- 로그인 유지되는 시간(초) -->
 		<sec:csrf disabled="true" />
 
 	</sec:http>
