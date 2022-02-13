@@ -3,6 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="data.mybatis.mapper.AdminMapper">
+
 	<!-- 관리자 로그인 -->
 	<select id="login" 
 		parameterType="com.test.finalproject.form.AdminLoginForm" 
@@ -10,4 +11,46 @@
 	>
 		select * from admin_m where aid=#{aid} and apwd=#{apwd}
 	</select>
+	
+	<!-- 관리자 계정 리스트 -->
+	<select id="getList"
+		resultType="com.test.finalproject.form.AdminInfoSelect"
+	>
+		select aid, alevel, theatername, regdate, enabled 
+		from admin_m where aid!='admin001'
+	</select>
+	
+	<!-- 관리자 계정 생성 -->
+	<insert id="insert"
+		parameterType="com.test.finalproject.form.AdminInfoForm"
+	>
+		insert into admin_m values(
+			#{aid}, #{apwd}, #{alevel}, #{theatername}, sysdate, '1'
+		)
+	</insert>
+	
+	<!-- 관리자 정보 수정 -->
+	<update id="update"
+		parameterType="com.test.finalproject.form.AdminInfoForm"
+	>
+		update admin_m set 
+			apwd=#{apwd}, alevel=#{alevel}, theatername=#{theatername} 
+		where aid=#{aid}
+	</update>
+	
+	<!-- 관리자 계정 삭제 -->
+	<delete id="delete"
+		parameterType="string"
+	>
+		delete from admin_m where aid=#{aid}
+	</delete>
+	
+	<!-- 계정 비밀번호 조회 -->
+	<select id="getPassword"
+		parameterType="string"
+		resultType="string"
+	>
+		select apwd from admin_m where aid=#{aid}
+	</select>
+	
 </mapper>

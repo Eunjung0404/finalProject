@@ -18,7 +18,6 @@ public class AdminLoginController {
 	
 	@GetMapping("/login")
 	public String loginForm() {
-		log.info("관리자 로그인폼 요청");
 		return "admin/login.tiles";
 	}
 	
