@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <style>
 .nonePadding {
 	padding: 0px;
@@ -67,7 +69,6 @@
 	border: none;
 	background-color: #ED4C00;
 	color: white;
-	
 }
 
 .clickarea {
@@ -116,38 +117,37 @@
 	list-style: none;
 	padding: 0;
 }
-.screentime
-{
-    display: flex;
-    border: 1px solid gray;
-    width: 120px;
-    text-align: center;
-    height: 80px;
-    justify-content: center;
-    align-content: center;
-    align-items: center;
-    margin:10px;
-    
-    }
-.screentime:hover
-{
 
-    border:none;
-    background-color: #ED4C00;
+.screentime {
+	display: flex;
+	border: 1px solid gray;
+	width: 120px;
+	text-align: center;
+	height: 80px;
+	justify-content: center;
+	align-content: center;
+	align-items: center;
+	margin: 10px;
+}
+
+.screentime:hover {
+	border: none;
+	background-color: #ED4C00;
 	color: white;
+}
 
+#nextpage {
+	width: 100px;
+	height: 100px;
+	position: fixed;
+	top: 50%;
+	left: 92%;
+	opacity: 50%;
 }
-#nextpage
- {   width: 100px;
-    height: 100px;
-    position: fixed;
-    top: 50%;
-    left: 92%;
-    opacity: 50%;
-}
-#nextpage:hover
- {   background-color: #ED4C00;
-    opacity: 100%;
+
+#nextpage:hover {
+	background-color: #ED4C00;
+	opacity: 100%;
 }
 </style>
 
@@ -284,35 +284,54 @@
 </div>
 
 <div class="row centerPosition">
-	<div class="col-4 nonePadding"
-		style="border: 1px solid gray; height: 700px; margin-top: 50px;">
+	<div class="col-8 nonePadding"
+		style="border: 1px solid gray; height:300px; margin-top: 50px;">
 		영화정보>
-		<div id="movieposterinfo">
-			<img src="/finalproject/resources/images/icon/img.png"  alt="이미지없음"
-				style="width: 50%;height:100%" id="posterImg">
+		<div id="movieposterinfo" style="height:100%; width:100%; background-size: 5000px 5000px;">
+			<img src="/finalproject/resources/images/icon/img.png" alt="이미지없음"
+				style="width:150px;height:250px;" id="posterImg">
+		
 		</div>
-		<div id="movie-name">
-		영화를 선택해주세요
-		</div>
+		<div id="movie-name">영화를 선택해주세요</div>
 
 	</div>
-	<div class="col-5 nonePadding"
+</div>
+<div class="row centerPosition">
+	<div class="col-8 nonePadding"
 		style="border: 1px solid gray; height: 700px; margin-top: 50px;">
 		시간선택>
-		<div id="theater-info">
-		상영관과 날짜를 선택해주세요
-		</div>
+		<div id="theater-info">상영관과 날짜를 선택해주세요</div>
 
 	</div>
+
 </div>
-<div>
-<img src="/finalproject/resources/images/icon/forword.png"  alt="다음페이지"
-			 id="nextpage" onclick="">
-</div>
-<input type="hidden" value="" id="moviecode">
-<input type="hidden" value="" id="areaname">
-<input type="hidden" value="" id="theatercode">
-<input type="hidden" value="" id="screendate">
+
+<form:form method="post"
+	action="${pageContext.request.contextPath}/member/seat" id="nextform">
+	<!-- 영화코드 -->
+	<input type="hidden" value="" id="moviecode" name="moviecode">
+	<!-- 영화이름 -->
+	<input type="hidden" value="" id="moviename" name="moviename">
+	<!-- 지역코드 -->
+	<input type="hidden" value="" id="areaname" name="areaname">
+	<!--극장코드 -->
+	<input type="hidden" value="" id="theatercode" name="theatercode">
+	<!--극장이름 -->
+	<input type="hidden" value="" id="theatername" name="theatername">
+	<!-- 상영일 -->
+	<input type="hidden" value="" id="screendate" name="screendate">
+	<!-- 상영관코드 -->
+	<input type="hidden" value="" id="screencode" name="screencode">
+	<!-- 스케쥴코드 -->
+	<input type="hidden" value="" id="timecode" name="timecode">
+	<!-- 상영시간 -->
+	<input type="hidden" value="" id="screentime" name="screentime">
+
+	<button id="nextpage" onclick="nextpage()">
+		<img src="/finalproject/resources/images/icon/forword.png" alt="다음페이지">
+	</button>
+
+</form:form>
 <script type="text/javascript">
 	//달력정보들
 	var year = document.getElementById("text-year").innerText;
@@ -325,6 +344,7 @@
 	let moviecode = document.getElementById("moviecode");
 	//극장코드값 넘기는용
 	let theatercode = document.getElementById("theatercode");
+
 	//스케쥴코드값 넘기는용
 	let screendate = document.getElementById("screendate");
 	//극장정보 공간 불러오기
@@ -354,6 +374,9 @@
 		getTheaterName('서울', "");
 		getScreenTime("", "");
 
+	}
+	function nextpage() {
+		document.getElementById("nextform").submit();
 	}
 	function resetArea() {
 		let areas = document.getElementById("areas");
@@ -391,23 +414,32 @@
 							getTheaterCount(areas[i], event.target.id);
 
 						}
-						moviecode.value = event.target.id;
-	
+						//넘겨줄값 넣기
+						moviecode.value = event.target.id;//영화코드
+						let moviename = document.getElementById('moviename');
+						moviename.value = event.target.innerText;//영화이름
+
 						getTheaterName('서울', event.target.id);
-						//img그리기
+						//포스터img그리기
 						let posterdiv = document
 								.getElementById("movieposterinfo");
-						
+
 						let posterImg = document.getElementById('posterImg');
 						posterImg.src = getContextPath()
 								+ "/resources/images/movieupload/"
 								+ event.target.lastChild.value;
-
+						//벼경에 img깔기
+						posterdiv.style.backgroundImage=
+							//"linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0)),"
+							//+
+							"url("+getContextPath()
+							+ "/resources/images/movieupload/"
+							+ event.target.lastChild.value+")";
 						posterdiv.appendChild(posterImg);
 						//posterdiv.innerText=event.target.innerText;
 						let movienamediv = document
 								.getElementById("movie-name");
-						movienamediv.innerText=event.target.innerText;
+						movienamediv.innerText = event.target.innerText;
 					}
 					let movieimg = document.createElement('input');
 					movieimg.setAttribute("type", "hidden");
@@ -476,7 +508,8 @@
 							lis[i].lastChild.className = "";
 						}
 						event.target.className = "clickli";
-
+						let sn = document.getElementById("theatername");
+						sn.value = event.target.innerText;
 						theatercode.value = event.target.id;
 						let mc = document.getElementById("moviecode");
 						getScreenTime(mc.value, theatercode.value);
@@ -535,6 +568,7 @@
 		count = 0;
 
 	}
+
 	//현재달의달력그리기
 	function drawCerrentCalendar(year, month) {
 		let date = 0;
@@ -637,6 +671,8 @@
 				let json = JSON.parse(data);
 				//정보
 				let screendate = json.result.screendate;
+				//넘겨줄값 넣기
+
 				let td = tbody.getElementsByTagName("td");
 
 				//클레스이름 삭제...
@@ -716,7 +752,7 @@
 		drawprevCalendar(year, prevM - 1);
 	}
 
-	//상영관정보 가져오기~
+	//상영정보 가져오기~
 	function getScreeninfo(moviecode, theatercode, screendate) {
 		let xhr = new XMLHttpRequest();
 		if (moviecode == "")
@@ -733,14 +769,25 @@
 					div.removeChild(div.lastChild);
 				}
 				for (var i = 0; i < json.result.length; i++) {
-					let infodiv=document.createElement('div');
-					infodiv.innerText = json.result[i].starttime+"-"+json.result[i].endtime;
-					infodiv.className="screentime";
-					infodiv.onclick=function(event)
-					{
-					event.target.className+=" clickli";
+					let infodiv = document.createElement('div');
+					infodiv.innerText = json.result[i].starttime + "-"
+							+ json.result[i].endtime;
+					infodiv.id = json.result[i].timecode;
+					infodiv.className = "screentime";
+
+					infodiv.name = json.result[i].screencode;
+
+					//시간선택시
+					infodiv.onclick = function(event) {
+						event.target.className += " clickli";
+						let timecode = document.getElementById("timecode");
+						timecode.value = event.target.id;
+						let sc = document.getElementById("screencode");
+						let st = document.getElementById("screentime");
+						sc.value = event.target.name;
+						st.value = event.target.innerText;
 					}
-                    div.appendChild(infodiv);
+					div.appendChild(infodiv);
 				}
 
 			}

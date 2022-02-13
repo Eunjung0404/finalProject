@@ -107,25 +107,70 @@
 	color: #cbcbcb;
 	cursor: pointer;
 }
+
+.info {
+	display: flex;
+	justify-content: space-between;
+}
+
+#seatBlind {
+	background-color: black;
+	width: 66.6%;
+	position: absolute;
+	z-index: 1;
+	opacity: 80%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	justify-content: center;
+	display: none;
+}
 </style>
 <!-- 인원수 및 기타... -->
 <div class="row centerPosition">
 	<div class="col-8 nonePadding"
-		style="border: 1px solid gray; margin-top: 100px">
+		style="margin-top: 100px; font-size: 18px; font-weight: bold;">인원/좌석
+		선택</div>
+	<div class="col-8 nonePadding info" style="border: 1px solid gray;">
 
-		인원수 선택
-		<div id="people">성인:</div>
-		<div id="teenager">청소년:</div>
-		<div id="theater-info">상영관/시간 정보:</div>
-		<div id="seatname">
-			선택한 좌석번호:<span id="seat-info"></span>
+		<div style="padding-left: 50px; padding-top: 30px;">
+
+			<div>
+				<span style="font-weight: bold;">성&nbsp&nbsp인<span></span><span
+					id="people" style="padding-left: 50px;"></span>
+			</div>
+			<div style="padding-top: 5px;">
+				<span style="font-weight: bold;">청소년&nbsp</span><span id="teenager"
+					style="padding-left: 39.5px;"></span>
+			</div>
+		</div>
+		<div id="theater-info"
+			style="padding-top: 30px; padding-bottom: 30px;">
+			<span style="font-weight: bold;">상영관/시간 정보</span><br>
+			<div style="color: gray">
+				<span>${theatername }</span><br> <span>${screendate }</span> <span>${screentime }</span><input
+					type="hidden" value="${screencode }" id="screencode"> <input
+					type="hidden" value="${timecode }" id="timecode">
+			</div>
+		</div>
+		<div id="seatname"
+			style="padding-right: 250px; padding-top: 30px; width: 400px;">
+			<span style="font-weight: bold;">선택한 좌석번호</span><br> <span
+				style="color: gray;" id="seat-info"></span>
 		</div>
 	</div>
 </div>
 <!-- 좌석 -->
 <div class="row centerPosition">
 	<div class="col-8 nonePadding">
+
 		<div id="seat-area" class="centerTopPosition">
+			<div id="seatBlind">
+				<img src="/finalproject/resources/images/icon/arrowUP.png" alt="화살표"><br>
+				<span style="color: white;">인원을 먼저 선택해주세요</span>
+			</div>
 			<img src="/finalproject/resources/images/icon/screen.jpg" alt="스크린"
 				style="width: 70%;">
 			<div id="seat" style="width: 100%; padding: 50px;"></div>
@@ -134,19 +179,28 @@
 </div>
 <!-- 결제정보 -->
 <div class="row centerPosition">
-	<div class="col-8 nonePadding">...</div>
+	<div class="col-8 nonePadding" style="border: 1px solid gray;">
+		<span style="font-size:18px;font-weight:bold;">${moviename}</span> <span>${theatername }</span><br>
+		<span>${screendate }</span><span>${screentime}</span>
+	</div>
 </div>
 <script type="text/javascript">
+	let peopelcount = 0;
+	let teencount = 0;
+	let count = 0;
+
 	window.onload = function() {
-		createPPbtn("people", "teenager");
-		createPPbtn("teenager", "people");
-		createSeat(1, 1);
+		let timecode = document.getElementById("timecode").value;
+		let screencode = document.getElementById("screencode").value;
+		createPPbtn("people", "teenager", peopelcount);
+		createPPbtn("teenager", "people", teencount);
+		createSeat(screencode, timecode);
 		//setEvent();
 	}
-	let count = 0;
+
 	let selected = false;
-	//인원수
-	function createPPbtn(divname, otherdivname) {
+	//인원수선택 버튼 생성
+	function createPPbtn(divname, otherdivname, c) {
 		let div = document.getElementById(divname);
 		for (var i = 0; i < 7; i++) {
 			let btn = document.createElement("button");
@@ -157,10 +211,23 @@
 				btn.className = divname;
 			}
 			//클릭함수 추가..
-			btn.onclick = function(event) {
+			btn.onclick = function(event, c) {
 
 				let seatArea = document.getElementById("seat");
 				let divs = seatArea.getElementsByTagName("div");
+				let nowdiv = document.getElementById(divname);
+				let nowdivs = nowdiv.getElementsByTagName("button")
+				let otherdiv = document.getElementById(otherdivname);
+				let otherdivs = otherdiv.getElementsByTagName("button");
+				if (c >= 6) {
+					c = 0;
+				}
+				for (var s = 0; s < otherdivs.length; s++) {
+
+					//otherdivs[s].className = "";
+					otherdivs[s].disabled = false;
+
+				}
 				//선택된 좌석이 있는경우 초기화여부 묻기
 				if (selected) {
 					let result = confirm("선택된좌석이 있습니다 초기화하시겠습니까?");
@@ -168,19 +235,38 @@
 						let seatinfo = document.getElementById("seat-info");
 						seatinfo.innerHTML = "";
 						for (var z = 0; z < divs.length; z++) {
+							//선택된 좌석인경우 css초기화
 							if (divs[z].classList.contains('select-seat')) {
 
 								divs[z].classList.remove('select-seat');
 
 							}
-
-							else if (!divs[z].classList.contains('blank')&&!divs[z].classList.contains('book')) {
+							//공백이 아닌경우 css초기화
+							else if (!divs[z].classList.contains('blank')
+									&& !divs[z].classList.contains('book')) {
 								divs[z].classList.remove('cant-select');
 								divs[z].className = 'seat-list';
 								divs[z].innerHTML = divs[z].id.substr(1, 2);
 							}
 						}
+						//인원수버튼 활성화
+						for (var s = 0; s < nowdivs.length; s++) {
+
+							nowdivs[s].className = "";
+							nowdivs[s].disabled = false;
+
+						}
+						nowdivs[0].className = divname;
+						//그 외 인원수버튼 활성화
+						for (var s = 0; s < otherdivs.length; s++) {
+
+							otherdivs[s].className = "";
+							otherdivs[s].disabled = false;
+
+						}
+						otherdivs[0].className = otherdivname;
 						selected = false;
+						c = 0;
 
 					} else {
 						return;
@@ -193,17 +279,18 @@
 					clickbtn[j].className = '';
 
 				}
-				count += parseInt(event.target.innerText);
-				let otherdiv = document.getElementById(otherdivname);
-				let otherdivs = otherdiv.getElementsByTagName("button");
-				console.log(otherdiv);
+				c = parseInt(event.target.innerText);
+				//console.log(otherdiv);
 				for (var s = 0; s < otherdivs.length; s++) {
+
 					if (count + parseInt(otherdivs[s].innerText) > 6) {
 						otherdivs[s].disabled = true;
+
 						console.log("들어왔다.");
 					}
 
 				}
+				count += c;
 				event.target.className = divname;
 				console.log(count);
 				event.target.disabled = true;
@@ -225,10 +312,10 @@
 				let row = json.row;
 				let col = json.col;
 				let movetop = 20;
+				let seatArea = document.getElementById("seat");
 				for (var i = 0; i < row; i++) {
 
 					let moveleft = 28;
-					let seatArea = document.getElementById("seat");
 
 					let span = document.createElement("span");
 					span.innerText = json.list[seatcount].CODE.substr(0, 1);
@@ -248,14 +335,12 @@
 							div.id = json.list[seatcount].CODE;
 							if (j + 1 < 10) {
 								div.innerText = div.id.substr(1, 2);
-								
+
 							} else {
 								div.innerText = div.id.substr(1, 2);
-								
 
 							}
-							 
-							
+
 							//예약상태일때
 							if (json.list[seatcount].BOOKINGSTATE == 1) {
 								div.className = 'book';
@@ -279,6 +364,10 @@
 					movetop += 20;
 					setEvent();
 				}
+				let seatBlind = document.getElementById("seatBlind");
+				seatBlind.style.height = document.getElementById("seat-area").clientHeight
+						+ "px";
+				//console.log(seatArea.clientHeight);
 			}
 
 		}
@@ -297,7 +386,7 @@
 					console.log('좌석명 ' + event.target.id);
 					event.target.className += ' select-seat';
 					let seatinfo = document.getElementById("seat-info");
-					seatinfo.innerHTML += " "+event.target.id;
+					seatinfo.innerHTML += " " + event.target.id;
 					selected = true;
 					count--;
 					if (count == 0) {
@@ -306,7 +395,8 @@
 
 						for (var z = 0; z < divs.length; z++) {
 							if (!divs[z].classList.contains('select-seat')
-									&& !divs[z].classList.contains('blank')&&!divs[z].classList.contains('book')) {
+									&& !divs[z].classList.contains('blank')
+									&& !divs[z].classList.contains('book')) {
 
 								divs[z].className = 'cant-select';
 								divs[z].innerHTML = "";
