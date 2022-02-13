@@ -47,8 +47,8 @@
 	<mybatis-spring:scan
 		base-package="data.mybatis.mapper" />
 
-	<context:component-scan
-		base-package="com.test.finalproject.service" />
+	<!--<context:component-scan
+		base-package="com.test.finalproject.service" /> -->
 
 	<context:component-scan
 		base-package="com.test.finalproject">
