@@ -15,7 +15,6 @@
 		<th>글번호</th>
 		<th>작성자</th>
 		<th>제목</th>
-		<th>내용</th>
 		<th>작성일</th>
 	</tr>
 	<c:forEach var="vo" items="${list }">
@@ -23,7 +22,6 @@
 			<td>${vo.qnacode }</td>
 			<td>${vo.mid }</td>
 			<td><a href="${cp }/qna/detail?num=${vo.qnacode}">${vo.title }</a></td>
-			<td>${vo.content }</td>
 			<td>${vo.regdate }</td>
 		</tr>
 	</c:forEach>

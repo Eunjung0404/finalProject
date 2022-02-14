@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.test.finalproject.service.QnaService;
 import com.test.finalproject.vo.QnaVo;
@@ -14,7 +15,12 @@ public class QnaDetailController {
 	private QnaService service;
 
 	@GetMapping("/qna/detail")
-	public String detail(int num, Model model) {
+	public String passwordform() {
+		
+		return "qna/password.tiles";
+	}
+	@PostMapping("/qna/detail")
+	public String detail(int num, int pwd, Model model) {
 		QnaVo vo = service.detail(num);
 		String content = vo.getContent().replaceAll("\n", "<br>");
 		vo.setContent(content);
