@@ -1,5 +1,6 @@
 package com.test.finalproject.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +16,22 @@ import com.test.finalproject.vo.ReviewVo;
 public class ReviewListController {
 	@Autowired private ReviewService service;
 	
-	@GetMapping(value = "/movie/moviedetailpage", produces = {MediaType.APPLICATION_JSON_VALUE})
-	public String list(Model model) {
-		List<ReviewVo> reviewlist=service.selectAll();
-		model.addAttribute("reviewlist", reviewlist);
+	@GetMapping(value = "/review/list", produces = {MediaType.APPLICATION_JSON_VALUE})
+	public HashMap<String, Object> reviewlist(Model model) {
 		
-		return "movie/moviedetailpage.tiles"; 
+		List<ReviewVo> reviewlist=service.selectAll();
+//		model.addAttribute("reviewlist", reviewlist);
+
+		HashMap<String, Object> map=new HashMap<String, Object>();
+		map.put("list", reviewlist);
+		return map;
 	}
+//
+//	public String list(Model model) {
+//
+//		List<ReviewVo> reviewlist = service.selectAll();
+//		model.addAttribute("reviewlist", reviewlist);
+//
+//		return "movie/moviedetailpage.tiles";
+//	}
 }
