@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.test.finalproject.error.exception.AdminCheckException;
+import com.test.finalproject.error.exception.AdminLevelCheckException;
 import com.test.finalproject.error.exception.FormBindException;
 import com.test.finalproject.error.exception.NoSearchSqlException;
 import com.test.finalproject.form.ResultForm;
@@ -35,6 +36,13 @@ public class GlobalAPIExceptionAdvice {
 	@ExceptionHandler(AdminCheckException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public ResultForm adminCheck(AdminCheckException ex) {
+		log.error(ex.getMessage());
+		return new ResultForm("fail", ex.getMessage());
+	}
+	
+	@ExceptionHandler(AdminLevelCheckException.class)
+	@ResponseStatus(HttpStatus.FORBIDDEN)
+	public ResultForm adminLevelCheck(AdminLevelCheckException ex) {
 		log.error(ex.getMessage());
 		return new ResultForm("fail", ex.getMessage());
 	}
