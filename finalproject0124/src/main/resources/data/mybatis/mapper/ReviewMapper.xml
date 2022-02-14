@@ -3,18 +3,17 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="data.mybatis.mapper.ReviewMapper">
-	<insert id="insertcommets" parameterType="com.test.finalproject.vo.ReviewVo">
+	<insert id="insertcomments" parameterType="com.test.finalproject.vo.ReviewVo">
 		insert into movie_review values(seq_movie_review.nextval, #{moviecode}, #{mid}, #{score}, #{comments}, sysdate)
 	</insert>
 
 	<!-- 전체 리뷰 목록 -->
-	<select id="selectAll" parameterType="hashmap" resultType="com.test.finalproject.vo.ReviewVo">
-		<![CDATA[
-			select * from
-			(
-				select aa.*. rownum rnum from(select * from movie_review where moviecode=#{moviecode} order by reviewcode desc)aa
-			)
-			where rnum>=#{startRowNum} and rnum<=#{endRowNum}
-		]]>
+	<select id="selectAll" resultType="com.test.finalproject.vo.ReviewVo">
+		select * from movie_review
 	</select>
+	
+	<!-- 리뷰목록 높은순서부터 출력하기
+	select * from movie_review
+	where moviecode=2
+	order by reviewcode desc; -->
 </mapper>

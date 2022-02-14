@@ -41,7 +41,7 @@ public class MovieImgInsertController {
 								//List<MultipartFile> photofile,
 								Model model2) {
 		List<MultipartFile> filelist=request.getFiles("photofile");
-		String path=sc.getRealPath("/resources/images/movieupload");
+		String path=sc.getRealPath("/resources/images/stillcutupload");
 		System.out.println(path);
 		
 		for(MultipartFile mf:filelist) {
@@ -50,7 +50,7 @@ public class MovieImgInsertController {
 			//String sateFile=path + System.currentTimeMillis() + imgname; //중복이름 방지
 		
 		try {
-			mf.transferTo(new File(imgname));
+			mf.transferTo(new File(path + "\\" + imgname));
 			MovieImgVo vo=new MovieImgVo(0, moviecode, imgname); //시퀀스 사용
 			service.movieimginsert(vo);
 			model2.addAttribute("msg", "success");

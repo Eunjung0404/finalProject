@@ -16,9 +16,11 @@ public class ReviewinsertController {
 	
 	@GetMapping(value="/review/insert", produces = {MediaType.APPLICATION_JSON_VALUE})
 	public HashMap<String, Object> insertcomments(ReviewVo vo){
+		//System.out.println("...............");
 		HashMap<String, Object> map=new HashMap<String, Object>();
 		try {
-			service.insertcomments(vo);
+			int n=service.insertcomments(vo);
+			//System.out.println("n:" + n);
 			map.put("msg", "success");
 		}catch(Exception e) {
 			e.printStackTrace();

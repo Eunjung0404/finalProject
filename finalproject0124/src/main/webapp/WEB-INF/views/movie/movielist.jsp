@@ -7,14 +7,14 @@
 <meta charset="UTF-8">
 <title>영화 리스트 목록</title>
 <style type="text/css">
-	table{
-	border:solid 1px #BDBDBD; width:700px; margin:auto; margin-top:40px;
+	tr th td{
+		border:solid 1px #BDBDBD;
 	}
 </style>
 </head>
 <body>
 <h1>영화 목록 리스트</h1>
-<table border="1" width="700">
+<table style="border:solid 2px #BDBDBD; width:700px; margin:auto; margin-top:40px;">
 	<tr>
 		<th>영화코드</th><th>영화이름</th><th>대표이미지</th><th>영화상태</th><th>스틸컷 추가</th>
 	</tr>

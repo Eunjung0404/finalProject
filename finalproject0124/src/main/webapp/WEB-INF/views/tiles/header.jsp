@@ -5,6 +5,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Sharp|Material+Icons+Two+Tone|Material+Icons+Outlined"
     rel="stylesheet">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <style>
 #drop {
 	display: none;
@@ -28,7 +29,6 @@
 	display: block;
 }
 
-<!-- 검색창 -->
 </style>
 <script type="text/javascript" src="${cp }/resources/js/jquery-3.6.0.js"></script>
 <nav class="py-1 bg-dark ">
@@ -127,5 +127,5 @@
 		</div>
 </header>
 <script type="text/javascript">
-
+	
 </script>
