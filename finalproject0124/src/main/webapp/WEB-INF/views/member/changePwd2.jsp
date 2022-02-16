@@ -2,8 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<!-- 마이페이지에서 비밀번호 변경할 때 요청되는 페이지 -->
 
+<!-- 비밀번호 찾기 했을 때 요청되는 페이지 -->
 <style>
 	div .content {
 		padding-left: auto;
@@ -78,14 +78,9 @@
 <p>•현재 비밀번호를 입력한 후 새로 사용할 비밀번호를 입력하세요.</p>
 
 <form:form class="changePwdForm" name="changePwdForm"  id="changePwdForm">
+	<input type="hidden" name="mpwdNow" id="mpwdNow"  value="${mpwd }">
 	<table class="board-form">
 		<tbody>
-			<tr>
-				<th scope="row">
-					<label for="pwnow">현재 비밀번호</label>
-				</th>
-				<td><input type="password" name="mpwdNow" id="mpwdNow"  value="${getMpwd }"></td>
-			</tr>
 			<tr>
 				<th scope="row">
 					<label for="pwnew">새 비밀번호</label>

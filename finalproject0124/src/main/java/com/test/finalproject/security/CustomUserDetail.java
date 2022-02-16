@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,7 +18,7 @@ public class CustomUserDetail implements UserDetails {
 	// DB에서 가져와 저장
 	private String mid;
 	private String mpwd;
-	private String enabled;
+	private String enabled;	
 	
 	// 가져 온 데이터 리스트로 담기
 	private List<AuthoritiesVo> authList;
@@ -62,7 +66,7 @@ public class CustomUserDetail implements UserDetails {
 	// enabled 값이 0인 회원은 로그인 불가!
 	@Override
 	public boolean isEnabled() {
-		if (enabled.equals('0')) {
+		if (enabled.equals("0")) {
 			return false;
 		} else {
 			return true;

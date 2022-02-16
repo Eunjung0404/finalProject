@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -63,17 +64,17 @@ public class MemberService {
 	}
 //	이름과 이메일로 아이디 찾기
 	public MemberVo findId2(HashMap<String, Object> map) {
-		return mapper.findId(map);
-	}	
-	
-//	회원 탈퇴
-	public MemberVo withdrawal(String mname) {
-		return mapper.withdrawal(mname);
+		return mapper.findId2(map);
 	}	
 
-//	비밀번호 찾기 이메일 인증
-	public MemberVo selectMember(String mname, String memail) {
-		return mapper.selectMember(mname, memail);
+//	비밀번호 찾기 이메일 인증(아이디, 이메일)
+	public MemberVo findPwd(HashMap<String, Object> map) {
+		return mapper.findPwd(map);
+	}
+	
+//	비밀번호 찾기 이메일 인증(아이디, 전화번호)
+	public MemberVo findPwd2(HashMap<String, Object> map) {
+		return mapper.findPwd2(map);
 	}
 	
 //	비밀번호 변경(새로운 비밀번호를 암호화 하여 저장)
@@ -88,4 +89,8 @@ public class MemberService {
 		return mapper.getInfo(mid);
 	}
 
+//	회원탈퇴
+	public int withdrawal(String mid) {
+		return mapper.withdrawal(mid);
+	}
 }

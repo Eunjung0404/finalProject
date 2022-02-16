@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.test.finalproject.error.exception.AdminCheckException;
+import com.test.finalproject.error.exception.AdminLevelCheckException;
 import com.test.finalproject.form.ResultForm;
 
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +31,7 @@ public class GlobalExceptionAdvice {
 		return "error/error.tiles";
 	}
 	
-	@ExceptionHandler(AccessDeniedException.class)
+	@ExceptionHandler({AccessDeniedException.class, AdminLevelCheckException.class})
 	public String denied(Exception ex, Model model) {
 		log.error(ex.getMessage()+"##");
 		model.addAttribute("result", new ResultForm("403","접근 권한이 없습니다"));

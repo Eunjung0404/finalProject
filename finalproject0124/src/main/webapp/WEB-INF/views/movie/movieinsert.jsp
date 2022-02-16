@@ -19,7 +19,7 @@
 <body>
 <div id="movieinsertform">
 	<h2>영화 업로드</h2>
-	<form method="post" action="${cp }/movie/movieinsert?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
+	<form method="post" action="${cp }/admin/movie/movieinsert?${_csrf.parameterName}=${_csrf.token}" enctype="multipart/form-data">
 		<input placeholder="영화이름" type="text" name="moviename"><br>
 		<input placeholder="상영시간" type="text" name="runtime"><br>
 		<input placeholder="감독" type="text" name="director"><br>

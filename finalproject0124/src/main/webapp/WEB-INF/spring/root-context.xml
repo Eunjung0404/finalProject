@@ -3,9 +3,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 
 	<bean id="dataSource"
 		class="org.apache.commons.dbcp2.BasicDataSource"
@@ -28,8 +30,8 @@
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.naver.com"></property>
 		<property name="port" value="465"></property>
-		<property name="username" value="username"></property>	<!-- 발송할 이메일(현재 네이버로 설정되어 있음) 계정 -->
-		<property name="password" value="password"></property>		<!-- 발송할 이메일 비밀번호 -->
+		<property name="username" value="userEmail"></property>	<!-- 발송할 이메일(현재 네이버로 설정되어 있음) 계정 -->
+		<property name="password" value="userEmailPassword"></property>		<!-- 발송할 이메일 비밀번호 -->
 		<property name="defaultEncoding" value="utf-8"></property>
 		<property name="javaMailProperties">
 			<props>
@@ -55,5 +57,7 @@
 		<context:exclude-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
+	
+	<aop:aspectj-autoproxy></aop:aspectj-autoproxy>
 
 </beans>

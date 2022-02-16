@@ -2,7 +2,11 @@ package com.test.finalproject.controller;
 
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -12,6 +16,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.test.finalproject.service.MemberService;
@@ -23,6 +30,10 @@ import oracle.jdbc.proxy.annotation.Post;
 public class FindController {
 	@Autowired
 	private MemberService service;
+	@Autowired
+	private HttpServletRequest request;
+	@Autowired
+	private HttpSession session;
 
 	@GetMapping("/findId")
 	public String findIdForm() {
@@ -33,27 +44,74 @@ public class FindController {
 		return "member/findPwd.tiles";
 	}
 	
-	@PostMapping("/findId")
-	public String findId(String mname, String mphone, Model model) {
+	@RequestMapping(value = "/findId", method=RequestMethod.POST)
+	@ResponseBody
+	public MemberVo findId(String mname) {
+		String mphone = request.getParameter("mphone");
+		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("mname", mname);
 		map.put("mphone", mphone);
 		MemberVo vo = service.findId(map);
-		model.addAttribute("vo", vo);
 		
-		return "member/result";
+		session.setAttribute("mid", vo.getMid());
+		
+		return vo;
 	}
-	@PostMapping("/findId2")
-	public String findId2(String mname, String memail, Model model) {
+	
+	@RequestMapping(value = "/findId2", method=RequestMethod.POST)
+	@ResponseBody
+	public MemberVo findId2(String mname) {
+		String memail = request.getParameter("memail");
+		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("mname", mname);
 		map.put("memail", memail);
-		MemberVo vo = service.findId(map);
-		model.addAttribute("vo", vo);
-		System.out.println("a: " + mname);
-		System.out.println("b: " + memail);
 		
-		return "member/result";
+		MemberVo vo = service.findId2(map);
+		
+//		System.out.println("내가 입력한 정보: " + map);
+//		System.out.println("내 정보: " + vo);
+		
+		session.setAttribute("getMid", vo.getMid());
+		
+		return vo;
+	}
+	
+	@RequestMapping(value = "/findPwd", method=RequestMethod.POST)
+	@ResponseBody
+	public MemberVo findPwd(String mid) {
+		String memail = request.getParameter("memail");
+		
+//		System.out.println("아이디 받았는가?" + mid);
+//		System.out.println("이메일 받았는가?" + memail);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("mid", mid);
+		map.put("memail", memail);
+//		System.out.println("맵에 잘 담겼는가?" + map);
+		MemberVo vo = service.findPwd(map);
+		
+		return vo;
+	}
+	
+	@RequestMapping(value = "/findPwd2", method=RequestMethod.POST)
+	@ResponseBody
+	public MemberVo findPwd2(String mid) {
+		String mphone = request.getParameter("mphone");
+		
+//		System.out.println("아이디 받았는가?" + mid);
+//		System.out.println("전화번호 받았는가?" + mphone);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("mid", mid);
+		map.put("mphone", mphone);
+	
+		MemberVo vo = service.findPwd2(map);
+		
+		session.setAttribute("getMpwd", vo.getMpwd());
+		
+		return vo;
 	}
 
 

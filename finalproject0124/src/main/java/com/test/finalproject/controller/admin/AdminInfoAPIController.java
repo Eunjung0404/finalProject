@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.test.finalproject.aop.annotation.AdminLevel;
 import com.test.finalproject.error.exception.FormBindException;
 import com.test.finalproject.form.AdminInfoForm;
 import com.test.finalproject.form.AdminInfoSelect;
@@ -31,11 +32,13 @@ public class AdminInfoAPIController {
 	private final AdminService service;
 	
 	@GetMapping("/list")
+	@AdminLevel(1)
 	public List<AdminInfoSelect> getList() {
 		return service.getList();
 	}
 	
 	@PostMapping
+	@AdminLevel(1)
 	public ResultForm insert(
 				@Valid @RequestBody AdminInfoForm form,
 				BindingResult bindingResult
@@ -48,6 +51,7 @@ public class AdminInfoAPIController {
 	}
 	
 	@PutMapping
+	@AdminLevel(1)
 	public ResultForm update(
 				@Valid @RequestBody AdminInfoForm form,
 				BindingResult bindingResult
@@ -60,12 +64,14 @@ public class AdminInfoAPIController {
 	}
 	
 	@DeleteMapping("/{aid}")
+	@AdminLevel(1)
 	public ResultForm delete(@PathVariable String aid) {
 		service.delete(aid);
 		return new ResultForm("success", "삭제 되었습니다.");
 	}
 	
 	@GetMapping("/show/{aid}")
+	@AdminLevel(1)
 	public ResultForm show(@PathVariable String aid) {
 		String apwd = service.getPassword(aid);
 		return new ResultForm("success", apwd);

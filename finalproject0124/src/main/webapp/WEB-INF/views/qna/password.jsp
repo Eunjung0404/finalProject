@@ -8,11 +8,14 @@
 </head>
 <body>
 	<h2>비밀번호 입력</h2>
-	<table>
-		<tr>
-			<th><label for="pwd">비밀번호</label></th>
-			<td><input type="password" name="pwd" id="pwd"><input type="submit" value="확인"></td>
-		</tr>
-	</table>
+	<form action="${pageContext.request.contextPath }/qna/detail" method="post">
+		<table>
+			<tr>
+				<th><label for="pwd">비밀번호</label></th>
+				<td><input type="password" name="pwd" id="pwd">
+				<input type="submit" value="확인"></td>
+			</tr>
+		</table>
+	</form>
 </body>
 </html>

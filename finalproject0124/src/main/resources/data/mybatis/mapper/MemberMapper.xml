@@ -50,13 +50,6 @@
 		where mname=#{mname} and memail=#{memail}
 	</select>
 
-	<!-- 회원 탈퇴 -->
-	<update id="withdrawal" parameterType="com.test.finalproject.vo.MemberVo">
-		update * from member_m
-		set mstate=2
-		where mname=#{mname}
-	</update>
-
 	<!-- 새로운 비밀번호 입력(비밀번호 변경) -->
 	<update id="changePwd" parameterType="com.test.finalproject.vo.MemberVo">
 		update member_m
@@ -64,11 +57,18 @@
 		where memail=#{memail}
 	</update>
 
-	<!-- 회원 정보 조회 -->
-	<select id="selectMember" parameterType="String" resultType="com.test.finalproject.vo.MemberVo">
+	<!-- 비밀번호 찾기(아이디와 이메일) -->
+	<select id="findPwd" parameterType="hashMap" resultType="com.test.finalproject.vo.MemberVo">
 		select *
 		from member_m
-		where mname=#{mname} and memail=#{memail}
+		where mid=#{mid} and memail=#{memail}
+	</select>
+	
+	<!-- 비밀번호 찾기(아이디와 전화번호) -->
+	<select id="findPwd2" parameterType="hashMap" resultType="com.test.finalproject.vo.MemberVo">
+		select *
+		from member_m
+		where mid=#{mid} and mphone=#{mphone}
 	</select>
 
 	<!-- 아이디와 일치하는 회원 정보 가져오기 -->
@@ -77,5 +77,13 @@
 		from member_m
 		where mid=#{mid}
 	</select>
+
+	<!-- 회원탈퇴 -->
+	<update id="withdrawal" parameterType="string" >
+		update member_m
+		set enabled = 0
+		where mid = #{mid}
+	</update>
+		
 		
 </mapper>

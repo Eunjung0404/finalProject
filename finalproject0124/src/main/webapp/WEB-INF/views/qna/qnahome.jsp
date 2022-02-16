@@ -32,8 +32,8 @@
 
 #title {
 	position: absolute;
-	right: 46%;
-	top: 20%;
+	right: 44%;
+	top: 24%;
 }
 
 #maindiv {
@@ -154,35 +154,58 @@
 }
 
 #div3 {
-	margin-top: 70px;
+	margin-top: 100px;
 }
 
-#div3 ul {
+#notelist ul {
 	border: 1px solid #D5D5D5;
 	background-color: white;
 	margin-top: 30px;
 	padding-top: 20px;
 	list-style-type: none;
-	width: 1440px;
+	width: 680px;
 	height: 70px;
 	color: #4C4C4C;
 }
 
-#div3 span {
+#notelist span {
 	position: absolute;
-	left: 94%;
+	left: 50%;
+	color: black;
+}
+
+#qnalist {
+	position: absolute;
+	right: 70px;
+	top: 810px;
+}
+
+#qnalist ul {
+	border: 1px solid #D5D5D5;
+	background-color: white;
+	margin-top: 30px;
+	padding-top: 20px;
+	list-style-type: none;
+	width: 680px;
+	height: 70px;
+	color: #4C4C4C;
+}
+
+#qnalist span {
+	position: relative;
+	left: 540px;
 	color: black;
 }
 
 #div4 {
-	padding-top: 40px;
+	position: relative;
+	margin-top: 100px;
+	margin-bottom: 60px;
 }
 
 #div4-1 {
 	width: 1300px;
 	height: 150px;
-	padding-top: 25px;
-	padding-right: 20px;
 	font-size: 20px;
 	margin-left: 50px;
 }
@@ -198,7 +221,7 @@
 }
 
 #d4a1 {
-	margin-left: 40px;
+	margin-left: 220px;
 	width: 220px;
 	height: 100px;
 	text-align: center;
@@ -207,7 +230,7 @@
 
 #d4a2 {
 	position: relative;
-	left: 350px;
+	left: 440px;
 	bottom: 100px;
 	width: 220px;
 	height: 100px;
@@ -217,7 +240,7 @@
 
 #d4a3 {
 	position: relative;
-	left: 670px;
+	left: 660px;
 	bottom: 200px;
 	width: 220px;
 	height: 100px;
@@ -227,7 +250,7 @@
 
 #d4a4 {
 	position: relative;
-	left: 980px;
+	left: 880px;
 	bottom: 300px;
 	width: 220px;
 	height: 100px;
@@ -348,25 +371,48 @@
 				</div>
 			</div>
 			<div id="div3">
-				<h3>
-					공지사항<a href="#"><span class="material-icons">
-							arrow_forward_ios </span></a>
-				</h3>
-				<ul>
-					<li>[공지]</li>
-				</ul>
-				<ul>
-					<li>[공지]</li>
-				</ul>
-				<ul>
-					<li>[공지]</li>
-				</ul>
-				<ul>
-					<li>[공지]</li>
-				</ul>
-				<ul>
-					<li>[공지]</li>
-				</ul>
+				<div id="notelist">
+					<h3>
+						공지사항<a href="#"><span class="material-icons">
+								arrow_forward_ios </span></a>
+					</h3>
+					<ul>
+						<li>[공지]</li>
+					</ul>
+					<ul>
+						<li>[공지]</li>
+					</ul>
+					<ul>
+						<li>[공지]</li>
+					</ul>
+					<ul>
+						<li>[공지]</li>
+					</ul>
+					<ul>
+						<li>[공지]</li>
+					</ul>
+				</div>
+				<div id="qnalist">
+					<h3>
+						문의내역<a href="${cp }/qna/list"><span class="material-icons">
+								arrow_forward_ios </span></a>
+					</h3>
+					<ul>
+						<li>문의제목</li>
+					</ul>
+					<ul>
+						<li>문의제목</li>
+					</ul>
+					<ul>
+						<li>문의제목</li>
+					</ul>
+					<ul>
+						<li>문의제목</li>
+					</ul>
+					<ul>
+						<li>문의제목</li>
+					</ul>
+				</div>
 			</div>
 			<div id="div4">
 				<div id="div4-1">

@@ -24,12 +24,12 @@ public class MovieInsertController_hj {
 	@Autowired private Movie_MService_hj service;
 	@Autowired private ServletContext sc;
 	
-	@GetMapping("/movie/movieinsert")
+	@GetMapping("/admin/movie/movieinsert")
 	public String movieForm() {
 		return "movie/movieinsert.tiles";
 	}
 	
-	@PostMapping("/movie/movieinsert")
+	@PostMapping("/admin/movie/movieinsert")
 	public String movieinsert(String moviename, int runtime, String director, String genre, String rating,
 							String country, String actorinfo, Date opendate, int state, String video,
 							MultipartFile moviefile,

@@ -28,16 +28,19 @@ public interface MemberMapper {
 //	이름과 이메일로 아이디 찾기
 	MemberVo findId2(HashMap<String, Object> map);
 	
-//	회원 탈퇴
-	MemberVo withdrawal(String mname);
+//	비밀번호 찾기 이메일 인증(아이디, 이메일)
+	MemberVo findPwd(HashMap<String, Object> map);
 	
-//	비밀번호 찾기 이메일 인증
-	MemberVo selectMember(@Param("mname")String mname, @Param("memail")String memail);
+//	비밀번호 찾기 이메일 인증(아이디, 이메일)
+	MemberVo findPwd2(HashMap<String, Object> map);
 	
 //	비밀번호 변경
 	int changePwd(MemberVo vo);
 	
 // 아이디와 일치하는 회원의 정보 가져오기
 	MemberVo getInfo(String mid);
+	
+//	회원탈퇴
+	int withdrawal(String mid);
 } 
 

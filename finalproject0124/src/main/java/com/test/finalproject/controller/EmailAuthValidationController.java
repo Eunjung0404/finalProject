@@ -19,7 +19,7 @@ public class EmailAuthValidationController {
 //		System.out.println("입력한 인증번호: " + emailAuth);
 
 		if (emailAuth.equals(num)) {
-			return "member/changePwd.tiles";
+			return "member/changePwd2.tiles";
 		} else {
 			return "member/findPwd.tiles";
 		}

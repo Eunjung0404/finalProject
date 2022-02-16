@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.test.finalproject.aop.annotation.AdminLevel;
 import com.test.finalproject.error.exception.AdminCheckException;
 
 @Controller
@@ -31,6 +32,12 @@ public class TestController {
 	public String test4() {
 		System.out.println("컨트롤러4");
 		int n = 1/0;
+		return "/";
+	}
+	
+	@AdminLevel(1)
+	@RequestMapping("/test5")
+	public String test5() {
 		return "/";
 	}
 }

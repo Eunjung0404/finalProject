@@ -80,7 +80,7 @@
 	<div class="menuBox">		
 		<p><a type="button" id="mainList">메인으로 보여질 페이지</a></p>		
 		<p><a href="#">예매/구매내역</a></p>
-		<p><a href="#">예매/구매내역</a></p>
+		<p><a href="#">나의 평점 모아보기</a></p>
 		<p><a type="button" id="myinfo">내 정보 보기</a></p>		
 	</div>
 	
@@ -98,7 +98,7 @@
 <!-- 			<input type="password" name="mpwd" id="mpwd" placeholder="비밀번호를 입력해주세요." ><br> -->
 			
 <%-- 		</form:form> --%>
-		<form:form  name="pwdForm" id="pwdForm">
+		<form:form  name="pwdForm" id="pwdForm" action="${cp}/member/doMyinfo" onsubmit="return">
 			<input type="password" name="mpwd" id="mpwd" placeholder="비밀번호를 입력해주세요."  style="height: 50px; width: 400px; text-align: center" maxlength="16"><br>
 			
 		</form:form>
@@ -106,6 +106,7 @@
 		<button type="button" id="btn1" style="text-align: center">확인</button>
 		<button type="button" id="btn2" style="text-align: center">취소</button>
 	</div>
+	
 	
 	<!-- <div id="mainBox" style="display:block">
 		<div id="ticketing">
@@ -134,7 +135,7 @@
  				if (data == 0){
  					alert("비밀번호가 일치하지 않습니다!");
  				} else {
- 					location.href="${cp}/member/doMyinfo";		// 비밀번호가 일치하면 나의 정보 페이지로 이동
+ 					document.pwdForm.submit();		// 비밀번호가 일치하면 나의 정보 페이지로 이동
  				}
  			}
  		});

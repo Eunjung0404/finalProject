@@ -52,11 +52,11 @@
 			</sec:authorize>
 			<tr>
 				<th><div>
-						<b>댓글</b>
+						<i>댓글</i>
 						<sec:authorize access="isAuthenticated()">
-							<button>등록</button>
+							<button id="addReplyBtn">등록</button>
 						</sec:authorize>
-					</div></th>
+				</div></th>
 			</tr>
 			<tr>
 				<td>이전글</td>
@@ -71,4 +71,79 @@
 		</table>
 	</form>
 </body>
+<script type="text/javascript">
+	var modal = $(".modal");
+	var modalInputReply = modal.find("input[name='reply']");
+	var modalInputReply = modal.find("input[name='replyer']");
+	var modalInputReplyDate = modal.find("input[name='replyDate']");
+
+	var modalModBtn = $("#modalModBtn");
+	var modalRemoveBtn = $("#modalRemoveBtn");
+	var modalRegisterBtn = $("#modalRegisterBtn");
+	
+	var replyer = null;
+	<sec:authorize access = "isAuthenticated()">
+		replyer = '<sec:authentication property="principal.username"/>';
+	</sec:authorize>
+	
+	var csrfHeaderName = "${_csrf.headerName}";
+	var csrfTokenValue = "${_csrf.token}";
+	
+	$("#addReplyBtn").on("click", function(e){
+		modal.find("input").val("");
+		modal.find("input[name='replyer']").val(replyer);
+		modalInputReplyDate.closest("div").hide();
+		modal.find("button[id != 'modalCloseBtn']").hide();
+		modalRegistenBtn.show();
+		$(".modal").modal("show");
+	});
+	
+	$(document).ajaxSend(function(e, xhr, options) {
+		xhr.setRequestHeader(csrfHeaderName, csrfTokenValue);
+	});
+
+	modalRegisterBtn.on("click", function(e){
+		var reply = {
+				reply: modalInputReply.val(),
+				replyer:modalInputReplyer.val(),
+				qnacode:qnacodeValue
+		};
+		commentService.add(reply, function(result){
+			alert(result);
+			modal.find("input").val("");
+			modal.modal("hide");
+			
+			showList(1);
+			//showList(-1);
+			//showList(pageNum);
+		});
+	});
+	
+	modalRemoveBtn.on("click", function(e){
+		var commentcode = modal.data("commentcode");
+		
+		if(!replyer){
+			alert("로그인 후 삭제가 가능합니다.");
+			modal.modal("hide");
+			return;
+		}
+		
+		var originalReplyer = modalInputReplyer.val();
+		
+		if(replyer != originalReplyer) {
+			alert("자신이 작성한 댓글만 삭제가 가능합니다.");
+			modal.modal("hide");
+			return;
+		}
+		
+		CommentService.remove(commentcode, originalReplyer, function(result){
+			alert(result);
+			modal.modal("hide");
+			showList(1);
+			//showList(pageNum);
+		});
+	});
+	
+	
+</script>
 </html>

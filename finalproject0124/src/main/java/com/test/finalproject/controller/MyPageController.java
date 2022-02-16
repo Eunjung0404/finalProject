@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-
 import com.test.finalproject.service.MemberService;
 import com.test.finalproject.vo.MemberVo;
 
@@ -23,31 +21,34 @@ public class MyPageController {
 	private MemberService service;
 	@Autowired
 	PasswordEncoder passwordEncoder;
+	@Autowired
+	HttpSession session;
 	
 	@GetMapping("/member/mypage")
 	public String myPage() {				
 		return "member/myPage.tiles";
 	}
 	
-	@RequestMapping(value = "/member/doMyinfo", method=RequestMethod.GET)
-	public ModelAndView doMyinfo(Principal principal) {		
+	@RequestMapping(value = "/member/doMyinfo", method=RequestMethod.POST)
+	public String doMyinfo(Principal principal, Model model) {		
 		String mid = principal.getName();		// 로그인 아이디 가져오기
 		
 		MemberVo vo = service.getInfo(mid);		// 아이디와 일치하는 회원 정보 가져오기		
 		
-		ModelAndView mv = new ModelAndView();
-		mv.setViewName("/member/doMyinfo");
-		mv.addObject("info", vo);		// info 이름으로 회원 정보 담기
+		session.setAttribute("getMpwd", vo.getMpwd());			// 비밀번호 변경 시 기존에 사용하던 비밀번호를 넣어주기 위해 세션에 담음.
+		session.setAttribute("getMemail", vo.getMemail());		//	비밀번호와 이메일이 일치해야 회원 비밀번호를 변경이 가능하기 때문에 이메일을 담아서 사용함.
+		model.addAttribute("info", vo);
 		
-		return mv;		
+		return "member/doMyinfo.tiles";
 	}
 	
 	@RequestMapping(value="/member/pwdVali", method=RequestMethod.POST)
 	@ResponseBody
-	public int pwdVali(String mpwd, Principal principal, Model model) {
+	public int pwdVali(String mpwd, Principal principal) {
 		String mid = principal.getName();		// 로그인한 아이디 가져오기
 		MemberVo vo = service.getInfo(mid);	// 로그인한 아이디와 일치하는 정보 가져오기
 		String pwd = vo.getMpwd();	// 로그인한 아이디와 일치하는 암호화된 비밀번호
+		
 //		System.out.println("아아디:" + mid);
 //		System.out.println("DB에 저장된 비밀번호:" + pwd);
 //		System.out.println("내가 입력한 비밀번호:" + mpwd);
