@@ -68,7 +68,7 @@
 <script type="text/javascript" src="/spring13/resources/js/jquery-3.6.0.js"></script>
 <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
 
-<script type="text/javascript">
+<script type="text/javascript"> 
 	//스틸컷
 	$(document).ready(function(){ 
 		$(".slider").bxSlider({
