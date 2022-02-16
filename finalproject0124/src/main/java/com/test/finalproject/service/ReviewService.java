@@ -1,6 +1,7 @@
 package com.test.finalproject.service;
 
 import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,11 @@ public class ReviewService {
 		return mapper.insertcomments(vo);
 	}
 	
-	public List<ReviewVo> selectAll(){
-		return mapper.selectAll();
+	public List<ReviewVo> selectAll(HashMap<String, Object> map){
+		return mapper.selectAll(map);
+	}
+	
+	public int count(int moviecode) {
+		return mapper.count(moviecode);
 	}
 }

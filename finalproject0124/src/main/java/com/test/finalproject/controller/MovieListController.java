@@ -15,6 +15,7 @@ import com.test.finalproject.vo.Movie_MVo;
 public class MovieListController {
 	@Autowired private Movie_MService_hj service;
 	
+	//영화 목록 페이지(관리자)
 	@RequestMapping("/movie/list")
 	public String movielist(Model model) {
 				
@@ -24,7 +25,7 @@ public class MovieListController {
 		return "movie/movielist.tiles";
 	}
 	
-	
+	//영화 검색 페이지
 	@RequestMapping("/movie/search")
 	public String searchlist(String keyword, Model model) {
 		

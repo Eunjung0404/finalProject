@@ -31,7 +31,7 @@ public class MovieInsertController_hj {
 	
 	@PostMapping("/admin/movie/movieinsert")
 	public String movieinsert(String moviename, int runtime, String director, String genre, String rating,
-							String country, String actorinfo, Date opendate, int state, String video,
+							String country, String actorinfo, Date opendate, int state, String video, int count,
 							MultipartFile moviefile,
 							Model model) {
 		String path=sc.getRealPath("/resources/images/movieupload"); //업로드 할 경로 얻어오기
@@ -46,7 +46,7 @@ public class MovieInsertController_hj {
 			is.close();
 			fos.close();
 			
-			Movie_MVo vo=new Movie_MVo(0, moviename, runtime, director, genre, rating, country, actorinfo, movieimg, opendate, state, video);
+			Movie_MVo vo=new Movie_MVo(0, moviename, runtime, director, genre, rating, country, actorinfo, movieimg, opendate, state, video, count);
 			service.insert(vo);
 			model.addAttribute("msg", "success");
 		}catch(Exception e) {

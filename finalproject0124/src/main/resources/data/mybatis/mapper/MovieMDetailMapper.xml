@@ -5,7 +5,7 @@
 <mapper namespace="data.mybatis.mapper.MovieMDetailMapper">
 	<insert id="insert" parameterType="com.test.finalproject.vo.Movie_MVo">
 		insert into movie_m values(seq_movie_m.nextval, #{moviename}, #{runtime}, #{director}, #{genre}, #{rating}, #{country},
-		#{actorinfo}, #{movieimg}, #{opendate}, #{state}, #{video})
+		#{actorinfo}, #{movieimg}, #{opendate}, #{state}, #{video}, '0')
 	</insert>
 	
 	<!-- 검색조건 -->

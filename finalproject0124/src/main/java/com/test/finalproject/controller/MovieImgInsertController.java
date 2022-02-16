@@ -64,22 +64,12 @@ public class MovieImgInsertController {
 	}
 		return "movie/result.tiles";
 		
-		//String imgname=filelist.getOriginalFilename();
-//		try {
-//			InputStream is=photofile.getInputStream();
-//			File f=new File(path + "\\" + imgname);
-//			FileOutputStream fos=new FileOutputStream(f);
-//			FileCopyUtils.copy(is, fos);
-//			is.close();
-//			fos.close();
-//			
-//			MovieImgVo vo=new MovieImgVo(0, moviecode, imgname);
-//			service.movieimginsert(vo);
-//			model.addAttribute("msg", "success");
-//		}catch(Exception e) {
-//			e.printStackTrace();
-//			model.addAttribute("msg", "fail");
-//		}
-//		return "movie/result.tiles";
+	}
+	
+	//스틸컷 리스트
+	@GetMapping("/movie/imglist")
+	public String movieimglist(int moviecode, Model model) {
+		model.addAttribute("imglist", service.movieimglist(moviecode));
+		return "movie/moviedetailpage.tiles";
 	}
 }

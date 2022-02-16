@@ -8,12 +8,18 @@
 	</insert>
 
 	<!-- 전체 리뷰 목록 -->
-	<select id="selectAll" resultType="com.test.finalproject.vo.ReviewVo">
-		select * from movie_review
+	<select id="selectAll" parameterType="hashmap" resultType="com.test.finalproject.vo.ReviewVo">
+	<![CDATA[
+		select * from 
+		(
+			select aa.*, rownum rnum from (select * from movie_review where moviecode=#{moviecode} order by reviewcode desc)aa
+		)
+		where rnum>=#{startRowNum} and rnum<=#{endRowNum}
+	]]>
 	</select>
 	
-	<!-- 리뷰목록 높은순서부터 출력하기
-	select * from movie_review
-	where moviecode=2
-	order by reviewcode desc; -->
+	<!-- 리뷰 갯수 -->
+	<select id="count" parameterType="int" resultType="int">
+		select NVL(count(*),0) from movie_review where moviecode=#{moviecode}
+	</select>
 </mapper>
