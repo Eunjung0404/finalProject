@@ -7,6 +7,7 @@
 		select * from movie_img
 	</select>
 	
+	<!-- detail -->
 	<select id="movieimglist" parameterType="int" resultType="com.test.finalproject.vo.MovieImgVo">
 		select * from movie_img where moviecode=#{moviecode}
 	</select>

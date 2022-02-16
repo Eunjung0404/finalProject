@@ -21,4 +21,5 @@ public class Movie_MVo {
 	private Date opendate;
 	private int state;
 	private String video;
+	private int count;
 }

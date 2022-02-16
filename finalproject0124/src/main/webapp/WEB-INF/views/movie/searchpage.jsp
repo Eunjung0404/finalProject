@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,6 +17,8 @@
 <div id="backgroundColor">
 	<h3>검색</h3>
 	<div class="maincontainer"></div>
+	<c:choose>
+	<c:when test="${fn: length(list) > 0 }">
 		<c:forEach var="vo" items="${list }">
 			<div class="row" id="mainposter">
 				<div class="col-md-4 text-center" id="poster">
@@ -30,6 +33,11 @@
 				</div>
 			</div>
 		</c:forEach>
+	</c:when>
+	<c:otherwise>
+		<p>검색된 결과가 없습니다.</p>
+	</c:otherwise>
+	</c:choose>
 	</div>
 </div>
 </body>

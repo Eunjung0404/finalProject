@@ -14,13 +14,15 @@
 	#btnadd{position:absolute; width:146px; height:134px; color:#fff; background:#ec6159; cursor:pointer; border:none;}
 	#btnNotLogin{position:absolute; width:146px; height:134px; color:#fff; background:#ec6159; cursor:pointer; border:none;}
 	
+	#star_span{color:#ec6159; border-color:#ec6159;}
+	
 	#btnReserve{width:160px; height:55px; text-align: center; color:black; background:none; border:1px solid black;}
 	#btnReserve:hover{color:#ec6159; border-color:#ec6159;}
 	
 	div.comm1{width:400px; height:100px; border:1px solid #aaa; padding:5px; margin-top:5px;}
 	
 	textarea{
-		height: 134px; width: 510px;
+		height: 134px; width: 510px; border: none;
 	}
 	
 	/* 별점 관련 */
@@ -35,26 +37,17 @@
 		width:5em;
 		border: 0;
 	}
-
 	/* 라디오 버튼 숨기기 */
 	.star-rating input[type=radio] {
   		display:none;
 	}
-	
 	.star-rating label {
 		color:#ccc;
 		cursor:pointer;
 	}
-	
 	.star-rating :checked ~ label {
 	  	color:#ec6159;
 	}
-	
-	.star-rating label:hover,
-	.star-rating label:hover ~ label {
-	  	color:#ec6159;
-	}
-	
 	article {
 	  background-color:#ffe;
 	  box-shadow:0 0 1em 1px rgba(0,0,0,.25);
@@ -66,19 +59,39 @@
 	  padding:2em;
 	}
 	
+	/* 스틸컷 관련*/
+	
 	
 </style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
 <script type="text/javascript" src="/spring13/resources/js/jquery-3.6.0.js"></script>
+<script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+
 <script type="text/javascript">
+	//스틸컷
+	$(document).ready(function(){ 
+		$(".slider").bxSlider({
+			auto:true,
+			speed:500
+		});
+	});
+
 	//리뷰 작성
 	$(function () {
 		$("#btnadd").click(function() {
 			let score=$("input[name='score']:checked").val();
-		//	alert(star+" ");
-			//alert(${username });
-
 			let mid=$("#mid").val();
 			let comments=$("#comments").val();
+			
+			if(score==0){
+				alert("평점을 체크해주세요.");
+				return;
+			}
+			if(comments==""){
+				alert("내용을 입력해주세요.");
+				return;
+			}
+			
 			//alert(mid +"," + comments);
 			$.ajax({
 				url:'${cp}/review/insert',
@@ -87,7 +100,7 @@
 				success:function(data){
 					if(data.msg=='success'){
 						reviewlist(1);
-						//alert('success');
+						//alert('success!');
 					}else{
 						alert("등록 실패!");
 					}
@@ -105,15 +118,14 @@
 	
 	//리뷰 리스트
 	
-	function reviewlist() {
+	function reviewlist(pageNum) {
 		$("#commentsList").empty();
 		$.ajax({
 			url:'${cp}/review/list',
-			data:{'moviecode':${vo.moviecode}},
+			data:{'pageNum':pageNum, 'moviecode':${vo.moviecode}},
 			dataType:'json',
 			success:function(data){
 				$(data.list).each(function(i,d){
-					//console.log(d.mid);
 					let score=d.score;
 					let mid=d.mid;
 					let comments=d.comments;
@@ -124,21 +136,55 @@
 					for(let i=0; i<score; i++){
 						span += "<span id='star_span'>★</span>";
 					}
-					
 					html += span + "<br>";
 					html += comments + "<br>";
 					html += mid + "  |  " + regdate + "<br>";
 					html += "</div>";
 					$("#commentsList").append(html);
 				});
-			},
+				//페이징
+				let startPage=data.startPageNum;
+				let endPage=data.endPageNum;
+				let pageCount=data.pageCount;
+				let pageHTML="";
+				
+				//이전 페이지 버튼
+				if(startPage>5){
+					pageHTML += "<a href='javascript:reviewlist(" + (startPage-1) + ")'>이전</a>";
+				}
+				
+				for(let i=startPage; i<=endPage; i++){
+					if(i==pageNum){
+						pageHTML += "<a href='javascript:reviewlist(" + i + ")'><span style='color:bule'>[" + i + "]</span></a>";
+					}else{
+						pageHTML += "<a href='javascript:reviewlist(" + i + ")'><span style='color:gray'>[" + i + "]</span></a>";
+					}
+				}
+				
+				//다음 페이지 버튼
+				if(endPage<pageCount){
+					pageHTML += "<a href='javascript:reviewlist(" + (endPage+1) + ")'>다음</a>";
+				}
+				$("#page").html(pageHTML);
+				
+			}
 		     //error:function(request,status,error){
 		     //alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 		     //}
 		});
-
+		
+//		$(function () {
+//			$("div.comm1").slice(0,10).show();
+//			$("#moreList").click(function(e) {
+//				e.preventDefault();
+//				$("div.comm1:hidden").slice(0,10).show();
+//					if($("div.comm1:hidden").length==0){
+//						alert("볼 수 있는 댓글이 없습니다");
+//					}
+//			});
+//		});		
+		
 	}
-	
 </script>
 </head>
 
@@ -171,12 +217,18 @@
 	
 	</div>
 	<!-- 기본정보 배우정보 및 영상, 스틸컷 등등 -->
-		<div>
-			<h3>스틸컷</h3>
-
-		</div>
+	<h3>스틸컷</h3>
+		<div class="slidshow-container">
+		<c:forEach var="imglist" items="${imglist }">
+			<div class="slider">
+				<img src="${cp }/resources/images/stillcutupload/${imglist.imgname}" style="width:290px; height:416px;">
+			</div>
+		</c:forEach>
+		
+		
+		
+		
 		<!-- 평점 -->
-
 		<div id="commentsForm">
 			<p id="reviewtitle">평점</p>
 			<div class="comment_top">
@@ -190,13 +242,13 @@
 							name="score" value="3" /><label for="3-stars" class="star">★</label>
 						<input type="radio" id="4-stars" name="score" value="2" /><label
 							for="4-stars" class="star">★</label> <input type="radio"
-							id="5-star" name="score" value="1" /><label for="5-star"
+							id="5-star" name="score" value="1" checked="checked" /><label for="5-star"
 							class="star">★</label>
 					</div>
 
 					
 					<div class="comment_cont">
-						<sec:authorize access="isAuthenticated()">
+						<sec:authorize access="isAuthenticated()"> <!-- 로그인 했을 경우 -->
 							<sec:authentication property="principal.username" var="username" />
 							<textarea placeholder="별점을 먼저 선택하신 후, 감상을 남겨주세요." rows="5"
 								cols="50" id="comments"></textarea>
@@ -206,18 +258,21 @@
 						</sec:authorize>
 					</div>
 
-					<sec:authorize access="isAnonymous()">
+					<sec:authorize access="isAnonymous()"> <!-- 로그인 안했을 경우 -->
 						<div class="comment_cont">
 							<textarea placeholder="별점을 먼저 선택하신 후, 감상을 남겨주세요." rows="5"
 								cols="50" id="comments"></textarea>
-							<input type="button" value="등록" id="btnNotLogin">
+							<input type="button" value="등록" id="btnNotLogin"><br>
 						</div>
 					</sec:authorize>
 				</form>
 			</div>
 
 
-			<div id="commentsList"></div>
+			<div id="commentsList">
+			</div>
+			<div id="page"></div>
+			<!--  <button id="moreList"><span>더보기</span></button> -->
 		</div>
 	</div>
 </body>
