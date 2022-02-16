@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <style>
 .nonePadding {
 	padding: 0px;
@@ -24,7 +28,6 @@
 
 #ppbtn:hover {
 	background-color: olive;
-	border: none;
 }
 
 .people {
@@ -125,7 +128,26 @@
 	align-items: center;
 	flex-direction: column;
 	justify-content: center;
+}
+
+.nonedisplay {
 	display: none;
+}
+
+#nextpage {
+	width: 100px;
+	height: 100px;
+	position: fixed;
+	top: 50%;
+	left: 92%;
+	opacity: 50%;
+	border: none;
+	background: none;
+}
+
+#nextpage:hover {
+	background-color: #ED4C00;
+	opacity: 100%;
 }
 </style>
 <!-- 인원수 및 기타... -->
@@ -139,11 +161,13 @@
 
 			<div>
 				<span style="font-weight: bold;">성&nbsp&nbsp인<span></span><span
-					id="people" style="padding-left: 50px;"></span>
+					id="people" style="padding-left: 50px;"></span><input type="hidden"
+					value=0 id="people-count">
 			</div>
 			<div style="padding-top: 5px;">
 				<span style="font-weight: bold;">청소년&nbsp</span><span id="teenager"
-					style="padding-left: 39.5px;"></span>
+					style="padding-left: 39.5px;"></span><input type="hidden" value=0
+					id="teenager-count">
 			</div>
 		</div>
 		<div id="theater-info"
@@ -162,6 +186,8 @@
 		</div>
 	</div>
 </div>
+<!-- 결제방법 -->
+
 <!-- 좌석 -->
 <div class="row centerPosition">
 	<div class="col-8 nonePadding">
@@ -180,15 +206,34 @@
 <!-- 결제정보 -->
 <div class="row centerPosition">
 	<div class="col-8 nonePadding" style="border: 1px solid gray;">
-		<span style="font-size:18px;font-weight:bold;">${moviename}</span> <span>${theatername }</span><br>
-		<span>${screendate }</span><span>${screentime}</span>
+		<span style="font-size: 18px; font-weight: bold;">${moviename}</span>
+		<span>${theatername }</span><br> <span>${screendate }</span><span>${screentime}</span><br>
+		<span id="seat-info2"></span>
+		<!-- 결제버튼 다음버튼 선택시 활성화-->
+		<form:form method="post" action="${pageContext.request.contextPath}/"
+			id="nextform">
+			<!-- 유저아이디  -->
+			<sec:authorize access="isAuthenticated()">
+				<input type="hidden" name="username" id="userddd"
+					value="<sec:authentication property="principal.username" />">
+			</sec:authorize>
+
+			<button>결제</button>
+		</form:form>
+
 	</div>
+
 </div>
+
+<button id="nextpage" onclick="nextpage()">
+	<img src="/finalproject/resources/images/icon/forword.png" alt="다음페이지">
+</button>
+
 <script type="text/javascript">
 	let peopelcount = 0;
 	let teencount = 0;
 	let count = 0;
-
+	let price = 0;
 	window.onload = function() {
 		let timecode = document.getElementById("timecode").value;
 		let screencode = document.getElementById("screencode").value;
@@ -198,9 +243,13 @@
 		//setEvent();
 	}
 
+	function totalcount() {
+		count = peopelcount + teencount;
+		console.log("카운트 더한다~.");
+	}
 	let selected = false;
 	//인원수선택 버튼 생성
-	function createPPbtn(divname, otherdivname, c) {
+	function createPPbtn(divname, otherdivname, _count) {
 		let div = document.getElementById(divname);
 		for (var i = 0; i < 7; i++) {
 			let btn = document.createElement("button");
@@ -211,7 +260,7 @@
 				btn.className = divname;
 			}
 			//클릭함수 추가..
-			btn.onclick = function(event, c) {
+			btn.onclick = function(event, _count) {
 
 				let seatArea = document.getElementById("seat");
 				let divs = seatArea.getElementsByTagName("div");
@@ -219,9 +268,10 @@
 				let nowdivs = nowdiv.getElementsByTagName("button")
 				let otherdiv = document.getElementById(otherdivname);
 				let otherdivs = otherdiv.getElementsByTagName("button");
-				if (c >= 6) {
-					c = 0;
+				if (count > 6) {
+					count = 0;
 				}
+
 				for (var s = 0; s < otherdivs.length; s++) {
 
 					//otherdivs[s].className = "";
@@ -230,10 +280,12 @@
 				}
 				//선택된 좌석이 있는경우 초기화여부 묻기
 				if (selected) {
-					let result = confirm("선택된좌석이 있습니다 초기화하시겠습니까?");
+					let result = confirm("선택된 좌석이 있습니다 초기화하시겠습니까?");
 					if (result) {
 						let seatinfo = document.getElementById("seat-info");
 						seatinfo.innerHTML = "";
+						let seatinfo2 = document.getElementById("seat-info2");
+						seatinfo2.innerHTML = "";
 						for (var z = 0; z < divs.length; z++) {
 							//선택된 좌석인경우 css초기화
 							if (divs[z].classList.contains('select-seat')) {
@@ -266,7 +318,7 @@
 						}
 						otherdivs[0].className = otherdivname;
 						selected = false;
-						c = 0;
+						count = 0;
 
 					} else {
 						return;
@@ -279,20 +331,38 @@
 					clickbtn[j].className = '';
 
 				}
-				c = parseInt(event.target.innerText);
+				_count = parseInt(event.target.innerText);
 				//console.log(otherdiv);
 				for (var s = 0; s < otherdivs.length; s++) {
 
-					if (count + parseInt(otherdivs[s].innerText) > 6) {
+					if (_count + parseInt(otherdivs[s].innerText) > 6) {
 						otherdivs[s].disabled = true;
 
-						console.log("들어왔다.");
+						//console.log("들어왔다.");
 					}
 
 				}
-				count += c;
+				//가격정보 추가
+				if (divname == 'people') {
+					price += 12000 * _count;
+					console.log(price);
+				} else if (divname == 'teenager') {
+					price += 10000 * _count;
+					console.log(price);
+
+				}
+				//카운트
+				let countdiv = document.getElementById(divname + "-count");
+				countdiv.value = _count;
+				//count += _count;
 				event.target.className = divname;
-				console.log(count);
+				let othercountdiv = document.getElementById(otherdivname
+						+ "-count");
+				count = parseInt(countdiv.value)
+						+ parseInt(othercountdiv.value);
+				console.log(divname + "카운트 " + _count);
+				console.log("총카운트" + count);
+				//클릭버튼 중복클릭방지
 				event.target.disabled = true;
 			}
 			div.appendChild(btn);
@@ -386,7 +456,9 @@
 					console.log('좌석명 ' + event.target.id);
 					event.target.className += ' select-seat';
 					let seatinfo = document.getElementById("seat-info");
+					let seatinfo2 = document.getElementById("seat-info2");
 					seatinfo.innerHTML += " " + event.target.id;
+					seatinfo2.innerHTML += " " + event.target.id;
 					selected = true;
 					count--;
 					if (count == 0) {

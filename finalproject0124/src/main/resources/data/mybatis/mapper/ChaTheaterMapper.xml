@@ -4,6 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="data.mybatis.mapper.ChaTheaterMapper">
 
+<!-- 영화선택시추가 -->
 	<sql id="moviechoose">
 		<choose>
 			<when test="moviecode!=null and moviecode!=''">
@@ -34,6 +35,7 @@
 		<include refid="moviechoose"/>
 		
 	</select>
+	<!-- 극장리스트 -->
 	<select id="selectTheater" parameterType="hashmap"
 		resultType="hashmap">
 		select t.theatername ,t.theatercode from theater t
@@ -43,6 +45,7 @@
 		 where area=#{area}
 		<include refid="moviechoose"/>
 	</select>
+	<!-- 상영날짜 가져오기 -->
 	<select id="getScreenDate" parameterType="hashmap"
 		resultType="com.test.finalproject.vo.TiketScreenTimeVo">
 		select st.screendate,st.screencode,s.theatercode from screen_time
@@ -55,5 +58,13 @@
 	</select>
 	<select id="selectScreenTime" parameterType="hashmap" resultType="com.test.finalproject.vo.TiketScreenTimeVo">
 	select st.*,s.name from screen_time st, screen s where s.theatercode=#{theatercode} and st.screendate=#{screendate} and st.moviecode=#{moviecode} and st.screencode=s.screencode
+	</select>
+	<!-- 영화검색 -->
+	<select id="searchMovie" parameterType="string" resultType="hashmap">
+	select moviename,moviecode from movie_m where moviename like '%'||#{keyword}||'%' and state=1
+	</select>
+	<!-- 극장검색 -->
+	<select id="searchTheater" parameterType="string" resultType="hashmap">
+	select theatername,theatercode,area from  theater where theatername like '%'||#{keyword}||'%' and state=1
 	</select>
 </mapper>

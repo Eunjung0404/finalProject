@@ -36,4 +36,12 @@ public class ChaTheaterService {
 	{
 		return mapper.selectScreenTime(map);
 	}
+	public List<HashMap<String, Object>> searchMovie(String keyword)
+	{
+          return mapper.searchMovie(keyword);
+	}
+	public List<HashMap<String, Object>> searchTheater(String keyword)
+	{
+          return mapper.searchTheater(keyword);
+	}
 }

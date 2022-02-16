@@ -12,4 +12,6 @@ public interface ChaTheaterMapper {
     List<TiketScreenTimeVo> getScreenDate(HashMap<String, Object> map);
     List<HashMap<String, Object>> movielist();
     List<TiketScreenTimeVo> selectScreenTime(HashMap<String, Object> map);
+    List<HashMap<String, Object>> searchMovie(String keyword);
+    List<HashMap<String, Object>> searchTheater(String keyword);
 }

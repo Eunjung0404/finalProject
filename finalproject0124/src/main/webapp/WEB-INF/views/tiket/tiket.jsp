@@ -56,12 +56,12 @@
 	border: none;
 }
 
-#Tab li:hover {
+.Tab li:hover {
 	background-color: gray;
 	color: white;
 }
 
-#Tab li {
+.Tab li {
 	padding: 10px;
 }
 
@@ -85,7 +85,7 @@
 	color: white;
 }
 
-#Tab {
+.Tab {
 	list-style: none;
 	padding: 0;
 }
@@ -143,20 +143,85 @@
 	top: 50%;
 	left: 92%;
 	opacity: 50%;
+	border: none;
+	background: none;
 }
 
 #nextpage:hover {
 	background-color: #ED4C00;
 	opacity: 100%;
 }
+
+.nonedisplay {
+	display: none;
+}
+
+.inputsearch {
+	padding: 0 0 5px 1px;
+	width: calc(100% - 200px);
+	line-height: 1;
+	border: none;
+	border-bottom: 1px solid #777;
+	font-size: 13px;
+	font-weight: normal;
+	color: #2b2b2b;
+	outline: none;
+	background: none;
+	line-height: 1;
+}
+
+.nonebackground {
+	background: none;
+	border: none;
+}
+
+.search_result {
+	margin-left: 79px;
+	padding: 10px 0;
+	display: none;
+	max-height: 430px;
+	overflow: hidden;
+	overflow-y: auto;
+	background: #fff;
+	border: 1px solid #1a1a1a;
+	border-top: none;
+	width: calc(100% - 1470px);
+	position: absolute;
+	z-index: 3;
+}
+
+.search_result li:hover {
+	background-color: #ED4C00;
+	color: white;
+}
+
+.search_result ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.search_result li {
+	padding: 10px;
+}
 </style>
 
 <div class="row centerPosition">
 	<!-- 영화선택창 -->
 	<div class="col-3 nonePadding" style="margin-top: 100px;">
-		영화선택
+		<span style="font-size: 18px; font-weight: bold;">영화선택</span>
+		<!-- 검색 -->
+		<input type="text" placeholder="영화명을 입력해주세요" class="inputsearch"
+			id="searchMovie" onkeyup="searchinfo(event)">
+		<button class="nonebackground">
+			<img src="/finalproject/resources/images/icon/search_black.png"
+				alt="검색">
+		</button>
+		<div class="search_result" id="result-searchMovie">
+			<ul></ul>
+		</div>
 		<div class="accordion accordion-flush" id="accordionFlushExample"
-			style="border: 1px solid gray; height: 500px;">
+			style="border: 1px solid gray; height: 500px; margin-top: 10px;">
 
 			<div class="accordion-item">
 				<h2 class="accordion-header" id="flush-headingOne">
@@ -169,7 +234,7 @@
 					aria-labelledby="flush-headingOne"
 					data-bs-parent="#accordionFlushExample">
 					<div class="accordion-body nonePadding">
-						<ul id="Tab">
+						<ul id="Tab1" class="Tab">
 
 						</ul>
 					</div>
@@ -186,7 +251,7 @@
 					aria-labelledby="flush-headingTwo"
 					data-bs-parent="#accordionFlushExample">
 					<div class="accordion-body">
-						<ul>
+						<ul id="Tab2" class="Tab">
 							<li>특송</li>
 							<li>스파이더맨:노웨이홈</li>
 							<li>경관의 피</li>
@@ -205,7 +270,7 @@
 					aria-labelledby="flush-headingThree"
 					data-bs-parent="#accordionFlushExample">
 					<div class="accordion-body">
-						<ul>
+						<ul id="Tab3" class="Tab">
 							<li>특송</li>
 							<li>스파이더맨:노웨이홈</li>
 							<li>경관의 피</li>
@@ -220,8 +285,18 @@
 	<!-- 영화창  -->
 
 	<div class="col-3 nonePadding" style="margin-top: 100px">
-		극장선택
-		<div style="height: 500px; border: 1px solid gray;">
+		<span style="font-size: 18px; font-weight: bold;">극장선택</span>
+		<!-- 검색 -->
+		<input type="text" placeholder="극장명을 입력해주세요" class="inputsearch"
+			id="searchTheater" onkeyup="searchinfo(event)">
+		<button class="nonebackground">
+			<img src="/finalproject/resources/images/icon/search_black.png"
+				alt="검색">
+		</button>
+		<div class="search_result" id="result-searchTheater">
+			<ul></ul>
+		</div>
+		<div style="height: 500px; margin-top: 10px; border: 1px solid gray;">
 			극장<br>
 			<div class="centerPosition" style="height: 95%;">
 				<div style="width: 35%; border: 1px solid gray; height: 100%;">
@@ -248,10 +323,10 @@
 	<!-- 관람일 선택 -->
 	<div class="col-2 nonePadding" style="margin-top: 100px">
 
-		관람일 선택
+		<span style="font-size: 18px; font-weight: bold;">관람일 선택</span>
 
 		<div id="Calendar" class="centerTopPosition"
-			style="width: 250px; height: 300px; border: 1px solid gray; height: 500px;">
+			style="width: 250px; height: 300px; border: 1px solid gray; height: 500px; margin-top: 10px;">
 			<span id="text-year">2022</span>
 			<div>
 				<button class="movemonth" id="prevmonth" onclick="prevmonthbtn()">
@@ -279,32 +354,60 @@
 
 				</tbody>
 			</table>
+			<div style="display: flex; align-items: center;">
+				<div style="border: 1px solid gray; width: 10px; height: 10px;"></div>
+				<span style="font-size: 5px; padding: 10px;"> 선택가능 </span>
+				<div style="width: 11px; height: 11px; background-color: #ED4C00;"></div>
+				<span style="font-size: 5px; padding: 10px;">선택 </span>
+			</div>
+			<div style="border-top: 1px solid; width: 100%; margin-top: 50px;"
+				class="centerPosition">
+				<span style="font-size: 5px; padding: 30px">영화, 극장, 관람일을
+					선택하시면 <br>시간 선택이 아래쪽에 나타납니다.
+				</span>
+			</div>
 		</div>
 	</div>
 </div>
 
-<div class="row centerPosition">
-	<div class="col-8 nonePadding"
-		style="border: 1px solid gray; height:300px; margin-top: 50px;">
-		영화정보>
-		<div id="movieposterinfo" style="height:100%; width:100%; background-size: 5000px 5000px;">
-			<img src="/finalproject/resources/images/icon/img.png" alt="이미지없음"
-				style="width:150px;height:250px;" id="posterImg">
-		
-		</div>
-		<div id="movie-name">영화를 선택해주세요</div>
-
+<div class="row centerPosition nonedisplay" id="timesdiv">
+	<div class="col-8 nonePadding" style="margin-top: 50px;">
+		<span style="font-size: 18px; font-weight: bold;">시간선택></span>
 	</div>
-</div>
-<div class="row centerPosition">
-	<div class="col-8 nonePadding"
-		style="border: 1px solid gray; height: 700px; margin-top: 50px;">
-		시간선택>
+	<div class="col-8 nonePadding" style="border: 1px solid gray;">
+
 		<div id="theater-info">상영관과 날짜를 선택해주세요</div>
 
 	</div>
 
 </div>
+<div class="row centerPosition">
+	<div class="col-8 nonePadding" style="margin-top: 50px;">
+		<span style="font-size: 18px; font-weight: bold;">영화정보 ></span>
+	</div>
+	<div class="col-8 nonePadding"
+		style="border: 1px solid gray; height: 300px; overflow: hidden; position: relative;">
+
+		<div id="movieposterinfo"
+			style="height: 100%; width: 100%; background-size: 5000px; position: absolute; filter: brightness(40%) blur(20px); transform: scale(1.1)">
+		</div>
+		<div>
+
+			<div>
+				<img src="/finalproject/resources/images/icon/img.png" alt="이미지없음"
+					style="width: 150px; position: absolute; margin-left: 50px; margin-top: 35px;"
+					id="posterImg">
+			</div>
+			<div
+				style="z-index: 1; color: black; position: absolute; margin-left: 230px; margin-top: 100px;">
+				<span id="movie-name" style="font-size: 22px; font-weight: bold;">영화를
+					선택해주세요</span><br> <br> <span id="select-area">극장을 선택해주세요</span><br>
+				<span id="select-time">관람일시를 선택해주세요</span>
+			</div>
+		</div>
+	</div>
+</div>
+
 
 <form:form method="post"
 	action="${pageContext.request.contextPath}/member/seat" id="nextform">
@@ -340,6 +443,8 @@
 	var tr = table.getElementsByTagName("tr");
 	var th = tr[0].getElementsByTagName("th").length;
 	var tbody = document.getElementById("week");
+	//요일
+	const weekday = [ '일', '월', '화', '수', '목', '금', '토' ];
 	//영화코드값 넘기는용
 	let moviecode = document.getElementById("moviecode");
 	//극장코드값 넘기는용
@@ -385,10 +490,92 @@
 			lis[i].className = "";
 		}
 	}
+	//검색 
+	function searchinfo(event) {
+
+		let xhr = new XMLHttpRequest();
+
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				let data = xhr.responseText;
+				let json = JSON.parse(data);
+				let resultdiv = document.getElementById("result-"
+						+ event.target.id);
+				let resultul = resultdiv.children[0];
+
+				let length = resultul.childNodes.length;
+				console.log(length);
+				for (var i = 0; i < length; i++) {
+					resultul.removeChild(resultul.lastChild);
+					console.log("삭제!");
+				}
+
+				//검색아래에 li생성하기
+				if (event.target.value != "") {
+					for (var i = 0; i < json.result.length; i++) {
+						//div 활성화
+						resultdiv.style.display = "block";
+
+						//검색된 내역 li생성해서 담아주기
+						let li = document.createElement('li');
+						if (event.target.id == 'searchMovie') {
+							li.id = json.result[i].MOVIECODE;
+							li.innerText = json.result[i].MOVIENAME;
+							//li클릭시 이벤트 발생
+							li.onclick = function(event) {
+								
+								event.target.className = "clickli";
+								//영화목록 가져오기
+								let aco = document
+										.getElementById('accordionFlushExample');
+								for (var x = 0; x < aco.childNodes.length; x++) {
+									//ul정보 가져오기
+									let tab = document
+											.getElementsByClassName('Tab');
+									for (var y = 0; y < tab.length; y++) {
+										//ul-li가져오기
+										let lis = tab[y]
+												.getElementsByTagName('li');
+										for (var z = 0; z < lis.length; z++) {
+											//li배열에서 moviecode가 같을경우 해당 li click()이벤트 발생
+											if (lis[z].id == event.target.id) {
+												lis[z].click();
+											}
+										}
+									}
+
+								}
+								resultdiv.style.display = "none";
+							}
+
+						}
+						if (event.target.id == 'searchTheater') {
+							li.id = json.result[i].THEATERCODE;
+							li.innerText = json.result[i].THEATERNAME;
+							li.onclick = function(event) {
+								event.target.className = "clickli";
+							}
+						}
+
+						resultul.appendChild(li);
+					}
+
+				} else {
+					//div비활성화
+					resultdiv.style.display = "none";
+				}
+
+				//li에 이벤트 걸어주기
+			}
+		}
+		xhr.open('get', '/finalproject/tiket-' + event.target.id + "?keyword="
+				+ event.target.value, true);
+		xhr.send();
+	}
 	//영화정보불러오기
 	function getMovieInfo() {
 		let xhr = new XMLHttpRequest();
-		let tab = document.getElementById("Tab");
+		let tab = document.getElementById("Tab1");
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState == 4 && xhr.status == 200) {
 				let data = xhr.responseText;
@@ -402,7 +589,7 @@
 					li.onclick = function(event) {
 						resetArea();
 						areas[0].className = "clickarea";
-						let tab = document.getElementById("Tab");
+						let tab = document.getElementById("Tab1");
 						let lis = tab.getElementsByTagName("li");
 						for (var i = 0; i < lis.length; i++) {
 							lis[i].className = "";
@@ -416,8 +603,9 @@
 						}
 						//넘겨줄값 넣기
 						moviecode.value = event.target.id;//영화코드
-						let moviename = document.getElementById('moviename');
+						let moviename = document.getElementById('movie-name');
 						moviename.value = event.target.innerText;//영화이름
+						moviename.style.color = "white";
 
 						getTheaterName('서울', event.target.id);
 						//포스터img그리기
@@ -428,14 +616,14 @@
 						posterImg.src = getContextPath()
 								+ "/resources/images/movieupload/"
 								+ event.target.lastChild.value;
-						//벼경에 img깔기
-						posterdiv.style.backgroundImage=
-							//"linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0)),"
-							//+
-							"url("+getContextPath()
-							+ "/resources/images/movieupload/"
-							+ event.target.lastChild.value+")";
-						posterdiv.appendChild(posterImg);
+						//배경에 img깔기
+						posterdiv.style.backgroundImage =
+						//"linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0)),"
+						//+
+						"url(" + getContextPath()
+								+ "/resources/images/movieupload/"
+								+ event.target.lastChild.value + ")";
+						//posterdiv.appendChild(posterImg);
 						//posterdiv.innerText=event.target.innerText;
 						let movienamediv = document
 								.getElementById("movie-name");
@@ -511,6 +699,11 @@
 						let sn = document.getElementById("theatername");
 						sn.value = event.target.innerText;
 						theatercode.value = event.target.id;
+						//영화정보창에 정보 넣어주기
+						let selectarea = document.getElementById('select-area');
+						selectarea.innerText = event.target.innerText;
+						selectarea.style.color = "white";
+						//영화코드값 가져오기
 						let mc = document.getElementById("moviecode");
 						getScreenTime(mc.value, theatercode.value);
 
@@ -692,6 +885,12 @@
 
 							td[j].className += " time";
 							td[j].onclick = function(event) {
+								let timearea = document
+										.getElementById('select-time');
+								let day = new Date(event.target.id);
+								timearea.innerText = event.target.id + ' ('
+										+ weekday[day.getDay()] + ')';
+								timearea.style.color = "white";
 								for (var s = 0; s < td.length; s++) {
 
 									td[s].classList.remove('clickli');
@@ -763,6 +962,8 @@
 
 				let data = xhr.responseText;
 				let json = JSON.parse(data);
+				let timesdiv = document.getElementById('timesdiv');
+				timesdiv.classList.remove("nonedisplay");
 				let div = document.getElementById('theater-info');
 				let length = div.childNodes.length
 				for (var i = 0; i < length; i++) {
@@ -786,6 +987,8 @@
 						let st = document.getElementById("screentime");
 						sc.value = event.target.name;
 						st.value = event.target.innerText;
+						let timearea = document.getElementById('select-time');
+						timearea.innerText += " " + event.target.innerText;
 					}
 					div.appendChild(infodiv);
 				}

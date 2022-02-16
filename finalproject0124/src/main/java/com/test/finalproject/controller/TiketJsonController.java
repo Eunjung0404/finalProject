@@ -80,4 +80,30 @@ public class TiketJsonController {
 		map.put("result", result);
 		return map;
 	}
+	//영화검색
+	@GetMapping(value = "/tiket-searchMovie", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public @ResponseBody HashMap<String, Object> searchMovie(String keyword) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		if(keyword==null)
+		{
+			keyword="null";
+		}
+		List<HashMap<String, Object>> result=service.searchMovie(keyword);
+		System.out.println(map);
+		map.put("result", result);
+		return map;
+	}
+	//극장검색검색
+	@GetMapping(value = "/tiket-searchTheater", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public @ResponseBody HashMap<String, Object> searchTheater(String keyword) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		if(keyword==null)
+		{
+			keyword="null";
+		}
+		List<HashMap<String, Object>> result=service.searchTheater(keyword);
+		System.out.println(map);
+		map.put("result", result);
+		return map;
+	}
 }

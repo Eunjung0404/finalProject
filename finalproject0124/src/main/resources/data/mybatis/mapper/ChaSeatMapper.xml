@@ -21,19 +21,24 @@
 		select seatcode from seat where screencode=#{screencode}
 	</select>
 
+	<!-- seat목록읽어오기 -->
 	<select id="seatLsit" parameterType="hashmap"
 		resultType="hashmap">
-		select s.code,s.state blank,si.state bookingstate from seat s,
+		select s.code,s.state blank,si.state bookingstate from seat
+		s,
 		seat_info si where
 		s.screencode=#{screencode} and
-		si.timecode=#{timecode} and s.seatcode=si.seatcode order by s.seatcode asc
+		si.timecode=#{timecode} and s.seatcode=si.seatcode order by s.seatcode
+		asc
 	</select>
 
 	<select id="getseatrow" resultType="int" parameterType="int">
-		select max(seatrow) from seat where screencode=#{screencode}
+		select
+		max(seatrow) from seat where screencode=#{screencode}
 	</select>
 
 	<select id="getseatcol" resultType="int">
-		select max(seatcol) from seat where screencode=#{screencode}
+		select max(seatcol) from seat
+		where screencode=#{screencode}
 	</select>
 </mapper>
