@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.mybatis.mapper.TheaterMapper">
+
+	<!-- 극장 리스트 -->
+	<select id="getList"
+		resultType="com.test.finalproject.vo.TheaterVo"
+	>
+		select * from theater
+	</select>
+	
+	<!-- 극장 조회 -->
+	<select id="getTheater"
+		resultType="com.test.finalproject.vo.TheaterVo"
+	>
+		select * from theater where theatercode=#{theatercode}
+	</select>
+	
+	<!-- 극장 등록 -->
+	<insert id="insert"
+		parameterType="com.test.finalproject.form.TheaterForm"
+	>
+		insert into theater values(
+			seq_theater.nextval, #{theatername}, #{area}, #{state}
+		)
+	</insert>
+	
+	<!-- 극장 정보 수정 -->
+	<update id="update"
+		parameterType="com.test.finalproject.form.TheaterForm"
+	>
+		update theater set 
+			theatername=#{theatername}, area=#{area}, state=#{state} 
+		where theatercode=#{theatercode}
+	</update>
+	
+</mapper>
