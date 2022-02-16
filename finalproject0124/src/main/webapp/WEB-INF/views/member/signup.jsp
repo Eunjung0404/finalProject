@@ -8,10 +8,10 @@
 <style type="text/css">
 h3 {
 	padding-top: 5%;
-	margin-left: 35%;
+	margin-left: 300px;
 }
 #membercheck{
-	margin-left: 35%;
+	margin-left: 300px;
 }
 table tr td {	
 	text-align: left;
@@ -26,7 +26,7 @@ table tr td input[name=maddr] {
 	/* {속성값 !important } 우선순위 지정 */
 }
 div .sign {
-	padding-left: 35%;
+	padding-left: 300px;
 }
 
 .ui-datepicker select {
@@ -46,11 +46,33 @@ div .sign {
 .invalid {
 	color: red;
 }
+#signupBtn {
+	border: 0;
+	color: #fff;
+	background-color: #503396;
+	height: 46px;
+	padding: 0 30px;
+	border-radius: 4px;
+	margin-right: 10px;
+	margin-top: 10px;
+	margin-right: 20px;
+}
+#cancle {
+	border-width: 0.5px;
+	border-color: #503396;
+	color: #503396;
+	background-color: #fff;
+	height: 46px;
+	padding: 0 30px;
+	border-radius: 4px;
+	margin-right: 10px;
+	margin-top: 10px;
+}
 </style>
 
 
 <h3>회원가입</h3>
-<hr>
+<hr style="color: #503396; ">
 <form:form method="post" action="${cp }/signup" id="membercheck" name="signupForm" onsubmit="return validation(this)">
 	<table>
 		<tr>
@@ -64,17 +86,17 @@ div .sign {
 		</tr>
 		<tr>
 			<th>비밀번호</th>
-			<td><input type="password" title="비밀번호" name="mpwd" id="mpwd" maxlength="16" placeholder="비밀번호를 입력하세요." >
+			<td><input type="password" title="비밀번호" name="mpwd" id="mpwd" maxlength="16" placeholder="비밀번호를 입력하세요."  >
 				<div class="valid">비밀번호를 입력하세요.(8~16글자, 영문 대/소문자, 숫자를 모두 포함)</div></td>
 		<tr>
 		<tr>
 			<th>비밀번호 확인</th>
-			<td><input type="password" title="비밀번호 확인" id="pw_ck" name="pw_ck" class="chk" maxlength="16">
+			<td><input type="password" title="비밀번호 확인" id="pw_ck" name="pw_ck" class="chk" maxlength="16" placeholder="비밀번호를 재입력하세요." style="margin-bottom: 10px;" >
 				<div class="vaild" id="confirmMsg"></div></td>
 		</tr>
 		<tr>
 			<th>이메일</th>
-			<td><input type="email" title="이메일"  id="memail1" class="chk" placeholder="이메일을 입력하세요."><span id="middle">@</span>
+			<td><input type="email" title="이메일"  id="memail1" class="chk" placeholder="이메일을 입력하세요." style="margin-bottom: 10px;"><span id="middle">@</span>
 			<input type="text" id="emailSuffix" disabled value="">
 			<select class="chk" id="memail2"  >
 				<option  value="" >선택</option>
@@ -90,24 +112,24 @@ div .sign {
 		<tr>
 			<th>성명</th>
 			<td><input type="text" class="chk" title="이름" id="mname"
-				name="mname" placeholder="이름을 입력하세요."></td>
+				name="mname" placeholder="이름을 입력하세요." style="margin-bottom: 10px;" ></td>
 		</tr>
 		<tr>
 			<th>생년월일</th>
-			<td><input type="text" name="birth" placeholder="생년월일을 입력하세요."> 
+			<td><input type="text" name="birth"  id="birth"  placeholder="생년월일을 입력하세요."> 
 				<div class="valid">ex)1999-01-01</div></td>
 		</tr>
 		<tr>
 			<th>전화번호</th>
-			<td><input type="text" id="mphone" name="mphone" maxlength="11" placeholder="-없이 숫자만 입력">
+			<td><input type="text" id="mphone" name="mphone" maxlength="11" placeholder="-없이 숫자만 입력" style="margin-bottom: 10px;">
 			</td>
 		</tr>
 		<tr>
 			<th>주소</th>
 			<td>
-				<input type="text" id="postcode" placeholder="우편번호" readonly="readonly">
+				<input type="text" id="postcode" placeholder="우편번호" readonly="readonly" style="margin-bottom: 5px;">
 				<input type="button" id="execPostCode" value="우편번호 찾기"><br>
-				<input type="text" id="roadAddress" placeholder="도로명주소" readonly="readonly">
+				<input type="text" id="roadAddress" placeholder="도로명주소" readonly="readonly" style="margin-bottom: 5px;">
 				<input type="text" id="jibunAddress" placeholder="지번주소" readonly="readonly">
 				<span id="guide" style="color:#999;display:none"></span><br>
 				<input type="text" id="detailAddress" placeholder="상세주소">
@@ -118,7 +140,7 @@ div .sign {
 </form:form>
 	<hr>
 	<div class="sign">
-		<input type="button" value="회원가입" onclick="validation()" style="width: 200pt;" name="signup">
+		<input type="button" value="회원가입" onclick="validation()" style="width: 200pt;" name="signup" id="signupBtn">
 		<input type="button" value="취소" id="cancle"  style="width: 200pt;" name="clncle">
 	</div>
 <!-- 	<input type="button" value="테스트" id="testButton"> -->
@@ -130,6 +152,7 @@ div .sign {
 	let cnt = 0;
 	let sw = 0;
 	
+	// 주소 API
 	$("#execPostCode").click(function(){
 		new daum.Postcode({
             oncomplete: function(data) {
@@ -284,27 +307,40 @@ div .sign {
  			alert("주소를 입력해주세요.");
  			return false;
  		}
- 		if (document.getElementById("roadAddress").value == "" && document.getElementById("jibunAddress").value == ""){
- 			alert("주소를 입력해주세요.");
- 			return false;
- 		} 		
- 		if (document.getElementById("detailAddress").value == ""){
- 			alert("상세주소를 입력해주세요.");
- 			return false;
- 		} 		
+//  		if (document.getElementById("roadAddress").value == "" && document.getElementById("jibunAddress").value == ""){
+//  			alert("주소를 입력해주세요.");
+//  			return false;
+//  		} 		
+//  		if (document.getElementById("detailAddress").value == ""){
+//  			alert("상세주소를 입력해주세요.");
+//  			return false;
+//  		} 		
+
  		if (cnt == 0) {
  			alert("아이디 중복검사를 해주세요.");
  			return false;
  		}
  		$("#totalEmail").val($("#memail1").val() + $("#middle").text() + $("#memail2").val()); 
  		
-//  		if (document.getElementById("roadAddress").value != ""){
-//  			 document.getElementById("roadAddress").value = 1;
-//  		} else 
- 		
- 		document.getElementById("totalAddress").value = document.getElementById("roadAddress").value +  document.getElementById("detailAddress").value;
-		document.signupForm.submit();
-		alert("회원이 되신 것을 축하합니다!");
+ 		// 무지성 주소 조건문
+ 		if (document.getElementById("roadAddress").value != ""){		// 도로명 주소만 있을 경우
+ 			document.getElementById("totalAddress").value = document.getElementById("roadAddress").value + " " + document.getElementById("detailAddress").value;
+ 			document.signupForm.submit();
+ 			return alert("회원이 되신 것을 축하합니다!");
+ 		}
+ 		if (document.getElementById("jibunAddress").value != "") {		// 지번주소만 있을 경우{
+ 			document.getElementById("totalAddress").value = document.getElementById("jibunAddress").value + " " +document.getElementById("detailAddress").value;
+ 			document.signupForm.submit();
+ 			return alert("회원이 되신 것을 축하합니다!");
+ 		} 
+ 		if (document.getElementById("roadAddress").value != "" && document.getElementById("jibunAddress").value != "") {		// 도로명과 지번주소 모두 있을 경우
+ 			document.getElementById("totalAddress").value = document.getElementById("roadAddress").value + " " + document.getElementById("detailAddress").value;
+ 			document.signupForm.submit();
+ 			return alert("회원이 되신 것을 축하합니다!");
+ 		}
+ 		if (document.getElementById("roadAddress").value == "" && document.getElementById("jibunAddress").value == "") {		// 도로명 주소와 지번 주소 모두 없을 경우
+ 			return false;
+ 		}
  	}
 
  	$("#cancle").click(function(){
