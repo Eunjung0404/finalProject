@@ -82,12 +82,9 @@
 			let score=$("input[name='score']:checked").val();
 			let mid=$("#mid").val();
 			let comments=$("#comments").val();
+			let blank = /^\s+|\s+$/g;
 			
-			if(score==0){
-				alert("평점을 체크해주세요.");
-				return;
-			}
-			if(comments==""){
+			if(comments == ''){
 				alert("내용을 입력해주세요.");
 				return;
 			}
@@ -245,7 +242,6 @@
 							id="5-star" name="score" value="1" checked="checked" /><label for="5-star"
 							class="star">★</label>
 					</div>
-
 					
 					<div class="comment_cont">
 						<sec:authorize access="isAuthenticated()"> <!-- 로그인 했을 경우 -->
@@ -267,7 +263,6 @@
 					</sec:authorize>
 				</form>
 			</div>
-
 
 			<div id="commentsList">
 			</div>

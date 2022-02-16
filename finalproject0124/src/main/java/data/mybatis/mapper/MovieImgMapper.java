@@ -9,5 +9,5 @@ public interface MovieImgMapper {
 	
 	List<MovieImgVo> movieimglistall();
 	
-	MovieImgVo movieimglist(int moviecode);
+	List<MovieImgVo>  movieimglist(int moviecode);
 }

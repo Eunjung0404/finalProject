@@ -22,7 +22,7 @@ public class MovieImgService_hj {
 		return mapper.movieimglistall();
 	}
 	
-	public MovieImgVo movieimglist(int moviecode) {
+	public List<MovieImgVo> movieimglist(int moviecode) {
 		return mapper.movieimglist(moviecode);
 	}
 }
