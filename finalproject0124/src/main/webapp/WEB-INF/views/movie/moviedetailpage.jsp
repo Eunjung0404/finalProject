@@ -60,6 +60,7 @@
 	}
 	
 	/* 스틸컷 관련*/
+	.slider {height:300px; }
 	
 	
 </style>
@@ -72,7 +73,11 @@
 	$(document).ready(function(){ 
 		$(".slider").bxSlider({
 			auto:true,
-			speed:500
+			speed:500,
+			autoHover: true,
+			slideWidth:700,
+			adaptiveHeight: true, 
+			mode: 'fade'
 		});
 	});
 
@@ -216,12 +221,12 @@
 	<!-- 기본정보 배우정보 및 영상, 스틸컷 등등 -->
 	<h3>스틸컷</h3>
 		<div class="slidshow-container">
-		<c:forEach var="imglist" items="${imglist }">
-			<div class="slider">
-				<img src="${cp }/resources/images/stillcutupload/${imglist.imgname}" style="width:290px; height:416px;">
-			</div>
-		</c:forEach>
-		
+		<div class="slider">
+			<c:forEach var="imglist" items="${imglist }">
+				<img src="${cp }/resources/images/stillcutupload/${imglist.imgname}">
+			</c:forEach>
+		</div>
+		</div>
 		
 		
 		
@@ -258,12 +263,12 @@
 						<div class="comment_cont">
 							<textarea placeholder="별점을 먼저 선택하신 후, 감상을 남겨주세요." rows="5"
 								cols="50" id="comments"></textarea>
-							<input type="button" value="등록" id="btnNotLogin"><br>
+							<input type="button" value="등록" id="btnNotLogin">
 						</div>
 					</sec:authorize>
 				</form>
 			</div>
-
+			<br>
 			<div id="commentsList">
 			</div>
 			<div id="page"></div>
