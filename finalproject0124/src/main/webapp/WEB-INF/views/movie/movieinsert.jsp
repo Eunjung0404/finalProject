@@ -30,6 +30,7 @@
 		<input placeholder="개봉일" type="date" name="opendate"><br>
 		<input placeholder="영화상태" type="text" name="state"><br>
 		<input placeholder="예고편 주소" type="text" name="video"><br>
+		<input placeholder="예매율" type="hidden" name="count" value="0"><br>
 		<input type="file" name="moviefile"><br>
 		<input type="submit" value="업로드" style="margin:6px; background-color: #196ab3; min-width: 70px; 
 			border: none; line-height: 30px; color: #ffffff; cursor: pointer;">
