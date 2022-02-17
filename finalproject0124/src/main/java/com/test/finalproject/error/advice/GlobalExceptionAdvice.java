@@ -24,6 +24,15 @@ public class GlobalExceptionAdvice {
 		return "error/error.tiles";
 	}
 	
+	@ExceptionHandler(IllegalArgumentException.class)
+	public String illegalArgException(IllegalArgumentException ex, Model model) {
+		log.error(ex.getMessage()+"##");
+		ex.printStackTrace();
+		model.addAttribute("result", 
+				new ResultForm("400", "허용되지 않는 값이 포함되어 있습니다."));
+		return "error/error.tiles";
+	}
+	
 	@ExceptionHandler({NoHandlerFoundException.class, AdminCheckException.class})
 	public String notFound(Exception ex, Model model) {
 		log.error(ex.getMessage()+"##");

@@ -26,6 +26,14 @@ public class GlobalAPIExceptionAdvice {
 		return new ResultForm("fail", "서버 오류 발생");
 	}
 	
+	@ExceptionHandler(IllegalArgumentException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	public ResultForm illegalArgException(IllegalArgumentException ex) {
+		log.error(ex.getMessage());
+		ex.printStackTrace();
+		return new ResultForm("fail", "허용되지 않는 값이 포함되어 있습니다.");
+	}
+	
 	@ExceptionHandler(FormBindException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ResultForm formbind(FormBindException ex) {
