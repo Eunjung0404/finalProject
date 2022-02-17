@@ -102,6 +102,7 @@
 				success:function(data){
 					if(data.msg=='success'){
 						reviewlist(1);
+						document.getElementById("comments").value='';
 						//alert('success!');
 					}else{
 						alert("등록 실패!");
@@ -109,8 +110,11 @@
 				}
 			});
 		});
+		
 		reviewlist(1);
 	});
+
+	출처: https://developer-joe.tistory.com/184 [코드 조각-Android, Java, Spring, JavaScript, C#, C, C++, PHP, HTML, CSS, Delphi]
 	//로그인 안할 경우
 	$(function () {
 		$("#btnNotLogin").click(function() {
@@ -202,6 +206,9 @@
 			<div class="col-md-8" id="moviebox">
 				<div class="col-sm-12 text-left"> 
 				<h2 class="title" style="font-weight: bold;">${vo.moviename }</h2>
+				
+				<p class="starAvg">평점 ${avg.avgscore }</p>
+				
 				<p class="content">${vo.opendate } 개봉 | ${vo.runtime }분 | ${vo.rating } | ${vo.genre } | ${vo.country }</p>
 					<button type="button" id="btnReserve" onclick="">예매</button>
 			</div>
