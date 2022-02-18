@@ -13,7 +13,7 @@ import lombok.ToString;
 @ToString
 public class NoteVo {
 	private int notecode;			  //글번호
-	private int theatercode;		  //극장코드
+//	private int theatercode;		  //극장코드
 	private String title;			  //글제목
 	private String content;		 	  //글내용
 	private Date regdate;		   	  //작성일

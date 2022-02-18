@@ -14,4 +14,6 @@ public interface QnaMapper {
 	QnaVo detail(int num);
 	QnaVo prev(int num);
 	QnaVo next(int num);
+	QnaVo passwordform(HashMap<String, Integer> map);
+	List<QnaVo> qnalist();
 }

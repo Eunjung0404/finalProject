@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>qna/result.jsp</title>
+<title>qna/result1.jsp</title>
 </head>
 <body>
 <c:choose>
@@ -17,8 +17,8 @@
 	</c:when>
 	<c:otherwise>
 		<script type="text/javascript">
-			alert("실패 되었습니다.");
-			location.href="${cp}/qna/qnahome";
+			alert("등록 실패");
+			location.href="${cp}/qna/list";
 		</script>
 	</c:otherwise>
 </c:choose>

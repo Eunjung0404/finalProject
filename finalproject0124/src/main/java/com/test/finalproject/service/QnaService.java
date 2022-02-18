@@ -38,4 +38,10 @@ public class QnaService {
 	public QnaVo detail(int num) {
 		return mapper.detail(num);
 	}
+	public QnaVo passwordform(HashMap<String, Integer> map) {
+		return mapper.passwordform(map);
+	}
+	public List<QnaVo> qnalist() {
+		return mapper.qnalist();
+	}
 }

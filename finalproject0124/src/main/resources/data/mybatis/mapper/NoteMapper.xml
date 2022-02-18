@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.mybatis.mapper.NoteMapper">
+	<insert id="insert"
+		parameterType="com.test.finalproject.vo.NoteVo">
+		insert into note
+		values(seq_note.nextval, #{title}, #{content}, sysdate)
+	</insert>
+
+	<select id="list" parameterType="hashmap" resultType="com.test.finalproject.vo.NoteVo">
+		select * from
+		(
+     		select aa.*,rownum rnum from
+    		(
+				select * from note 
+		<!--  	<include refid="search" /> -->
+				order by notecode desc
+     		)aa
+	 <![CDATA[	) where rnum>=#{startRow} and rnum<=#{endRow} ]]>
+	</select>
+	<select id="detail" parameterType="int" resultType="com.test.finalproject.vo.NoteVo">
+		select * from note where notecode=#{notecode}
+	</select>
+
+	<!-- 전체 글의 갯수 -->
+	<select id="count" resultType="int" parameterType="hashmap">
+		select NVL(count(*),0) cnt from note
+	<!--  	<include refid="search" /> -->
+	</select>
+	
+	<select id="next" parameterType="int" resultType="com.test.finalproject.vo.NoteVo">
+		<![CDATA[
+		select * from
+		(
+		  select * from qna where notecode>#{notecode} order by notecode asc
+		) where rownum=1
+		]]>
+	</select>
+	
+	<select id="notelist" resultType="com.test.finalproject.vo.NoteVo">
+		<![CDATA[
+		select * from(
+			select title, regdate from note order by regdate desc)
+			where rownum<6
+		]]>
+	</select>
+</mapper>

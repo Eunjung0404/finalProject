@@ -4,11 +4,12 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.test.finalproject.vo.NoteVo;
 
 import data.mybatis.mapper.NoteMapper;
-
+@Service
 public class NoteService {
 	@Autowired private NoteMapper mapper;
 	
@@ -20,5 +21,8 @@ public class NoteService {
 	}
 	public List<NoteVo> selectList(HashMap<String, Object> map){
 		return mapper.list(map);
+	}
+	public List<NoteVo> notelist() {
+		return mapper.notelist();
 	}
 }

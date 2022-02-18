@@ -8,14 +8,17 @@
 </head>
 <body>
 	<h2>비밀번호 입력</h2>
-	<form action="${pageContext.request.contextPath }/qna/detail" method="post">
+	<form action="${pageContext.request.contextPath }/qna/detail"
+		method="post">
+		<input type="hidden" name="num" value="${num}">
 		<table>
 			<tr>
 				<th><label for="pwd">비밀번호</label></th>
-				<td><input type="password" name="pwd" id="pwd">
-				<input type="submit" value="확인"></td>
+				<td><input type="password" name="pwd" id="pwd"> <input
+					type="submit" value="확인"></td>
 			</tr>
 		</table>
 	</form>
+	<a href="${pageContext.request.contextPath }/qna/list">목록으로</a>
 </body>
 </html>

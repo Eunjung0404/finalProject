@@ -11,7 +11,7 @@
 </head>
 <body>
 	<h1>문의내역</h1>
-	<form action="" method="post">
+	<form action="${pageContext.request.contextPath }/qna/detail" method="post">
 		<input type="hidden" name="${_csrf.parameterName }"
 			value="${_csrf.token }">
 		<table border="1" width="600">
@@ -40,13 +40,14 @@
 			<sec:authentication property="principal" var="pinfo" />
 			<sec:authorize access="isAuthenticated()">
 				<c:if test="${pinfo.username eq vo.mid }">
+				<input type="button" value="수정">
 					<tr>
 						<th>수정</th>
-						<td><a href="${cp }/qna/update?num=${vo.qnacode}">수정</a></td>
+						<td><a href="${cp }/qna/update?qnacode=${vo.qnacode}">수정</a></td>
 					</tr>
 					<tr>
 						<th>삭제</th>
-						<td><a href="${cp }/qna/delete?num=${vo.qnacode}">삭제</a></td>
+						<td><a href="${cp }/qna/delete?qnacode=${vo.qnacode}">삭제</a></td>
 					</tr>
 				</c:if>
 			</sec:authorize>
@@ -61,12 +62,12 @@
 			<tr>
 				<td>이전글</td>
 				<td><a
-					href="${pageContext.request.contextPath }/qna/detail?num=${prev.num}">${prev.title }</a></td>
+					href="${pageContext.request.contextPath }/qna/detail?num=${prev.qnacode}">${prev.title }</a></td>
 			</tr>
 			<tr>
 				<td>다음글</td>
 				<td><a
-					href="${pageContext.request.contextPath }/qna/detail?num=${next.num}">${next.title }</a></td>
+					href="${pageContext.request.contextPath }/qna/detail?num=${next.qnacode}">${next.title }</a></td>
 			</tr>
 		</table>
 	</form>

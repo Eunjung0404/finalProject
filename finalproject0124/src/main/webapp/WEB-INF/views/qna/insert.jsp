@@ -13,16 +13,20 @@
 	height: 800px;
 	background-color: #EAEAEA;
 }
-#maindiv h2{
+
+#maindiv h2 {
 	text-align: center;
-	margin-top: 60px;
-	margin-bottom: 80px;
+	margin-top: 70px;
+	margin-bottom: 70px;
 }
-#fmdiv{
+
+#fmdiv {
 	position: absolute;
 	left: 560px;
 }
-#tbdiv {
+
+#tbdiv th {
+	padding: 15px;
 }
 </style>
 </head>
