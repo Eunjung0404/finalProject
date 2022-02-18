@@ -26,6 +26,7 @@
 			</when>
 		</choose>
 	</sql>
+	<!-- 극장갯수 -->
 	<select id="areaCount" parameterType="hashmap" resultType="int">
 		select count(*) from theater t
 		<if test="moviecode!=null and moviecode!=''">
@@ -38,7 +39,7 @@
 	<!-- 극장리스트 -->
 	<select id="selectTheater" parameterType="hashmap"
 		resultType="hashmap">
-		select t.theatername ,t.theatercode from theater t
+		select t.theatername ,t.theatercode, t.area from theater t
 		<if test="moviecode!=null and moviecode!=''">
 		, theater_move tm 
 		</if>
@@ -54,10 +55,15 @@
 	</select>
 	
 	<select id="movielist" resultType="hashmap">
-	select moviename,moviecode,movieimg from movie_m where state=1
+	select rating,moviename,moviecode,movieimg from movie_m where state=1 order by count desc
 	</select>
+	<!-- 상영스케쥴가져오기 -->
 	<select id="selectScreenTime" parameterType="hashmap" resultType="com.test.finalproject.vo.TiketScreenTimeVo">
-	select st.*,s.name from screen_time st, screen s where s.theatercode=#{theatercode} and st.screendate=#{screendate} and st.moviecode=#{moviecode} and st.screencode=s.screencode
+	select st.*,s.name from screen_time st, screen s where s.theatercode=#{theatercode} and st.screendate=#{screendate} and st.moviecode=#{moviecode} and st.screencode=s.screencode order by st.screendate,st.starttime asc
+	</select>
+	<!-- 상영관이름 가져오기 -->
+	<select id="selectScreenName" parameterType="hashmap" resultType="string">
+	select DISTINCT s.name from screen_time st, screen s where s.theatercode=#{theatercode} and st.screendate=#{screendate} and st.moviecode=#{moviecode} and st.screencode=s.screencode order by s.name asc
 	</select>
 	<!-- 영화검색 -->
 	<select id="searchMovie" parameterType="string" resultType="hashmap">

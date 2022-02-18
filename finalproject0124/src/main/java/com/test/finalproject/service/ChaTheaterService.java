@@ -44,4 +44,8 @@ public class ChaTheaterService {
 	{
           return mapper.searchTheater(keyword);
 	}
+	public List<String> selectScreenName(HashMap<String, Object> map)
+	{
+		return mapper.selectScreenName(map);
+	}
 }

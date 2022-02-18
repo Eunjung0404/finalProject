@@ -2,37 +2,68 @@ package com.test.finalproject.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.test.finalproject.service.ChapaymentService;
+import com.test.finalproject.vo.TiketParameterVo;
+import com.test.finalproject.vo.TiketSeatParameterVo;
+
 @Controller
 public class TiketController {
-
-	
+     @Autowired ChapaymentService service;
 	@GetMapping("/tiket")
-	public String tiketPage()
-	{
+	public String tiketPage() {
 		return "tiket/tiket.tiles";
 	}
 	
-	@RequestMapping("member/seat")
-	public String seatPage(Model m,String screencode,String timecode,
-			String theatername,Date screendate,String screentime,String moviecode,String moviename)
-	{
-		m.addAttribute("screencode", screencode);
-		m.addAttribute("timecode", timecode);
-		m.addAttribute("theatername",theatername);
-		SimpleDateFormat datefromat=new SimpleDateFormat("yyyy/MM/dd (E)요일");
-		String sDate = datefromat.format(screendate);
-		m.addAttribute("screendate",sDate);
-		m.addAttribute("screentime",screentime);
-		m.addAttribute("moviecode",moviecode);
-		m.addAttribute("moviename",moviename);
+	@RequestMapping("member/payment")
+	public String paymentPage(Model m, TiketSeatParameterVo vo) {
 		
+		//예약인서트
+		service.reservationInsert(vo);
+		//예매번호 가져오기
+		int reservationcode=service.getReservationCode();
+		//좌석예매하기
+		HashMap<String, Object> rmap=new HashMap<String, Object>();
+		rmap.put("RESERVATIONCODE", reservationcode);
+		for(int i=0;i<Integer.parseInt(vo.getCount());i++)
+		{
+			rmap.put("SEATNAME", vo.getSeatname().get(i));
+			service.reservationSeatInsert(rmap);
+		}
+		//결제정보 인서트
+		m.addAttribute("vo",vo);
+		rmap.put("TOTALPRICE", vo.getTotalprice());
+		rmap.put("PAYMENTTYPE", vo.getPaymenttype());
+		service.paymentInsert(rmap);
+		//seat-info 업데이트
+		for(int i=0;i<Integer.parseInt(vo.getCount());i++)
+		{
+			service.seatInfoUpdate(Integer.parseInt(vo.getSeatcode().get(i)));
+		}
+		
+		return "tiket/payment.tiles";
+		
+	}
+
+	@RequestMapping("member/seat")
+	public String seatPage(Model m, TiketParameterVo vo) {
+		if (vo.getScreencode() == null || vo.getScreencode() == "") {
+			return "redirect:/tiket";
+		}
+		SimpleDateFormat datefromat = new SimpleDateFormat("yyyy/MM/dd (E)요일");
+		String sDate = datefromat.format(vo.getScreendate());
+		System.out.println(vo.getMoviename());
+		m.addAttribute("vo",vo);
+		m.addAttribute("screendate",sDate);
+
 		return "tiket/seatSelect.tiles";
 	}
-	
+
 }

@@ -136,7 +136,7 @@
 	color: white;
 }
 
-#nextpage {
+.nextpage {
 	width: 100px;
 	height: 100px;
 	position: fixed;
@@ -147,7 +147,7 @@
 	background: none;
 }
 
-#nextpage:hover {
+.click {
 	background-color: #ED4C00;
 	opacity: 100%;
 }
@@ -204,6 +204,49 @@
 .search_result li {
 	padding: 10px;
 }
+
+#screenName {
+	font-size: 18px;
+	font-weight: bold;
+	padding: 10px;
+}
+
+.moviediv {
+	overflow-y: scroll;
+	max-height: 390px;
+}
+
+.rating {
+	padding-top: 5px;
+	margin: 5px;
+	 display : inline-block;
+	width: 25px;
+	height: 22px;
+	line-height: 1;
+	text-align: center;
+	font-size: 13px;
+	display: inline-block;
+}
+
+#rating15 {
+	color: orange;
+	border: 1px solid orange;
+	padding-top: 5px;
+}
+
+#rating12 {
+	color: green;
+	border: 1px solid green;
+}
+
+#ratingALL {
+	color: aqua;
+	border: 1px solid aqua;
+}
+.enone
+{
+pointer-events: none
+}
 </style>
 
 <div class="row centerPosition">
@@ -225,15 +268,16 @@
 
 			<div class="accordion-item">
 				<h2 class="accordion-header" id="flush-headingOne">
-					<button class="accordion-button " type="button"
+					<button class="accordion-button " type="button" id="flushbtn1"
 						data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
-						aria-expanded="true" aria-controls="flush-collapseOne">
+						aria-expanded="true" aria-controls="flush-collapseOne"
+						onclick="accordionctrl('flush-collapseOne','flush-collapseTwo',event,'flushbtn2')">
 						영화 TOP 10</button>
 				</h2>
 				<div id="flush-collapseOne" class="accordion-collapse collapse show"
 					aria-labelledby="flush-headingOne"
 					data-bs-parent="#accordionFlushExample">
-					<div class="accordion-body nonePadding">
+					<div class="accordion-body nonePadding moviediv">
 						<ul id="Tab1" class="Tab">
 
 						</ul>
@@ -243,41 +287,23 @@
 			<div class="accordion-item">
 				<h2 class="accordion-header" id="flush-headingTwo">
 					<button class="accordion-button collapsed" type="button"
-						data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo"
-						aria-expanded="false" aria-controls="flush-collapseTwo">
+						id="flushbtn2" data-bs-toggle="collapse"
+						data-bs-target="#flush-collapseTwo" aria-expanded="false"
+						aria-controls="flush-collapseTwo"
+						onclick="accordionctrl('flush-collapseTwo','flush-collapseOne',event,'flushbtn1')">
 						TOP 10 외 영화</button>
 				</h2>
 				<div id="flush-collapseTwo" class="accordion-collapse collapse"
 					aria-labelledby="flush-headingTwo"
 					data-bs-parent="#accordionFlushExample">
-					<div class="accordion-body">
+					<div class="accordion-body nonePadding moviediv">
 						<ul id="Tab2" class="Tab">
-							<li>특송</li>
-							<li>스파이더맨:노웨이홈</li>
-							<li>경관의 피</li>
+
 						</ul>
 					</div>
 				</div>
 			</div>
-			<div class="accordion-item">
-				<h2 class="accordion-header" id="flush-headingThree">
-					<button class="accordion-button collapsed" type="button"
-						data-bs-toggle="collapse" data-bs-target="#flush-collapseThree"
-						aria-expanded="false" aria-controls="flush-collapseThree">
-						영화제 영화</button>
-				</h2>
-				<div id="flush-collapseThree" class="accordion-collapse collapse"
-					aria-labelledby="flush-headingThree"
-					data-bs-parent="#accordionFlushExample">
-					<div class="accordion-body">
-						<ul id="Tab3" class="Tab">
-							<li>특송</li>
-							<li>스파이더맨:노웨이홈</li>
-							<li>경관의 피</li>
-						</ul>
-					</div>
-				</div>
-			</div>
+
 		</div>
 
 
@@ -401,8 +427,9 @@
 			<div
 				style="z-index: 1; color: black; position: absolute; margin-left: 230px; margin-top: 100px;">
 				<span id="movie-name" style="font-size: 22px; font-weight: bold;">영화를
-					선택해주세요</span><br> <br> <span id="select-area">극장을 선택해주세요</span><br>
-				<span id="select-time">관람일시를 선택해주세요</span>
+					선택해주세요</span><br> <br> <span id="select-area">극장을 선택해주세요</span><span
+					id="select-screen"></span><br> <span id="select-time">관람일시를
+					선택해주세요</span><span id="select-screentime"></span>
 			</div>
 		</div>
 	</div>
@@ -414,9 +441,9 @@
 	<!-- 영화코드 -->
 	<input type="hidden" value="" id="moviecode" name="moviecode">
 	<!-- 영화이름 -->
+	<input type="hidden" value="" id="movienamehtml" name="movienamehtml">
+	<!-- 영화이름 -->
 	<input type="hidden" value="" id="moviename" name="moviename">
-	<!-- 지역코드 -->
-	<input type="hidden" value="" id="areaname" name="areaname">
 	<!--극장코드 -->
 	<input type="hidden" value="" id="theatercode" name="theatercode">
 	<!--극장이름 -->
@@ -425,12 +452,16 @@
 	<input type="hidden" value="" id="screendate" name="screendate">
 	<!-- 상영관코드 -->
 	<input type="hidden" value="" id="screencode" name="screencode">
+	<!-- 상영관이름 -->
+	<input type="hidden" value="" id="screenname" name="screenname">
 	<!-- 스케쥴코드 -->
 	<input type="hidden" value="" id="timecode" name="timecode">
 	<!-- 상영시간 -->
 	<input type="hidden" value="" id="screentime" name="screentime">
+	<!-- 영화이미지 -->
+	<input type="hidden" value="" id="movieimgname" name="movieimgname">
 
-	<button id="nextpage" onclick="nextpage()">
+	<button id="nextpage" disabled="disabled" onclick="nextpage()" class="nextpage">
 		<img src="/finalproject/resources/images/icon/forword.png" alt="다음페이지">
 	</button>
 
@@ -480,6 +511,7 @@
 		getScreenTime("", "");
 
 	}
+
 	function nextpage() {
 		document.getElementById("nextform").submit();
 	}
@@ -490,6 +522,20 @@
 			lis[i].className = "";
 		}
 	}
+	//작동
+	function accordionctrl(id, id2, event, id3) {
+		let flush = document.getElementById(id);
+		let flush2 = document.getElementById(id2);
+		let btn = document.getElementById(id3);
+		if (!flush.classList.contains('show')) {
+			flush.className += ' show';
+			flush2.classList.remove('show');
+			event.target.classList.remove('collapsed');
+			btn.className += " collapsed"
+		}
+
+	}
+
 	//검색 
 	function searchinfo(event) {
 
@@ -523,7 +569,7 @@
 							li.innerText = json.result[i].MOVIENAME;
 							//li클릭시 이벤트 발생
 							li.onclick = function(event) {
-								
+
 								event.target.className = "clickli";
 								//영화목록 가져오기
 								let aco = document
@@ -552,8 +598,40 @@
 						if (event.target.id == 'searchTheater') {
 							li.id = json.result[i].THEATERCODE;
 							li.innerText = json.result[i].THEATERNAME;
+							let input = document.createElement('input');
+							input.setAttribute('type', 'hidden');
+							input.value = json.result[i].AREA;
+							li.appendChild(input);
 							li.onclick = function(event) {
 								event.target.className = "clickli";
+								//지역 li가져와서 click이벤트 
+								let areas = document.getElementById("areas");
+								let lis = areas.getElementsByTagName("li");
+								for (var z = 0; z < lis.length; z++) {
+									if (lis[z].id == event.target.lastChild.value) {
+										lis[z].click();
+										//console.log(lis[z]);
+										/////////////////////////////////////////////////
+										let theaterList = document
+												.getElementById("theaterList");
+										let theaterlis = theaterList
+												.getElementsByTagName("li");
+										console.log(theaterlis);
+										for (var s = 0; s < theaterlis.length; s++) {
+											console.log(theaterlis[s].id);
+											if (theaterlis[s].id == event.target.id) {
+												theaterlis[s].click();
+												console.log(theaterlis[z]);
+											}
+
+										}
+										/////////////////////////////////////////////////
+									}
+
+								}
+
+								resultdiv.style.display = "none";
+
 							}
 						}
 
@@ -575,7 +653,8 @@
 	//영화정보불러오기
 	function getMovieInfo() {
 		let xhr = new XMLHttpRequest();
-		let tab = document.getElementById("Tab1");
+		let tab1 = document.getElementById("Tab1");
+		let tab2 = document.getElementById("Tab2");
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState == 4 && xhr.status == 200) {
 				let data = xhr.responseText;
@@ -583,10 +662,29 @@
 				for (var i = 0; i < json.result.length; i++) {
 
 					let li = document.createElement('li');
+					let ratingid = "";
+					if (json.result[i].RATING == 'ALL') {
+						ratingid = "ratingALL"
+					} else if (json.result[i].RATING == '12') {
+						ratingid = "rating12"
+					} else if (json.result[i].RATING == '15') {
+						ratingid = "rating15"
+					}
+					if(i<10)
+						{
+						li.innerHTML=i+1+" ";
+						}
+						
+					li.innerHTML += "<span id="+ratingid+" class='rating enone'>"
+							+ json.result[i].RATING + "</span>"
 
-					li.innerText = json.result[i].MOVIENAME;
+					li.innerHTML += "<span class='enone'>"+json.result[i].MOVIENAME + "</span>";
 					li.id = json.result[i].MOVIECODE;
 					li.onclick = function(event) {
+						//버튼비활성화
+						let nextpage=document.getElementById('nextpage');
+						nextpage.disabled=true;
+						nextpage.className='nextpage';
 						resetArea();
 						areas[0].className = "clickarea";
 						let tab = document.getElementById("Tab1");
@@ -603,38 +701,80 @@
 						}
 						//넘겨줄값 넣기
 						moviecode.value = event.target.id;//영화코드
+					
+						
+						
 						let moviename = document.getElementById('movie-name');
-						moviename.value = event.target.innerText;//영화이름
+						moviename.value = event.target.innerHTML;//영화이름
 						moviename.style.color = "white";
 
 						getTheaterName('서울', event.target.id);
 						//포스터img그리기
 						let posterdiv = document
 								.getElementById("movieposterinfo");
-
+						let movieimgname = document
+						.getElementById('movieimgname');
+						movieimgname.value=event.target.lastChild.value;
 						let posterImg = document.getElementById('posterImg');
 						posterImg.src = getContextPath()
 								+ "/resources/images/movieupload/"
 								+ event.target.lastChild.value;
 						//배경에 img깔기
 						posterdiv.style.backgroundImage =
-						//"linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0)),"
-						//+
 						"url(" + getContextPath()
 								+ "/resources/images/movieupload/"
 								+ event.target.lastChild.value + ")";
-						//posterdiv.appendChild(posterImg);
-						//posterdiv.innerText=event.target.innerText;
+					
 						let movienamediv = document
 								.getElementById("movie-name");
-						movienamediv.innerText = event.target.innerText;
+						
+						let mn = document.getElementById('moviename');
+						let mnh = document.getElementById('movienamehtml');
+						mn.value = event.target.childNodes[2].innerText;
+						if (event.target.parentNode.id=="Tab1") {
+							movienamediv.innerHTML = event.target.innerHTML.substr(1);
+							mnh.value=event.target.innerHTML.substr(1);
+						
+						} else {
+							movienamediv.innerHTML = event.target.innerHTML;
+							mnh.value=event.target.innerHTML;
+						
+						}
+					
+						//초기화
+						let selectarea = document.getElementById("select-area");
+						selectarea.style.color = 'white';
+						selectarea.innerText = '극장을 선택해주세요';
+						let selecttime = document.getElementById("select-time");
+						selecttime.style.color = 'white';
+						selecttime.innerText = '관람일시를 선택해주세요';
+						let selectscreen = document
+								.getElementById("select-screen");
+						selectscreen.style.color = 'white';
+						selectscreen.innerText = '';
+						let selectscreentime = document
+								.getElementById("select-screentime");
+						selectscreentime.style.color = 'white';
+						selectscreentime.innerText = '';
+						//timediv 비활성화(초기화)
+						let timesdiv = document.getElementById('timesdiv');
+						if (!timesdiv.classList.contains('nonedisplay')) {
+							timesdiv.className += " nonedisplay";
+						}
+						//관람일 가져오기
+						getScreenTime(event.target.id, "");
 					}
+
 					let movieimg = document.createElement('input');
 					movieimg.setAttribute("type", "hidden");
 					movieimg.id = "movieimg";
 					movieimg.value = json.result[i].MOVIEIMG;
 					li.appendChild(movieimg);
-					tab.appendChild(li);
+					if (i < 10) {
+						tab1.appendChild(li);
+					} else {
+						tab2.appendChild(li);
+					}
 
 				}
 			}
@@ -689,6 +829,10 @@
 					li.innerText = list[i].THEATERNAME;
 					li.id = list[i].THEATERCODE;
 					li.onclick = function(event) {
+						//버튼비활성화
+						let nextpage=document.getElementById('nextpage');
+						nextpage.disabled=true;
+						nextpage.className='nextpage';
 						//let tab = document.getElementById("theaterList");
 						let lis = theaterList.getElementsByTagName("li");
 						for (var i = 0; i < lis.length; i++) {
@@ -705,6 +849,14 @@
 						selectarea.style.color = "white";
 						//영화코드값 가져오기
 						let mc = document.getElementById("moviecode");
+						//timediv 비활성화(초기화)
+						let timesdiv = document.getElementById('timesdiv');
+						if (!timesdiv.classList.contains('nonedisplay')) {
+							timesdiv.className += " nonedisplay";
+						}
+						//초기화
+						let selecttime = document.getElementById("select-time");
+						selecttime.innerText = '관람일시를 선택해주세요';
 						getScreenTime(mc.value, theatercode.value);
 
 					}
@@ -885,6 +1037,10 @@
 
 							td[j].className += " time";
 							td[j].onclick = function(event) {
+								//버튼비활성화
+								let nextpage=document.getElementById('nextpage');
+								nextpage.disabled=true;
+								nextpage.className='nextpage';
 								let timearea = document
 										.getElementById('select-time');
 								let day = new Date(event.target.id);
@@ -969,28 +1125,65 @@
 				for (var i = 0; i < length; i++) {
 					div.removeChild(div.lastChild);
 				}
-				for (var i = 0; i < json.result.length; i++) {
-					let infodiv = document.createElement('div');
-					infodiv.innerText = json.result[i].starttime + "-"
-							+ json.result[i].endtime;
-					infodiv.id = json.result[i].timecode;
-					infodiv.className = "screentime";
+				for (var j = 0; j < json.screenName.length; j++) {
 
-					infodiv.name = json.result[i].screencode;
+					let screendiv = document.createElement('div');
+					screendiv.innerHTML = "<br><span id='screenName'>"
+							+ json.screenName[j] + "</span>";
+					let timediv = document.createElement('div');
+					timediv.style.display = "flex";
 
-					//시간선택시
-					infodiv.onclick = function(event) {
-						event.target.className += " clickli";
-						let timecode = document.getElementById("timecode");
-						timecode.value = event.target.id;
-						let sc = document.getElementById("screencode");
-						let st = document.getElementById("screentime");
-						sc.value = event.target.name;
-						st.value = event.target.innerText;
-						let timearea = document.getElementById('select-time');
-						timearea.innerText += " " + event.target.innerText;
+					for (var i = 0; i < json.result.length; i++) {
+						if (json.screenName[j] == json.result[i].name) {
+							let infodiv = document.createElement('div');
+							infodiv.innerText = json.result[i].starttime + "-"
+									+ json.result[i].endtime;
+							infodiv.id = json.result[i].timecode;
+							infodiv.className = "screentime";
+
+							infodiv.name = json.result[i].screencode;
+
+							//상영관 이름 
+							let nameinput = document.createElement('input');
+							nameinput.setAttribute('type', 'hidden');
+							nameinput.value = json.result[i].name;
+							infodiv.appendChild(nameinput);
+							//시간선택시
+							infodiv.onclick = function(event) {
+								//버튼활성화
+								let nextpage=document.getElementById('nextpage');
+								nextpage.disabled=false;
+								nextpage.className+=' click';
+								event.target.className += " clickli";
+								let timecode = document
+										.getElementById("timecode");
+								timecode.value = event.target.id;
+								//정보넣기
+								let sc = document.getElementById("screencode");
+								let st = document.getElementById("screentime");
+								let sn=document.getElementById('screenname');
+								sn.value= event.target.lastChild.value;
+								sc.value = event.target.name;
+								st.value = event.target.innerText;
+								//정보넣기
+								let timearea = document
+										.getElementById('select-screentime');
+								timearea.innerText = "/"
+										+ event.target.innerText;
+								//정보넣기
+								let selectscreen = document
+										.getElementById("select-screen");
+								selectscreen.style.color = 'white';
+								selectscreen.innerText = '/'
+										+ event.target.lastChild.value;
+								
+							
+							}
+							timediv.appendChild(infodiv);
+						}
 					}
-					div.appendChild(infodiv);
+					div.appendChild(screendiv);
+					div.appendChild(timediv);
 				}
 
 			}

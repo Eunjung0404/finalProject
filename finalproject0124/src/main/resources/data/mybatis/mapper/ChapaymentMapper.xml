@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.mybatis.mapper.ChapaymentMapper">
+
+	<insert id="reservationInsert"
+		parameterType="com.test.finalproject.vo.TiketSeatParameterVo">
+		insert into RESERVATION
+		values(SEQ_RESERVATION.nextval,#{username},#{timecode},#{count},#{moviename},#{screenname},1,#{theatername})
+	</insert>
+	<!-- 예매번호 가져오기 -->
+	<select id="getReservationCode" resultType="int">
+	<![CDATA[select RESERVATIONCODE FROM RESERVATION where ROWNUM <= 1 order by RESERVATIONCODE desc]]>
+	</select>
+	<insert id="reservationSeatInsert" parameterType="hashmap">
+		insert into
+		RESERVATION_SEAT
+		values(SEQ_RESERVATIONSEAT.nextval,#{RESERVATIONCODE},#{SEATNAME})
+
+	</insert>
+	<insert id="paymentInsert" parameterType="hashmap">
+		insert into PAYMENT
+		values(SEQ_PAYMENT.nextval,#{RESERVATIONCODE},#{TOTALPRICE},#{PAYMENTTYPE},sysdate)
+	</insert>
+	<update id="seatInfoUpdate"
+		parameterType="int">
+        update seat_info set state=1 where infocode=#{infocode}
+	</update>
+</mapper>

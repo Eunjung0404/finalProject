@@ -24,7 +24,7 @@
 	<!-- seat목록읽어오기 -->
 	<select id="seatLsit" parameterType="hashmap"
 		resultType="hashmap">
-		select s.code,s.state blank,si.state bookingstate from seat
+		select si.infocode ,s.code,s.state blank,si.state bookingstate from seat
 		s,
 		seat_info si where
 		s.screencode=#{screencode} and

@@ -53,7 +53,7 @@ public class TiketJsonController {
 		map1.put("moviecode",moviecode);
 		map1.put("theatercode", theatercode);
 		List<TiketScreenTimeVo> result=service.getScreenDate(map1);
-		System.out.println(map);
+	
 		map.put("result", result);
 		return map;
 	}
@@ -76,8 +76,10 @@ public class TiketJsonController {
 		map1.put("theatercode", theatercode);
 		map1.put("screendate", screendate);
 		List<TiketScreenTimeVo> result=service.selectScreenTime(map1);
+		List<String> screenName=service.selectScreenName(map1);
 		System.out.println(map);
 		map.put("result", result);
+		map.put("screenName", screenName);
 		return map;
 	}
 	//영화검색
@@ -89,11 +91,11 @@ public class TiketJsonController {
 			keyword="null";
 		}
 		List<HashMap<String, Object>> result=service.searchMovie(keyword);
-		System.out.println(map);
+		
 		map.put("result", result);
 		return map;
 	}
-	//극장검색검색
+	//극장검색
 	@GetMapping(value = "/tiket-searchTheater", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public @ResponseBody HashMap<String, Object> searchTheater(String keyword) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -102,7 +104,7 @@ public class TiketJsonController {
 			keyword="null";
 		}
 		List<HashMap<String, Object>> result=service.searchTheater(keyword);
-		System.out.println(map);
+		
 		map.put("result", result);
 		return map;
 	}
