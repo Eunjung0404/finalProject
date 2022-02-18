@@ -3,6 +3,7 @@ package data.mybatis.mapper;
 import java.util.HashMap;
 import java.util.List;
 
+import com.test.finalproject.vo.AvgscoreVo;
 import com.test.finalproject.vo.ReviewVo;
 
 public interface ReviewMapper {
@@ -11,4 +12,6 @@ public interface ReviewMapper {
 	List<ReviewVo> selectAll(HashMap<String, Object> map);
 	
 	int count(int moviecode);
+	
+	AvgscoreVo avg(int moviecode);
 }

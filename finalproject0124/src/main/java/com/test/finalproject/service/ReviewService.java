@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.test.finalproject.vo.AvgscoreVo;
 import com.test.finalproject.vo.ReviewVo;
 
 import data.mybatis.mapper.ReviewMapper;
@@ -25,5 +26,9 @@ public class ReviewService {
 	
 	public int count(int moviecode) {
 		return mapper.count(moviecode);
+	}
+	
+	public AvgscoreVo avg(int moviecode) {
+		return mapper.avg(moviecode);
 	}
 }

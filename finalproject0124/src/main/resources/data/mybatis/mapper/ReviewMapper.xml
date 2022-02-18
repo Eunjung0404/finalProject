@@ -22,4 +22,11 @@
 	<select id="count" parameterType="int" resultType="int">
 		select NVL(count(*),0) from movie_review where moviecode=#{moviecode}
 	</select>
+	
+	<!-- 리뷰 평점 -->
+	<select id="avg" resultType="com.test.finalproject.vo.AvgscoreVo" parameterType="int">
+		select round(avg(score),1) avgscore
+		from movie_review 
+		where moviecode=#{moviecode}
+	</select>
 </mapper>

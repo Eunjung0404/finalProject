@@ -60,6 +60,7 @@
 	}
 	
 	/* 스틸컷 관련*/
+	.slider {height:300px; }
 	
 	
 </style>
@@ -67,12 +68,16 @@
 <script type="text/javascript" src="/spring13/resources/js/jquery-3.6.0.js"></script>
 <script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
 
-<script type="text/javascript">
+<script type="text/javascript"> 
 	//스틸컷
 	$(document).ready(function(){ 
 		$(".slider").bxSlider({
 			auto:true,
-			speed:500
+			speed:500,
+			autoHover: true,
+			slideWidth:700,
+			adaptiveHeight: true, 
+			mode: 'fade'
 		});
 	});
 
@@ -97,6 +102,7 @@
 				success:function(data){
 					if(data.msg=='success'){
 						reviewlist(1);
+						document.getElementById("comments").value='';
 						//alert('success!');
 					}else{
 						alert("등록 실패!");
@@ -104,8 +110,11 @@
 				}
 			});
 		});
+		
 		reviewlist(1);
 	});
+
+	출처: https://developer-joe.tistory.com/184 [코드 조각-Android, Java, Spring, JavaScript, C#, C, C++, PHP, HTML, CSS, Delphi]
 	//로그인 안할 경우
 	$(function () {
 		$("#btnNotLogin").click(function() {
@@ -197,6 +206,9 @@
 			<div class="col-md-8" id="moviebox">
 				<div class="col-sm-12 text-left"> 
 				<h2 class="title" style="font-weight: bold;">${vo.moviename }</h2>
+				
+				<p class="starAvg">평점 ${avg.avgscore }</p>
+				
 				<p class="content">${vo.opendate } 개봉 | ${vo.runtime }분 | ${vo.rating } | ${vo.genre } | ${vo.country }</p>
 					<button type="button" id="btnReserve" onclick="">예매</button>
 			</div>
@@ -216,12 +228,12 @@
 	<!-- 기본정보 배우정보 및 영상, 스틸컷 등등 -->
 	<h3>스틸컷</h3>
 		<div class="slidshow-container">
-		<c:forEach var="imglist" items="${imglist }">
-			<div class="slider">
-				<img src="${cp }/resources/images/stillcutupload/${imglist.imgname}" style="width:290px; height:416px;">
-			</div>
-		</c:forEach>
-		
+		<div class="slider">
+			<c:forEach var="imglist" items="${imglist }">
+				<img src="${cp }/resources/images/stillcutupload/${imglist.imgname}">
+			</c:forEach>
+		</div>
+		</div>
 		
 		
 		
@@ -258,12 +270,12 @@
 						<div class="comment_cont">
 							<textarea placeholder="별점을 먼저 선택하신 후, 감상을 남겨주세요." rows="5"
 								cols="50" id="comments"></textarea>
-							<input type="button" value="등록" id="btnNotLogin"><br>
+							<input type="button" value="등록" id="btnNotLogin">
 						</div>
 					</sec:authorize>
 				</form>
 			</div>
-
+			<br>
 			<div id="commentsList">
 			</div>
 			<div id="page"></div>

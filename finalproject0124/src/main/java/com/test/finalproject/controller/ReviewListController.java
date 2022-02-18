@@ -37,8 +37,11 @@ public class ReviewListController {
 		map.put("pageCount", pu.getTotalPageCount());
 		map.put("pageNum", pageNum);
 		return map;
-	}	
+	}
+	
 }
+
+	
 
 //model.addAttribute("reviewlist", reviewlist);
 
