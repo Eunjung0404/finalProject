@@ -19,7 +19,7 @@
 	#btnReserve{width:160px; height:55px; text-align: center; color:black; background:none; border:1px solid black;}
 	#btnReserve:hover{color:#ec6159; border-color:#ec6159;}
 	
-	div.comm1{width:400px; height:100px; border:1px solid #aaa; padding:5px; margin-top:5px;}
+	div.comm1{width:400px; height:120px; border:1px solid #aaa; padding:5px; margin-top:5px;}
 	
 	textarea{
 		height: 134px; width: 510px; border: none;
@@ -114,7 +114,6 @@
 		reviewlist(1);
 	});
 
-	출처: https://developer-joe.tistory.com/184 [코드 조각-Android, Java, Spring, JavaScript, C#, C, C++, PHP, HTML, CSS, Delphi]
 	//로그인 안할 경우
 	$(function () {
 		$("#btnNotLogin").click(function() {
@@ -122,8 +121,23 @@
 		});
 	});
 	
-	//리뷰 리스트
+	//평점 삭제
+	function removeReview(reviewcode) {
+		$.ajax({
+			url:'${cp}/review/delete',
+			data:{"reviewcode":reviewcode}, //삭제할 PK번호
+			dataType:'json',
+			success:function(data){
+				if(data.msg=='success'){
+					reviewlist(1);
+				}else{
+					alert("삭제에 실패했습니다. 다시 한 번 확인해 주세요");
+				}
+			}
+		});
+	}
 	
+	//평점 리스트
 	function reviewlist(pageNum) {
 		$("#commentsList").empty();
 		$.ajax({
@@ -136,6 +150,7 @@
 					let mid=d.mid;
 					let comments=d.comments;
 					let regdate=d.regdate;
+					let reviewcode=d.reviewcode; //삭제를 위한 PK번호
 					let html="<div class='comm1'>";
 					//여기에 별점 표시
 					let span="";
@@ -144,8 +159,18 @@
 					}
 					html += span + "<br>";
 					html += comments + "<br>";
-					html += mid + "  |  " + regdate + "<br>";
-					html += "</div>";
+					html += mid + "  |  " + regdate;
+					
+					//로그인 했을 때 삭제버튼  표시
+					let username=$("#mid").val();
+					let str="admin";
+					//alert("username" + username);
+					if(username==d.mid || username==str.substring(0,5)){ //|| username=='admin' || username='admin' 관리자 계정 substring으로 앞의 5글자만 뽑아오기
+							html += " <input type='button' id='delBtn' value='삭제' onclick='removeReview("+reviewcode+")' >";
+							
+					}
+					html+="</div>";
+			
 					$("#commentsList").append(html);
 				});
 				//페이징

@@ -31,4 +31,8 @@ public class ReviewService {
 	public AvgscoreVo avg(int moviecode) {
 		return mapper.avg(moviecode);
 	}
+	
+	public int reviewdelete(int reviewcode) {
+		return mapper.reviewdelete(reviewcode);
+	}
 }

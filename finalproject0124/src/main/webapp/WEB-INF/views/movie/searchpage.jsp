@@ -12,17 +12,18 @@
 	
 	#btnReserve{width:160px; height:55px; text-align: center; color:white; background:#ec6159; border:0;}
 </style>
+<script type="text/javascript" src="/spring13/resources/js/jquery-3.6.0.js"></script>
 </head>
 <body>
 <div id="backgroundColor">
-	<h3>검색</h3>
+	<h3>검색 결과</h3>
 	<div class="maincontainer"></div>
 	<c:choose>
 	<c:when test="${fn: length(list) > 0 }">
 		<c:forEach var="vo" items="${list }">
 			<div class="row" id="mainposter">
 				<div class="col-md-4 text-center" id="poster">
-					<img class="" src="${cp }/resources/images/movieupload/${vo.movieimg}" style="width:290px; height:416px;">
+					<a href="${cp }/movie/detail?moviecode=${vo.moviecode}"><img class="" src="${cp }/resources/images/movieupload/${vo.movieimg}" style="width:290px; height:416px;"></a>
 				</div>
 				<div class="col-md-8" id="moviebox">
 					<div class="col-sm-12 text-left">

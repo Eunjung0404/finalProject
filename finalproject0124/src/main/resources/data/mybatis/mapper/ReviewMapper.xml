@@ -29,4 +29,9 @@
 		from movie_review 
 		where moviecode=#{moviecode}
 	</select>
+	
+	<!-- 리뷰 삭제 -->
+	<delete id="reviewdelete" parameterType="com.test.finalproject.vo.ReviewVo">
+		delete from movie_review where reviewcode=#{reviewcode}
+	</delete>
 </mapper>

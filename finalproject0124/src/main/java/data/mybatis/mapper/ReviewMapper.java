@@ -14,4 +14,6 @@ public interface ReviewMapper {
 	int count(int moviecode);
 	
 	AvgscoreVo avg(int moviecode);
+	
+	int reviewdelete(int reviewcode);
 }
