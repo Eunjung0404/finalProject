@@ -12,7 +12,7 @@
 	</select>
 	
 	<!-- 상영관 조회 -->
-	<select id="getScreen"
+	<select id="getScreenByName"
 		resultType="com.test.finalproject.vo.ScreenVo"
 	>
 		select * from screen where screencode=#{screencode}
@@ -22,9 +22,6 @@
 	<insert id="insert" 
 		parameterType="com.test.finalproject.form.ScreenForm"
 	>
-		<selectKey keyProperty="num" resultType="int" order="AFTER">
-			select seq_screen.currval from dual
-		</selectKey>
 		insert into screen values(seq_screen.nextval, #{theatercode}, 
 								#{name}, #{state}, #{screentype})
 	</insert>

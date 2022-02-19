@@ -1,4 +1,4 @@
-package com.test.finalproject.controller;
+package com.test.finalproject.controller.api;
 
 import java.util.List;
 
@@ -14,7 +14,8 @@ import com.test.finalproject.vo.TheaterVo;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping(value = "/theater", produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(value = "/api/theater"
+			, produces = {MediaType.APPLICATION_JSON_VALUE})
 @RequiredArgsConstructor
 public class TheaterAPIController {
 
@@ -25,9 +26,9 @@ public class TheaterAPIController {
 		return service.getList();
 	}
 	
-	@GetMapping("/{theatercode}")
-	public TheaterVo getTheater(@PathVariable int theatercode) {
-		return service.getTheater(theatercode);
+	@GetMapping("/{theatername}")
+	public TheaterVo getTheater(@PathVariable String theatername) {
+		return service.getTheaterByName(theatername);
 	}
 	
 }

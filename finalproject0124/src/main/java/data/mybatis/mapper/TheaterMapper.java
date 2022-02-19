@@ -9,7 +9,7 @@ public interface TheaterMapper {
 
 	List<TheaterVo> getList();
 	
-	TheaterVo getTheater(int theatercode);
+	TheaterVo getTheaterByName(String theatername);
 	
 	int insert(TheaterForm form);
 	
