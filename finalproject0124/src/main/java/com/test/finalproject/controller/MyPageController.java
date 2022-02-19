@@ -1,6 +1,7 @@
 package com.test.finalproject.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.test.finalproject.service.MemberService;
+import com.test.finalproject.vo.MemberQnaVo;
 import com.test.finalproject.vo.MemberVo;
 
 @Controller
@@ -25,8 +27,15 @@ public class MyPageController {
 	HttpSession session;
 	
 	@GetMapping("/member/mypage")
-	public String myPage() {				
-		return "member/myPage.tiles";
+	public String myPage(Principal principal, Model model) {				
+		List<MemberQnaVo> list = service.selectQna(principal.getName());			// 로그인한 아이디를 가져와서 qna 테이블 조건문에 삽입. 결과를 리스트로 담음.
+		
+//		System.out.println("list:" + list);
+		
+		model.addAttribute("qnaList", list);			// 모델 객체에 qnaList라는 이름으로 list 결과 값을 담음.
+		model.addAttribute("getMid", principal.getName());		
+		
+		return "member/myPage.tiles";		// 값을 담은 모델 객체를 가지고 뷰 페이지로 이동.
 	}
 	
 	@RequestMapping(value = "/member/doMyinfo", method=RequestMethod.POST)

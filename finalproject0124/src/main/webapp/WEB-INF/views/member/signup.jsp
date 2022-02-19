@@ -8,10 +8,10 @@
 <style type="text/css">
 h3 {
 	padding-top: 5%;
-	margin-left: 300px;
+	margin-left: 600px;
 }
 #membercheck{
-	margin-left: 300px;
+	margin-left: 600px;
 }
 table tr td {	
 	text-align: left;
@@ -26,7 +26,7 @@ table tr td input[name=maddr] {
 	/* {속성값 !important } 우선순위 지정 */
 }
 div .sign {
-	padding-left: 300px;
+	padding-left: 600px;
 }
 
 .ui-datepicker select {
@@ -70,7 +70,6 @@ div .sign {
 }
 </style>
 
-
 <h3>회원가입</h3>
 <hr style="color: #503396; ">
 <form:form method="post" action="${cp }/signup" id="membercheck" name="signupForm" onsubmit="return validation(this)">
@@ -78,7 +77,6 @@ div .sign {
 		<tr>
 			<th>아이디</th>
 			<td><input type="text" title="아이디" id="mid" name="mid" placeholder="아이디를 입력하세요." maxlength="12"/> 				
-<!-- 				<button type="button" id="bntIdCheck" onclick="idCheck()"></button> -->
 				<input type="button" value="중복검사"  id="idCheck">
 				<div class="valid">아이디를 입력하세요.(5~12글자, 영문 소문자, 숫자만 입력 가능)</div>
 			</td>
@@ -151,7 +149,7 @@ div .sign {
 	let regExpPhone = /^\d{3}\d{3,4}\d{4}$/;
 	let cnt = 0;
 	let sw = 0;
-	
+
 	// 주소 API
 	$("#execPostCode").click(function(){
 		new daum.Postcode({
@@ -344,10 +342,10 @@ div .sign {
  	}
 
  	$("#cancle").click(function(){
-		console.log(document.getElementById(cancle));
-		if (document.getElementById(cancle) == null){
-			alert("회원 가입이 취소되었습니다.");
-			location.href = "${cp}/"; 
+		if (confirm("회원가입을 취소하시겠습니까?") == true) {
+			location.href="${cp}/";
+		} else {
+			return false;
 		}
  	});
 </script>

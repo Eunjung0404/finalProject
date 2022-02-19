@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.test.finalproject.security.CustomUserDetail;
 import com.test.finalproject.vo.AuthoritiesVo;
+import com.test.finalproject.vo.MemberQnaVo;
 import com.test.finalproject.vo.MemberVo;
 
 import data.mybatis.mapper.MemberMapper;
@@ -92,5 +93,25 @@ public class MemberService {
 //	회원탈퇴
 	public int withdrawal(String mid) {
 		return mapper.withdrawal(mid);
+	}
+	
+	// 마이페이지에 작성한 문의 글 출력
+	public List<MemberQnaVo> selectQuestion(HashMap<String, Object> map) {
+		return mapper.selectQuestion(map);
+	}
+	
+	// 문의 글 개수
+	public int getCount(HashMap<String, Object> map) {
+		return mapper.count(map);
+	}
+	
+//	문의 글 상세보기
+	public MemberQnaVo detatilQuestion(HashMap<Object, Object> map) {
+		return mapper.detatilQuestion(map);
+	}
+	
+//	회원 아이디와 일치하는 문의 내역 출력
+	public List<MemberQnaVo> selectQna(String mid) {
+		return mapper.selectQna(mid);
 	}
 }
