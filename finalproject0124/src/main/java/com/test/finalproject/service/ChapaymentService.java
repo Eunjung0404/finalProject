@@ -1,5 +1,6 @@
 package com.test.finalproject.service;
 
+import java.util.Date;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,5 +31,17 @@ public class ChapaymentService {
 	public int seatInfoUpdate(int infocode)
 	{
 		return mapper.seatInfoUpdate(infocode);
+	}
+	public int addCount(int moviecode)
+	{
+		return mapper.addCount(moviecode);
+	}
+	public int getPaymentCode()
+	{
+		return mapper.getPaymentCode();
+	}
+	public Date getPaymentData()
+	{
+		return mapper.getPaymentData();
 	}
 }

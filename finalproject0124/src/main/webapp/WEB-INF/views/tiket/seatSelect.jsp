@@ -209,6 +209,7 @@
 	border-left: 1px solid #e5e5e5;
 	border-right: 1px solid #e5e5e5;
 	border-bottom: 1px solid #e5e5e5;
+	display: none;
 }
 
 .rp_tit {
@@ -241,6 +242,10 @@
 	text-decoration: none;
 }
 
+.credit_card_list>li a.active {
+	color: #ec6159;
+}
+
 .tab_menu>li.active button {
 	background: #ec6159;
 	color: #fff;
@@ -269,6 +274,9 @@
 	display: table;
 	table-layout: fixed;
 	width: 100%;
+	margin: 0px;
+	margin-top: 50px;
+	padding: 0;
 }
 
 .tab_menu>li button {
@@ -277,6 +285,10 @@
 	font-size: 15px;
 	cursor: pointer;
 	border: none;
+}
+
+.activeDiv {
+	display: block;
 }
 </style>
 <!-- 인원수 및 기타... -->
@@ -339,8 +351,8 @@
 <div class="row centerPosition nonedisplay" id="payway">
 	<div class="col-8 nonePadding">
 		<ul class="tab_menu" id="ulPayTab">
-			<li id="PayCARD" class=""><button type="button">신용카드</button></li>
-			<li id="PayMOBILE" class="active"><button type="button">휴대폰</button></li>
+			<li id="PayCARD" class="active"><button type="button">신용카드</button></li>
+			<li id="PayMOBILE" class=""><button type="button">휴대폰</button></li>
 			<li id="PayBANKTOWN" class=""><button type="button">실시간
 					계좌이체</button></li>
 			<li id="PayKAKAO_BANK" class=""><button type="button">카카오
@@ -350,47 +362,51 @@
 				</button></li>
 		</ul>
 	</div>
-	<div class="col-8 nonePadding" style="border: 1px solid gray">
-		<div class="tab_content ">
-			<ul class="credit_card_list">
-				<li onclick="_pay.SelPayCreditCardList(this)"><a
-					href="javascript:;" id="34" class="active">KEB하나카드</a></li>
-				<li onclick="_pay.SelPayCreditCardList(this)"><a
+
+	<div class="col-8 nonePadding" style="border: 1px solid gray"
+		id="paywaydiv">
+		<!-- 카드결제 -->
+		<div class="tab_content activeDiv" id="PayCARD-div">
+			<ul class="credit_card_list" id="creditcard_ul">
+				<li onclick="SelPayCreditCardList(event)"><a
+					href="javascript:;" id="34" class="">KEB하나카드</a></li>
+				<li onclick="SelPayCreditCardList(event)"><a
 					href="javascript:;" id="41">NH카드</a></li>
-				<li onclick="_pay.SelPayCreditCardList(this)"><a
+				<li onclick="SelPayCreditCardList(event)"><a
 					href="javascript:;" id="06">국민카드</a></li>
-				<li onclick="_pay.SelPayCreditCardList(this)"><a
+				<li onclick="SelPayCreditCardList(event)"><a
 					href="javascript:;" id="03">롯데카드</a></li>
-				<li onclick="_pay.SelPayCreditCardList(this)"><a
+				<li onclick="SelPayCreditCardList(event)"><a
 					href="javascript:;" id="11">비씨카드</a></li>
-				<li onclick="_pay.SelPayCreditCardList(this)"><a
+				<li onclick="SelPayCreditCardList(event)"><a
 					href="javascript:;" id="12">삼성카드</a></li>
-				<li onclick="_pay.SelPayCreditCardList(this)"><a
+				<li onclick="SelPayCreditCardList(event)"><a
 					href="javascript:;" id="51">수협카드</a></li>
-				<li onclick="_pay.SelPayCreditCardList(this)"><a
+				<li onclick="SelPayCreditCardList(event)"><a
 					href="javascript:;" id="43">시티카드</a></li>
-				<li onclick="_pay.SelPayCreditCardList(this)"><a
+				<li onclick="SelPayCreditCardList(event)"><a
 					href="javascript:;" id="14">신한카드</a></li>
-				<li onclick="_pay.SelPayCreditCardList(this)"><a
+				<li onclick="SelPayCreditCardList(event)"><a
 					href="javascript:;" id="14_1">신한아침愛카드(조조무료)</a></li>
-				<li onclick="_pay.SelPayCreditCardList(this)"><a
+				<li onclick="SelPayCreditCardList(event)"><a
 					href="javascript:;" id="14_2">신한패밀리LOVE카드</a></li>
-				<li onclick="_pay.SelPayCreditCardList(this)"><a
+				<li onclick="SelPayCreditCardList(event)"><a
 					href="javascript:;" id="44">우리카드</a></li>
-				<li onclick="_pay.SelPayCreditCardList(this)"><a
+				<li onclick="SelPayCreditCardList(event)"><a
 					href="javascript:;" id="04">현대카드</a></li>
-				<li onclick="_pay.SelPayCreditCardList(this)"><a
+				<li onclick="SelPayCreditCardList(event)"><a
 					href="javascript:;" id="32">광주은행카드</a></li>
-				<li onclick="_pay.SelPayCreditCardList(this)"><a
+				<li onclick="SelPayCreditCardList(event)"><a
 					href="javascript:;" id="33">전북은행카드</a></li>
-				<li onclick="_pay.SelPayCreditCardList(this)"><a
+				<li onclick="SelPayCreditCardList(event)"><a
 					href="javascript:;" id="52">제주은행카드</a></li>
 			</ul>
 
 			<p class="rp_txt">YES24 영화예매의 신용카드 결제서비스는 (주)케이지이니시스에서 제공합니다.</p>
 
 		</div>
-		<div class="tab_content">
+		<!--휴대폰결제 -->
+		<div class="tab_content" id="PayMOBILE-div">
 			<p class="rp_txt">
 				휴대폰 결제는 <span class="col_point">이달 상영하는 영화만 결제</span>할 수 있습니다. 다음달
 				관람할 영화를 예매하실 경우 다른 결제 수단을 이용해 주세요.
@@ -406,7 +422,8 @@
 				<li>휴대폰 요금을 현금으로 납부하는 경우에만 해당 이동통신사에서 발급 가능</li>
 			</ul>
 		</div>
-		<div class="tab_content">
+		<!-- 계좌 이체 -->
+		<div class="tab_content" id="PayBANKTOWN-div">
 			<p class="rp_txt">계좌이체 서비스는 "(주)케이지이니시스"에서 제공합니다.</p>
 			<p class="rp_txt">국민은행을 비롯하여 20여개 은행의 실시간 계좌이체가 가능합니다.</p>
 			<p class="rp_txt">계좌이체 이용은 은행별 이용시간 내에만 가능합니다.</p>
@@ -419,7 +436,14 @@
 			<p class="rp_txt">예) 금요일 예매 후 토요일에 취소했을 경우, 다음주 화요일 자동환불. 금요일 예매
 				후 다음 월요일에 취소했을 경우, 환불할 계좌 확인 후 환불</p>
 		</div>
-		<div class="tab_content">
+		<!--카카오페이 -->
+		<div class="tab_content" id="PayKAKAO_BANK-div">
+			<p class="rp_txt">※ 카카오페이는 YES24 무이자 할부 및 제휴카드 혜택 내용과 관계가 없으며,
+				별도의 카카오페이 기준에 따라 적용됩니다.</p>
+			<p class="rp_txt">※ 영화 예매시 별도의 카카오페이 포인트는 적립되지 않습니다.</p>
+		</div>
+		<!-- N페이 -->
+		<div class="tab_content" id="NaverPay-div">
 			<!--N페이 추가_20200720 -->
 			<p class="rp_txt">주문 변경 시 카드사 혜택 및 할부 적용 여부는 해당 카드사 정책에 따라 변경될 수
 				있습니다.</p>
@@ -483,11 +507,16 @@
 					<input type="hidden" name="username"
 						value="<sec:authentication property="principal.username" />">
 				</sec:authorize>
+				<!-- screentime -->
+				<input type="hidden" value="${vo.screentime}" name="screentime">
+				<!-- screendate -->
+				<input type="hidden" value="${screendate}" name="screendate">
 				<!-- timecode -->
 				<input type="hidden" value="${vo.timecode}" name="timecode">
 				<!-- 인원수 -->
 				<input type="hidden" value="" name="count" id="count">
 				<!-- 영화이름 -->
+				<input type="hidden" value='${vo.moviecode}' name="moviecode">
 				<input type="hidden" value='${vo.movienamehtml}'
 					name="movienamehtml">
 				<input type="hidden" value='${vo.movieimgname}' name="movieimgname">
@@ -499,7 +528,7 @@
 				<!-- totalprice -->
 				<input type="hidden" value="" name="totalprice" id="total-price">
 				<!-- 결제 방식 -->
-				<input type="hidden" value="test" name="paymenttype"
+				<input type="hidden" value="신용카드" name="paymenttype"
 					id="payment-type">
 				<!-- 좌석정보 -->
 				<button class="paymentbtn" onclick="nextsubmit()">결제</button>
@@ -531,9 +560,51 @@
 		createPPbtn("teenager", "people", teencount);
 		createSeat(screencode, timecode);
 		//setEvent();
+		setpaybtnEvent();
 	}
 	function nextsubmit() {
 		document.getElementById("nextform").submit();
+	}
+	function setpaybtnEvent() {
+
+		let ulPayTab = document.getElementById("ulPayTab");
+		let lis = ulPayTab.getElementsByTagName("li");
+		for (var i = 0; i < lis.length; i++) {
+			lis[i].addEventListener('click', function(event) {
+				let ulPayTab = document.getElementById("ulPayTab");
+				let lis = ulPayTab.getElementsByTagName("li");
+				for (var j = 0; j < lis.length; j++) {
+					lis[j].classList.remove("active");
+
+				}
+				event.target.parentNode.className = "active";
+				let paywaydiv = document.getElementById("paywaydiv");
+				let divs = paywaydiv.getElementsByTagName("div");
+				for (var j = 0; j < divs.length; j++) {
+					divs[j].classList.remove("activeDiv");
+
+				}
+				let div = document.getElementById(event.target.parentNode.id
+						+ "-div");
+				console.log(event.target.id + "-div");
+				console.log(event);
+				div.className += " activeDiv";
+				let paymenttype = document.getElementById('payment-type');
+				paymenttype.value = event.target.innerText;
+			});
+		}
+	}
+	function SelPayCreditCardList(event) {
+		let creditcard = document.getElementById("creditcard_ul");
+		let lis = creditcard.getElementsByTagName("li");
+		for (var j = 0; j < lis.length; j++) {
+			lis[j].firstChild.classList.remove("active");
+
+		}
+		event.target.className = "active";
+		let paymenttype = document.getElementById('payment-type');
+		paymenttype.value = "신용카드/" + event.target.innerText;
+
 	}
 	function nextPage() {
 		let payway = document.getElementById("payway");

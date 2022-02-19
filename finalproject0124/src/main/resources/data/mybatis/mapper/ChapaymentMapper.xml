@@ -19,12 +19,26 @@
 		values(SEQ_RESERVATIONSEAT.nextval,#{RESERVATIONCODE},#{SEATNAME})
 
 	</insert>
+	<!-- 영화카운트 올리기 -->
+	<update id="addCount" parameterType="int">
+	update movie_m set count=count+1 where moviecode=#{moviecode}
+	</update>
+	<!-- 결제테이블 인서트 -->
 	<insert id="paymentInsert" parameterType="hashmap">
 		insert into PAYMENT
 		values(SEQ_PAYMENT.nextval,#{RESERVATIONCODE},#{TOTALPRICE},#{PAYMENTTYPE},sysdate)
 	</insert>
+	<!-- seatinfo_update -->
 	<update id="seatInfoUpdate"
 		parameterType="int">
         update seat_info set state=1 where infocode=#{infocode}
 	</update>
+	<!-- 결제번호가져오기 -->
+	<select id="getPaymentCode" resultType="int">
+	<![CDATA[select paymentcode FROM payment where ROWNUM <= 1 order by paymentcode desc]]>
+	</select>
+		<!-- 결제날짜가져오기 -->
+	<select id="getPaymentData" resultType="java.util.Date">
+	<![CDATA[select paymentdate FROM payment where ROWNUM <= 1 order by paymentcode desc]]>
+	</select>
 </mapper>

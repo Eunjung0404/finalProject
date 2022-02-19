@@ -1,5 +1,6 @@
 package com.test.finalproject.vo;
 
+
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -30,6 +31,8 @@ public class TiketSeatParameterVo {
 	private String movieimgname;
 	private String movienamehtml;
 	//상영관 일시.상영시간
-	
+	private String screendate;
+	private String screentime;
+	private String moviecode;
 	private List<String> seatname;
 }
