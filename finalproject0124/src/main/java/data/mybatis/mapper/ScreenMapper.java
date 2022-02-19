@@ -7,7 +7,7 @@ import com.test.finalproject.vo.ScreenVo;
 
 public interface ScreenMapper {
 
-	List<ScreenVo> getList();
+	List<ScreenVo> getList(int theatercode);
 	
 	ScreenVo getScreen(int screencode);
 	

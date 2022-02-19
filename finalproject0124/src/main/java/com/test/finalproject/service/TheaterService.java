@@ -1,7 +1,6 @@
 package com.test.finalproject.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -22,10 +21,12 @@ public class TheaterService {
 		return mapper.getList();
 	}
 	
-	public TheaterVo getTheater(int theatercode) {
-		return Optional.ofNullable(mapper.getTheater(theatercode))
-				.orElseThrow(() -> 
-					new NoSearchSqlException("조회 오류 : 극장 정보가 없습니다."));
+	public TheaterVo getTheaterByName(String theatername) {
+		TheaterVo result = mapper.getTheaterByName(theatername);
+		if(result == null) {
+			new NoSearchSqlException("조회 오류 : 극장 정보가 없습니다.");
+		}
+		return result;
 	}
 	
 	public int insert(TheaterForm form) {

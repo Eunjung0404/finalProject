@@ -12,13 +12,16 @@
 	</select>
 	
 	<!-- 좌석 등록 -->
-	<insert id="insert" 
-		parameterType="com.test.finalproject.form.SeatForm"
-	>
-		insert into seat values
-		<foreach item="item" collection="list" separator=",">
-			(seq_seat.nextval, #{screencode}, #{item.seatrow}
-				, #{item.seatcol}, #{item.code}, #{item.state})
+	<insert id="insert">
+		<selectKey resultType="int" order="AFTER">
+			select count(*) from seat 
+			where screencode=#{screencode} and state=1
+		</selectKey>
+		<foreach item="seat" collection="list" separator=" " 
+			open="INSERT ALL" close="select * from dual"
+		>
+			into seat values (get_seq_seat_nextval, #{seat.screencode}
+			, #{seat.seatrow}, #{seat.seatcol}, #{seat.code}, #{seat.state})
 		</foreach>
 	</insert>
 	

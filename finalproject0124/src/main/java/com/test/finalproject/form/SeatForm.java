@@ -9,6 +9,9 @@ import lombok.Data;
 public class SeatForm {
 	
 	@NotNull
+	private int screencode;
+	
+	@NotNull
 	private int seatrow;
 	
 	@NotNull
