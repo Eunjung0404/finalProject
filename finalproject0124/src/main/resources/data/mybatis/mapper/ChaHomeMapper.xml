@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.mybatis.mapper.ChaHomeMapper">
+	<!-- 1위부터5위까지 -->
+	<select id="getTopFiveMovie" resultType="com.test.finalproject.vo.Movie_MVo">
+	<![CDATA[select * from movie_m where ROWNUM <=5 order by count desc]]>
+	</select>
+	<!-- 이미지 가져오기 -->
+	<select id="getTopFiveMovieImg" parameterType="int" resultType="com.test.finalproject.vo.MovieImgVo">
+	select * from movie_img where moviecode=#{moviecode} and ROWNUM=1 order by mimgcode asc
+	</select>
+	
+</mapper>
