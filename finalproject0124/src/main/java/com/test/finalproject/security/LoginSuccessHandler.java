@@ -26,8 +26,8 @@ public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessH
 		
 		Cookie cookie = new Cookie("mid", request.getParameter("username"));
 		cookie.setMaxAge(30*60); 	// 쿠키 유지시간(30초)
-		cookie.setPath("/");
 		response.addCookie(cookie);
+		
 //		System.out.println("id" + request.getParameter("username"));
 		
 		String path = request.getContextPath() + "/";

@@ -161,8 +161,8 @@
 		let pwd = $("#password").val();
 		let chk = document.getElementById("checkbox2").checked; // 체크박스 체크 여부 (true / false로 담김)
 		//	let c = $.cookie('mid');
-		console.log("내가적은아이디:" + id);
-		console.log(chk);
+// 		console.log("내가적은아이디:" + id);
+// 		console.log(chk);
 		if ($("#username").val() == "") { // 아이디를 입력하지 않았다면
 			alert("아이디를 입력해주세요!");
 			$("#username").focus();

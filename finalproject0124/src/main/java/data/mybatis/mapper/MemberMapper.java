@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.test.finalproject.security.CustomUserDetail;
 import com.test.finalproject.vo.AuthoritiesVo;
+import com.test.finalproject.vo.MemberQnaVo;
 import com.test.finalproject.vo.MemberVo;
 
 public interface MemberMapper {
@@ -42,5 +43,17 @@ public interface MemberMapper {
 	
 //	회원탈퇴
 	int withdrawal(String mid);
+	
+//	마이페이지에 작성한 문의 글 출력
+	List<MemberQnaVo> selectQuestion(HashMap<String, Object> map);
+	
+//	문의 글 개수
+	int count(HashMap<String, Object> map);
+	
+//	문의 내역 상세보기
+	MemberQnaVo detatilQuestion(HashMap<Object, Object> map);
+	
+//	회원 아이디와 일치하는 문의내역 출력
+	List<MemberQnaVo> selectQna(String mid);
 } 
 

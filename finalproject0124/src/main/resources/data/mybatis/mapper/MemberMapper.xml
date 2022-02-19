@@ -84,6 +84,45 @@
 		set enabled = 0
 		where mid = #{mid}
 	</update>
-		
-		
+
+	<sql id="search">
+		<if test="field != null and field != ''">
+			where ${field} like '%' || #{keyword} || '%' 
+		</if>
+	</sql>
+
+	<!-- 마이페이지에 작성한 문의 글 출력 -->
+	<select id="selectQuestion" parameterType="hashmap" resultType="com.test.finalproject.vo.MemberQnaVo">
+	select * from
+		(
+     		select aa.*,rownum rnum from
+    		(
+				select * from qna where mid=#{mid}
+				<include refid="search"/>	
+				order by qnacode desc
+     		)aa
+	 <![CDATA[	) where rnum>=#{startRow} and rnum<=#{endRow} ]]>
+	</select>
+
+	<!-- 전체 글의 개수 -->
+	<select id="count" resultType="int" parameterType="hashmap">
+		select NVL(count(*),0) cnt from qna 
+		where mid=#{mid}
+		<include refid="search"/>
+	</select>
+
+<!-- 	문의 내역 상세보기 -->
+	<select id="detatilQuestion" parameterType="hashmap" resultType="com.test.finalproject.vo.MemberQnaVo">
+		select *
+		from member_m m, qna q
+		where m.mid=#{mid}	and q.qnacode=#{qnacode}
+	</select>
+	
+<!-- 	회원 아이디와 일치하는 문의 내역 출력 -->
+	<select id="selectQna" parameterType="String" resultType="com.test.finalproject.vo.MemberQnaVo">
+		select * from qna
+		where mid = #{mid}
+		order by qnacode asc
+	</select>
+
 </mapper>

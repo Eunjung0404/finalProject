@@ -24,7 +24,7 @@ public class SignupController {
 	public String singup(MemberVo vo, Model model) {
 		try {
 			int n = service.addMember(vo);
-			System.out.println("회원가입 결과: " + n);
+//			System.out.println("회원가입 결과: " + n);
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("code", "fail");

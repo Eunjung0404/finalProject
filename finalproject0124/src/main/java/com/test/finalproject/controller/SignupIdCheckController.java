@@ -19,7 +19,7 @@ public class SignupIdCheckController {
 	@RequestMapping(value = "/idCheck", method = RequestMethod.GET)
 	@ResponseBody
 	public int idCheck(@RequestParam("mid") String mid) {
-		System.out.println("id:" + mid);
+//		System.out.println("id:" + mid);
 		int n = service.idCheck(mid);
 //		System.out.println("n:" + n);
 		return n;
