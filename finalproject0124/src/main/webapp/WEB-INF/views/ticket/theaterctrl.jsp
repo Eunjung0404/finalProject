@@ -19,7 +19,7 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	padding:100px;
+	padding: 100px;
 }
 
 .tablecss {
@@ -52,11 +52,12 @@
 								<div>
 
 									<table class="tablecss">
-										<tr>
-											<th>영화이름</th>
-											<th>영화상태</th>
-										</tr>
-
+										<thead class="v-data-table-header">
+											<tr>
+												<th>영화이름</th>
+												<th>영화상태</th>
+											</tr>
+										</thead>
 									</table>
 								</div>
 							</div>
