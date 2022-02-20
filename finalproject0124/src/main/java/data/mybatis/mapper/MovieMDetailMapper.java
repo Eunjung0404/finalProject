@@ -10,7 +10,13 @@ public interface MovieMDetailMapper {
 	
 	Movie_MVo detail(int moviecode);
 	
-	List<Movie_MVo> selectAll();
+	//영화 등록 리스트 페이징
+	List<Movie_MVo> selectAll(HashMap<String, Object> map1);
 	
+	int moviecount(HashMap<String, Object> map1);
+	
+	//검색페이지
 	List<Movie_MVo> searchlist(HashMap<String, Object> map);
+	
+	int movieupdate(Movie_MVo vo);
 }
