@@ -3,6 +3,7 @@ package com.test.finalproject.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.test.finalproject.error.exception.NoSearchSqlException;
 import com.test.finalproject.form.SeatForm;
@@ -29,6 +30,7 @@ public class SeatService {
 		return mapper.insert(list, screencode);
 	}
 	
+	@Transactional(rollbackFor = Exception.class)
 	public int update(int screencode, List<SeatForm> list) {
 		mapper.delete(screencode);
 		return mapper.insert(list, screencode);
