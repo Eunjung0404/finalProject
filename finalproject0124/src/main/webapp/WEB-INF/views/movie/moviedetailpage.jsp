@@ -22,7 +22,7 @@
 	div.comm1{width:400px; height:120px; border:1px solid #aaa; padding:5px; margin-top:5px;}
 	
 	textarea{
-		height: 134px; width: 510px; border: none;
+		height: 134px; width: 510px; border: none; font-size:13px; text-align:left; padding-top: 38px; resize:none;
 	}
 	
 	/* 별점 관련 */
@@ -165,7 +165,7 @@
 					let username=$("#mid").val();
 					let str="admin";
 					//alert("username" + username);
-					if(username==d.mid || username==str.substring(0,5)){ //|| username=='admin' || username='admin' 관리자 계정 substring으로 앞의 5글자만 뽑아오기
+					if(username==d.mid || username==str.substring(0,5)){ //|| username=='admin' 관리자 계정 substring으로 앞의 5글자만 뽑아오기
 							html += " <input type='button' id='delBtn' value='삭제' onclick='removeReview("+reviewcode+")' >";
 							
 					}
@@ -226,21 +226,20 @@
 		<!-- 포스터 영화 내용 -->
 		<div class="row" id="mainposter">
 			<div class="col-md-4 text-center" id="poster">
-				<img class="" src="${cp }/resources/images/movieupload/${vo.movieimg}" style="width:290px; height:416px;">
+				<img class="" src="${cp }/resources/images/movieupload/${vo.movieimg}" style="width:290px; height:413.45px;">
 			</div>
 			<div class="col-md-8" id="moviebox">
 				<div class="col-sm-12 text-left"> 
-				<h2 class="title" style="font-weight: bold;">${vo.moviename }</h2>
+				<h2 class="title" style="font-weight: bold; font-size: 50px;">${vo.moviename }</h2>
 				
 				<p class="starAvg">평점 ${avg.avgscore }</p>
 				
 				<p class="content">${vo.opendate } 개봉 | ${vo.runtime }분 | ${vo.rating } | ${vo.genre } | ${vo.country }</p>
-					<button type="button" id="btnReserve" onclick="">예매</button>
+				배우정보: ${vo.actorinfo }<br>
+					<br><button type="button" id="btnReserve" onclick="">예매</button>
 			</div>
 		</div>
 	</div>
-	
-	배우정보: ${vo.actorinfo }<br>
 	
 	<h3>동영상</h3>
 	<iframe width="1246" height="701" src="${vo.video }" title="YouTube video player" 
@@ -263,8 +262,9 @@
 		
 		
 		<!-- 평점 -->
+		
+	<p id="reviewtitle">평점</p>
 		<div id="commentsForm">
-			<p id="reviewtitle">평점</p>
 			<div class="comment_top">
 				<form action="commentWriteOk">
 					<span>나의 평점</span>
@@ -283,8 +283,8 @@
 					<div class="comment_cont">
 						<sec:authorize access="isAuthenticated()"> <!-- 로그인 했을 경우 -->
 							<sec:authentication property="principal.username" var="username" />
-							<textarea placeholder="별점을 먼저 선택하신 후, 감상을 남겨주세요." rows="5"
-								cols="50" id="comments"></textarea>
+							<textarea placeholder="별점을 먼저 선택하신 후, 감상을 남겨주세요. 
+욕설, 비속어, 타인을 비방하는 문구를 사용하시면 운영자가 임의로 삭제할 수 있습니다." id="comments"></textarea>
 							<input type="hidden" id="mid" name="mid" value="${username }">
 							<input type="hidden" id="regdate" name="regdate">
 							<input type="button" value="등록" id="btnadd">
@@ -293,20 +293,21 @@
 
 					<sec:authorize access="isAnonymous()"> <!-- 로그인 안했을 경우 -->
 						<div class="comment_cont">
-							<textarea placeholder="별점을 먼저 선택하신 후, 감상을 남겨주세요." rows="5"
-								cols="50" id="comments"></textarea>
+							<textarea placeholder="별점을 먼저 선택하신 후, 감상을 남겨주세요. 
+욕설, 비속어, 타인을 비방하는 문구를 사용하시면 운영자가 임의로 삭제할 수 있습니다." id="comments"></textarea>
 							<input type="button" value="등록" id="btnNotLogin">
 						</div>
 					</sec:authorize>
 				</form>
 			</div>
-			<br>
 			<div id="commentsList">
 			</div>
 			<div id="page"></div>
 			<!--  <button id="moreList"><span>더보기</span></button> -->
-		</div>
-	</div>
+		</div> 
+		
+		
+	</div> <!-- 배경색 div -->
 </body>
 
 

@@ -28,13 +28,31 @@
 		)
 	</select>
 	
-	<select id="selectAll" resultType="com.test.finalproject.vo.Movie_MVo">
-		select * from movie_m
+	<select id="selectAll" resultType="com.test.finalproject.vo.Movie_MVo" parameterType="hashmap">
+		select * from
+		(
+		select b.*, rownum rnum
+		from(
+			select * from movie_m
+			order by moviecode desc
+		)b
+		)
+		<![CDATA[ where rnum>=#{startRow} and rnum<=#{endRow} ]]>
+	</select>
+	
+	<select id="moviecount" resultType="int" parameterType="hashmap">
+		select NVL(count(*),0) cnt from movie_m
 	</select>
 	
 	<select id="detail" parameterType="int" resultType="com.test.finalproject.vo.Movie_MVo">
 		select * from movie_m where moviecode=#{moviecode}
 	</select>
 	
-	
+	<update id="movieupdate" parameterType="com.test.finalproject.vo.Movie_MVo">
+		update movie_m set moviename=#{moviename}, runtime=#{runtime}, director=#{director}, genre=#{genre}, rating=#{rating}, country=#{country},
+		 actorinfo=#{actorinfo}, 
+		 <if test="movieimg!=null">
+		 movieimg=#{movieimg}
+		 </if>, opendate=#{opendate}, state=#{state}, video=#{video}, count=#{count} where moviecode=#{moviecode}
+	</update>
 </mapper>
