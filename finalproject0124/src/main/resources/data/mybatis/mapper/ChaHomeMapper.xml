@@ -5,11 +5,22 @@
 <mapper namespace="data.mybatis.mapper.ChaHomeMapper">
 	<!-- 1위부터5위까지 -->
 	<select id="getTopFiveMovie" resultType="com.test.finalproject.vo.Movie_MVo">
-	<![CDATA[select * from movie_m where ROWNUM <=5 order by count desc]]>
+	<![CDATA[select * from(select * from movie_m order by count desc) where ROWNUM <=5]]>
 	</select>
 	<!-- 이미지 가져오기 -->
 	<select id="getTopFiveMovieImg" parameterType="int" resultType="com.test.finalproject.vo.MovieImgVo">
 	select * from movie_img where moviecode=#{moviecode} and ROWNUM=1 order by mimgcode asc
 	</select>
-	
+	<!-- 상영중 영화데이터 가져오기(순위별) -->
+	<select id="getCurrnetMovie" resultType="com.test.finalproject.vo.Movie_MVo">
+	select * from movie_m where state=1 order by count desc
+	</select>
+	<!-- 계봉예정중 영화데이터 가져오기 -->
+	<select id="getFutureMovie" resultType="com.test.finalproject.vo.Movie_MVo">
+	<![CDATA[select * from movie_m where state=2 and opendate>sysdate]]>
+	</select>
+	<!-- 공지사항 가져오기 -->
+	<select id="getnote" resultType="com.test.finalproject.vo.NoteVo">
+	select * from note where ROWNUM=1 order by notecode asc
+	</select>
 </mapper>

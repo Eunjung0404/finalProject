@@ -18,7 +18,7 @@ import com.test.finalproject.service.ChaTheaterService;
 import com.test.finalproject.vo.TiketScreenTimeVo;
 
 @RestController
-public class TiketJsonController {
+public class TicketJsonController {
 
 	@Autowired
 	ChaTheaterService service;

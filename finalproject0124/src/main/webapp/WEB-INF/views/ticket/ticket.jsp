@@ -219,7 +219,7 @@
 .rating {
 	padding-top: 5px;
 	margin: 5px;
-	 display : inline-block;
+	display: inline-block;
 	width: 25px;
 	height: 22px;
 	line-height: 1;
@@ -243,12 +243,12 @@
 	color: aqua;
 	border: 1px solid aqua;
 }
-.enone
-{
-pointer-events: none
+
+.enone {
+	pointer-events: none
 }
 </style>
-
+<input id="num" value="${moviecode }" type="hidden">
 <div class="row centerPosition">
 	<!-- 영화선택창 -->
 	<div class="col-3 nonePadding" style="margin-top: 100px;">
@@ -461,7 +461,8 @@ pointer-events: none
 	<!-- 영화이미지 -->
 	<input type="hidden" value="" id="movieimgname" name="movieimgname">
 
-	<button id="nextpage" disabled="disabled" onclick="nextpage()" class="nextpage">
+	<button id="nextpage" disabled="disabled" onclick="nextpage()"
+		class="nextpage">
 		<img src="/finalproject/resources/images/icon/forword.png" alt="다음페이지">
 	</button>
 
@@ -512,6 +513,40 @@ pointer-events: none
 
 	}
 
+	function checkparam() {
+		let num = document.getElementById("num");
+		if (num.value != 0) {
+			//영화목록 가져오기
+			console.log("파라미터" + num.value);
+			let aco = document.getElementById('accordionFlushExample');
+			for (var x = 0; x < aco.childNodes.length; x++) {
+
+				//ul정보 가져오기
+				let tab = document.getElementsByClassName('Tab');
+				for (var y = 0; y < tab.length; y++) {
+
+					//ul-li가져오기
+					let lis = tab[y].getElementsByTagName('li');
+					console.log("체크" + lis.length);
+					for (var z = 0; z < lis.length; z++) {
+						//console.log("z="+z);
+						//li배열에서 moviecode가 같을경우 해당 li click()이벤트 발생
+						if (lis[z].id == num.value) {
+							lis[z].click();
+							//console.log("z="+z);
+							if (lis[z].parentNode.id=="Tab2") {
+								accordionctrl('flush-collapseTwo',
+										'flush-collapseOne', document.getElementById('flushbtn2'),
+										'flushbtn1')
+										//console.log();
+							}
+							
+						}
+					}
+				}
+			}
+		}
+	}
 	function nextpage() {
 		document.getElementById("nextform").submit();
 	}
@@ -521,6 +556,7 @@ pointer-events: none
 		for (var i = 0; i < lis.length; i++) {
 			lis[i].className = "";
 		}
+
 	}
 	//작동
 	function accordionctrl(id, id2, event, id3) {
@@ -531,6 +567,7 @@ pointer-events: none
 			flush.className += ' show';
 			flush2.classList.remove('show');
 			event.target.classList.remove('collapsed');
+			console.log("테스트="+event.target.classList)
 			btn.className += " collapsed"
 		}
 
@@ -670,21 +707,21 @@ pointer-events: none
 					} else if (json.result[i].RATING == '15') {
 						ratingid = "rating15"
 					}
-					if(i<10)
-						{
-						li.innerHTML=i+1+" ";
-						}
-						
+					if (i < 10) {
+						li.innerHTML = i + 1 + " ";
+					}
+
 					li.innerHTML += "<span id="+ratingid+" class='rating enone'>"
 							+ json.result[i].RATING + "</span>"
 
-					li.innerHTML += "<span class='enone'>"+json.result[i].MOVIENAME + "</span>";
+					li.innerHTML += "<span class='enone'>"
+							+ json.result[i].MOVIENAME + "</span>";
 					li.id = json.result[i].MOVIECODE;
 					li.onclick = function(event) {
 						//버튼비활성화
-						let nextpage=document.getElementById('nextpage');
-						nextpage.disabled=true;
-						nextpage.className='nextpage';
+						let nextpage = document.getElementById('nextpage');
+						nextpage.disabled = true;
+						nextpage.className = 'nextpage';
 						resetArea();
 						areas[0].className = "clickarea";
 						let tab = document.getElementById("Tab1");
@@ -701,9 +738,7 @@ pointer-events: none
 						}
 						//넘겨줄값 넣기
 						moviecode.value = event.target.id;//영화코드
-					
-						
-						
+
 						let moviename = document.getElementById('movie-name');
 						moviename.value = event.target.innerHTML;//영화이름
 						moviename.style.color = "white";
@@ -713,34 +748,35 @@ pointer-events: none
 						let posterdiv = document
 								.getElementById("movieposterinfo");
 						let movieimgname = document
-						.getElementById('movieimgname');
-						movieimgname.value=event.target.lastChild.value;
+								.getElementById('movieimgname');
+						movieimgname.value = event.target.lastChild.value;
 						let posterImg = document.getElementById('posterImg');
 						posterImg.src = getContextPath()
 								+ "/resources/images/movieupload/"
 								+ event.target.lastChild.value;
 						//배경에 img깔기
-						posterdiv.style.backgroundImage =
-						"url(" + getContextPath()
+						posterdiv.style.backgroundImage = "url("
+								+ getContextPath()
 								+ "/resources/images/movieupload/"
 								+ event.target.lastChild.value + ")";
-					
+
 						let movienamediv = document
 								.getElementById("movie-name");
-						
+
 						let mn = document.getElementById('moviename');
 						let mnh = document.getElementById('movienamehtml');
 						mn.value = event.target.childNodes[2].innerText;
-						if (event.target.parentNode.id=="Tab1") {
-							movienamediv.innerHTML = event.target.innerHTML.substr(1);
-							mnh.value=event.target.innerHTML.substr(1);
-						
+						if (event.target.parentNode.id == "Tab1") {
+							movienamediv.innerHTML = event.target.innerHTML
+									.substr(1);
+							mnh.value = event.target.innerHTML.substr(1);
+
 						} else {
 							movienamediv.innerHTML = event.target.innerHTML;
-							mnh.value=event.target.innerHTML;
-						
+							mnh.value = event.target.innerHTML;
+
 						}
-					
+
 						//초기화
 						let selectarea = document.getElementById("select-area");
 						selectarea.style.color = 'white';
@@ -777,7 +813,9 @@ pointer-events: none
 					}
 
 				}
+				checkparam();
 			}
+
 		}
 		xhr.open('get', '/finalproject/tiket-movie', true);
 		xhr.send();
@@ -830,9 +868,9 @@ pointer-events: none
 					li.id = list[i].THEATERCODE;
 					li.onclick = function(event) {
 						//버튼비활성화
-						let nextpage=document.getElementById('nextpage');
-						nextpage.disabled=true;
-						nextpage.className='nextpage';
+						let nextpage = document.getElementById('nextpage');
+						nextpage.disabled = true;
+						nextpage.className = 'nextpage';
 						//let tab = document.getElementById("theaterList");
 						let lis = theaterList.getElementsByTagName("li");
 						for (var i = 0; i < lis.length; i++) {
@@ -1038,9 +1076,10 @@ pointer-events: none
 							td[j].className += " time";
 							td[j].onclick = function(event) {
 								//버튼비활성화
-								let nextpage=document.getElementById('nextpage');
-								nextpage.disabled=true;
-								nextpage.className='nextpage';
+								let nextpage = document
+										.getElementById('nextpage');
+								nextpage.disabled = true;
+								nextpage.className = 'nextpage';
 								let timearea = document
 										.getElementById('select-time');
 								let day = new Date(event.target.id);
@@ -1151,9 +1190,10 @@ pointer-events: none
 							//시간선택시
 							infodiv.onclick = function(event) {
 								//버튼활성화
-								let nextpage=document.getElementById('nextpage');
-								nextpage.disabled=false;
-								nextpage.className+=' click';
+								let nextpage = document
+										.getElementById('nextpage');
+								nextpage.disabled = false;
+								nextpage.className += ' click';
 								event.target.className += " clickli";
 								let timecode = document
 										.getElementById("timecode");
@@ -1161,8 +1201,8 @@ pointer-events: none
 								//정보넣기
 								let sc = document.getElementById("screencode");
 								let st = document.getElementById("screentime");
-								let sn=document.getElementById('screenname');
-								sn.value= event.target.lastChild.value;
+								let sn = document.getElementById('screenname');
+								sn.value = event.target.lastChild.value;
 								sc.value = event.target.name;
 								st.value = event.target.innerText;
 								//정보넣기
@@ -1176,8 +1216,7 @@ pointer-events: none
 								selectscreen.style.color = 'white';
 								selectscreen.innerText = '/'
 										+ event.target.lastChild.value;
-								
-							
+
 							}
 							timediv.appendChild(infodiv);
 						}

@@ -20,13 +20,14 @@ import com.test.finalproject.vo.TiketParameterVo;
 import com.test.finalproject.vo.TiketSeatParameterVo;
 
 @Controller
-public class TiketController {
+public class TicketController {
 	@Autowired
 	ChapaymentService service;
 
-	@GetMapping("/tiket")
-	public String tiketPage() {
-		return "tiket/tiket.tiles";
+	@GetMapping("/ticket")
+	public String tiketPage(Model m,@RequestParam(value="moviecode",defaultValue="0")int moviecode) {
+		m.addAttribute("moviecode", moviecode);
+		return "ticket/ticket.tiles";
 	}
 
 	@PostMapping("member/payment")
@@ -74,14 +75,14 @@ public class TiketController {
 		m.addAttribute("reservationcode", reservationcode);
 		m.addAttribute("paymentcode", paymentcode);
 		m.addAttribute("paymentdate", sDate);
-		return "tiket/payment.tiles";
+		return "ticket/payment.tiles";
 
 	}
 
 	@RequestMapping("member/seat")
 	public String seatPage(Model m, TiketParameterVo vo) {
 		if (vo.getScreencode() == null || vo.getScreencode() == "") {
-			return "redirect:/tiket";
+			return "redirect:/ticket";
 		}
 		SimpleDateFormat datefromat = new SimpleDateFormat("yyyy/MM/dd (E)요일");
 		String sDate = datefromat.format(vo.getScreendate());
@@ -89,7 +90,7 @@ public class TiketController {
 		m.addAttribute("vo", vo);
 		m.addAttribute("screendate", sDate);
 
-		return "tiket/seatSelect.tiles";
+		return "ticket/seatSelect.tiles";
 	}
 
 }
