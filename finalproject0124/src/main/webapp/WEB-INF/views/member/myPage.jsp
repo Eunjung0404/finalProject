@@ -44,6 +44,17 @@ div #textBox {
 	background-color: #49434e;
 	color: #fff!important;
 }
+
+/* 문의사항 상세보기 */
+.input-textarea.view {
+	color: #000!important;
+	background-color: #fff;
+	height: 330px;
+}
+.input-textarea {
+ padding: 10px;
+ 
+}
 </style>
 
 <%
@@ -97,7 +108,12 @@ for (Cookie c : cookies) {
 
 
 <div class="w3-container" id="questionTable">
+ 	<div class="w3-qna" id="qna" style="display: none;"><input type="button" value="1:1 문의하기" id="qnaBtn">
+ 	</div>
   <table class="w3-table" id="question">
+  </table>
+  
+  <table class="w3-table" id="detail">
   </table>
 </div>
 
@@ -123,8 +139,8 @@ for (Cookie c : cookies) {
 		document.getElementById("mySidebar").style.width = "25%";
 		document.getElementById("mySidebar").style.display = "block";
 		document.getElementById("openNav").style.display = 'none';
-		questionBtn.disabled = false;	
-		changeInfoBtn.disabled = false;
+		questionBtn.disabled = false;		// 메뉴 버튼을 클릭하면 메뉴의 문의내역 버튼 활성화
+		changeInfoBtn.disabled = false;		// 메뉴 버튼을 클릭하면 메뉴의 개인정보수정 버튼 활성화
 	}
 	function w3_close() {
 		document.getElementById("main").style.marginLeft = "0%";
@@ -134,26 +150,29 @@ for (Cookie c : cookies) {
 		document.getElementById("openNav").style.display = "inline-block";
 	}
 
-
-	$("#questionBtn").click(function(e){
-		questionBtn.disabled = true;			// 문의내역 버튼을 클릭했을 때 문의내역 버튼 비활성화
-		page(1);					// 문의내역 버튼을 클릭했을 때 문의내역 페이지 출력
-	});
 	
 	// QnA 상세 보기
 	let idForm = $("#idDataFrom").serialize();
 	//.log(data.qnacode);
 	function detailQuesion(qnacode,id){
-
+		$("#question").empty();
 		$.ajax({
 			url: "${cp}/member/detailQuestion",
 			data:{"qnacode":qnacode,"mid": id},
 			type: "GET",
 			dataType: "JSON",
 			success: function(data){
-// 				console.log(data.title);
+// 				alert(data.mname);
 				let output = "";
-// 				output += 
+				output += "</div>";
+				output += "<div id='detail'><p><span class='tit'>" + data.mname + "</span></p>";
+				output += "<p><span class='txt'>" + data.mphone + "</span></p>";
+				output += "<p><span class='txt'>" + data.memail + "</span></p>";
+				output += "<p><span class='txt'>" + data.regdate + "</span></p>";
+				output += "</div>";
+				output += "<div id='cont'><textarea rows='5' clos='30' readyonly class='input-text area view' style='border:non;' id='inqCn'>" + data.content + "</textarea>";
+				output += "</div>";
+				$("#detail").append(output);
 			}, error: function(){
 				console.log("문의내역 상세정보 받아오기 실패!");
 			}
@@ -162,10 +181,10 @@ for (Cookie c : cookies) {
 
 	// 회원 정보 변경을 하기 위해서 비밀번호 확인을 한 번 더 요청
 	$("#changeInfoBtn").on("click", function(){
-		document.getElementById("questionBtn").disabled = false;
-		$("#question").empty();
 		$("#textBox").show();
-		document.getElementById("changeInfoBtn").disabled = true;
+		$("#question").empty();
+		$("#qna").hide();
+		$("#detail").empty();
 	});
 	
 	$("#btn1").click(function() {
@@ -185,6 +204,7 @@ for (Cookie c : cookies) {
 		});
 	});
 	
+// 	문의내역 결과물 출력
 	function page(pageNum) {
 		$.ajax({
 			url : "${cp}/member/question",
@@ -239,13 +259,44 @@ for (Cookie c : cookies) {
  					pagination += "</div>";
  					$("#question").append(output);					// 테이블 정보 출력
  					$("#question").append(pagination);			// 페이징 정보 출력
-			},
-			error : function() {
-				alert("실패");
+ 					$("#qna").show();
+ 					$("#textBox").hide();
+ 					$("#detail").empty();
+ 					$("#detail").show();
+			}, error: function(){
+				console.log("문의내역 불러오기 실패");
 			}
 		});
 	}
 
+	$("#questionBtn").click(function(e) {
+		page(1); // 문의내역 페이지 출력
+	});
+	
+	// 	리뷰 내역 결과 출력하기
+	function reviewPage(pageNum) {
+		let id = document.getElementById("idData").value;
+		$.ajax({
+			url: "${cp}/member/myreview",
+			type: "GET",
+			dataType: "JSON",
+			data: {"mid": id, pageNum:pageNum},
+			success: function(data){
+				let output = "";
+				output += 
+			}, error: function(){
+				alert('못받음');
+			}
+		});
+	}
+	
+	$("#reviewBtn").on("click", function(){
+		reviewPage(1);		// 리뷰내역 페이지 출력
+	});
+
+	$("#qnaBtn").on("click", function() {
+		location.href = "${cp}/qna/insert";
+	});
 </script>
 
 

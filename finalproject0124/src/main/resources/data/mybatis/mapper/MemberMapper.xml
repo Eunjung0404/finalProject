@@ -118,11 +118,13 @@
 		where m.mid=#{mid}	and q.qnacode=#{qnacode}
 	</select>
 	
-<!-- 	회원 아이디와 일치하는 문의 내역 출력 -->
-	<select id="selectQna" parameterType="String" resultType="com.test.finalproject.vo.MemberQnaVo">
-		select * from qna
-		where mid = #{mid}
-		order by qnacode asc
+	
+<!-- 	내가 작성한 평점 보기 -->
+	<select id="myReview" parameterType="hashmap" resultType="com.test.finalproject.vo.MemberQnaVo">
+		select * 
+		from movie_review
+		where mid=#{mid}
+		order by reviewcode asc
 	</select>
 
 </mapper>

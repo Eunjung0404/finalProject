@@ -13,6 +13,7 @@ import com.test.finalproject.security.CustomUserDetail;
 import com.test.finalproject.vo.AuthoritiesVo;
 import com.test.finalproject.vo.MemberQnaVo;
 import com.test.finalproject.vo.MemberVo;
+import com.test.finalproject.vo.ReviewVo;
 
 import data.mybatis.mapper.MemberMapper;
 
@@ -110,8 +111,9 @@ public class MemberService {
 		return mapper.detatilQuestion(map);
 	}
 	
-//	회원 아이디와 일치하는 문의 내역 출력
-	public List<MemberQnaVo> selectQna(String mid) {
-		return mapper.selectQna(mid);
+	
+//	내가 작성란 리뷰 보기
+	public List<ReviewVo> myReview(String mid) {
+		return mapper.myReview(mid);
 	}
 }
