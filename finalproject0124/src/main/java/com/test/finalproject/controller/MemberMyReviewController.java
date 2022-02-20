@@ -19,21 +19,22 @@ public class MemberMyReviewController {
 	private MemberService service;
 	
 	@RequestMapping(value = "/member/myreview", method=RequestMethod.GET)
-	public HashMap<String, Object> myReview(@RequestParam(value="", defaultValue = "1")int pageNum, String field, String keyword, String mid) {
+	public HashMap<String, Object> myReview(@RequestParam(value="pageNum", defaultValue = "1")int pageNum, String field, String keyword, String mid) {
+		System.out.println("아이디:" + mid);
 		HashMap<String, Object> pmap = new HashMap<String, Object>();
 		pmap.put("field", field);
 		pmap.put("keyword", keyword);
 		pmap.put("mid", mid);
 		
-		int totalRowCount = service.getCount(pmap);
+		int totalRowCount = service.reviewCount(pmap);
 		PageUtil pageutil = new PageUtil(pageNum, 10, 10, totalRowCount);
 		pmap.put("startRow", pageutil.getStartRow());
 		pmap.put("endRow", pageutil.getEndRow());
 		
-		List<ReviewVo> list = service.myReview(mid);
-		
+		List<ReviewVo> reviewList = service.myReview(mid);
+		System.out.println("리뷰리스트:" + reviewList);
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("reviewList", list);
+		map.put("reviewList", reviewList);
 		map.put("startPageNum", pageutil.getStartPageNum());
 		map.put("endPageNum", pageutil.getEndPageNum());
 		map.put("pageCount", pageutil.getTotalPageCount());

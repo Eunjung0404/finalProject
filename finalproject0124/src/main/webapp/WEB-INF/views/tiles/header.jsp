@@ -29,6 +29,10 @@
 	display: block;
 }
 
+.nav {
+	color: #FFFFFF;
+}
+
 </style>
 <script type="text/javascript" src="${cp }/resources/js/jquery-3.6.0.js"></script>
 <nav class="py-1 bg-dark ">

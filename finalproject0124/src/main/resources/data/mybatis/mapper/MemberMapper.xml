@@ -119,8 +119,15 @@
 	</select>
 	
 	
+	<!-- 전체 리뷰 글의 개수 -->
+	<select id="reviewCount" resultType="int" parameterType="hashmap">
+		select NVL(count(*),0) cnt from movie_review 
+		where mid=#{mid}
+		<include refid="search"/>
+	</select>
+	
 <!-- 	내가 작성한 평점 보기 -->
-	<select id="myReview" parameterType="hashmap" resultType="com.test.finalproject.vo.MemberQnaVo">
+	<select id="myReview" parameterType="hashmap" resultType="com.test.finalproject.vo.ReviewVo">
 		select * 
 		from movie_review
 		where mid=#{mid}

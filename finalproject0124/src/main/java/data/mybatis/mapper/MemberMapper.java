@@ -54,6 +54,9 @@ public interface MemberMapper {
 //	문의 내역 상세보기
 	MemberQnaVo detatilQuestion(HashMap<Object, Object> map);
 	
+//	리뷰 글 개수
+	int reviewCount(HashMap<String, Object> map);
+	
 	//내가 작성한 리뷰 보기
 	List<ReviewVo> myReview(String mid);
 } 
