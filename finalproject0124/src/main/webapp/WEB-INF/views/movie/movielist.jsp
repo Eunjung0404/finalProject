@@ -37,10 +37,10 @@
 	<c:forEach var="i" begin="${pu.startPageNum }" end="${pu.endPageNum }">
 		<c:choose>
 			<c:when test="${1==param.pageNum }">
-				<a href="${cp }/movie/list?pageNum=${i}"><span style='color:blue'>${i }</span></a>
+				<a href="${cp }/admin/movie/list?pageNum=${i}"><span style='color:blue'>${i }</span></a>
 			</c:when>
 			<c:otherwise>
-				<a href="${cp }/movie/list?pageNum=${i}"><span style='color:gray'>${i }</span></a>
+				<a href="${cp }/admin/movie/list?pageNum=${i}"><span style='color:gray'>${i }</span></a>
 			</c:otherwise>
 		</c:choose>
 	</c:forEach>
