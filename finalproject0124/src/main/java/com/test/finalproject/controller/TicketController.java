@@ -24,6 +24,18 @@ public class TicketController {
 	@Autowired
 	ChapaymentService service;
 
+	@GetMapping("/ctrl")
+	public String tiketPages() {
+
+		return "ticket/theaterlist";
+	}
+	@GetMapping("/ctrl2")
+	public String tiketPagesw() {
+
+		return "ticket/theaterctrl";
+	}
+
+	
 	@GetMapping("/ticket")
 	public String tiketPage(Model m,@RequestParam(value="moviecode",defaultValue="0")int moviecode) {
 		m.addAttribute("moviecode", moviecode);

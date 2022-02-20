@@ -111,8 +111,7 @@
 	opacity: 1;
 }
 
-@
-keyframes cardRotate {from { transform:rotateY(0deg);
+@keyframes cardRotate {from { transform:rotateY(0deg);
 	
 }
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.mybatis.mapper.ChaAdminMapper">
+	<!-- 극장리스트 -->
+	<select id="getTheaterList" resultType="hashmap">
+		select * from theater
+		where state=1
+	</select>
+	<!-- 상영영화리스트 -->
+	<select id="getTheaterMovieList" parameterType="int"
+		resultType="hashmap">
+		select m.moviename from theater_move tm, movie_m m where
+		tm.moviecode=m.moviecode and tm.theatercode=#{theatercode};
+	</select>
+	<!-- 상영관리스트 -->
+	<select id="getscreenList" parameterType="int"
+		resultType="hashmap">
+		select * from screen where theatercode=#{theatercode};
+	</select>
+</mapper>
