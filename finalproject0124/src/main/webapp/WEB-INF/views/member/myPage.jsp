@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+\<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -282,10 +282,18 @@ for (Cookie c : cookies) {
 			dataType: "JSON",
 			data: {"mid": id, pageNum:pageNum},
 			success: function(data){
+// 				console.log(data.reviewList);
 				let output = "";
-				output += 
-			}, error: function(){
-				alert('못받음');
+				
+				for(let i=0; i < data.reviewList.length; i++) {
+					output += "<div id='reviewList'>"; 
+// 					console.log(data.reviewList[i].score);
+					for(let j=0; j < data.reviewList[i].score; j++) {
+						output += "<span id='star_span'>" + '★' + "</span>"; 
+					}
+// 					output += "<br>" + data.comments[i] + "<br>";
+					output += "</div>";
+				}
 			}
 		});
 	}

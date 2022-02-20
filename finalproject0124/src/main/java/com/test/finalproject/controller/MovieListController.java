@@ -18,7 +18,7 @@ public class MovieListController {
 	@Autowired private Movie_MService_hj service;
 	
 	//영화 목록 페이지(관리자)
-	@RequestMapping("${cp}/admin/movie/list")
+	@RequestMapping("/admin/movie/list")
 	public String movielist(@RequestParam(value="pageNum", defaultValue = "1") int pageNum, Model model) {
 		
 		HashMap<String, Object> map1=new HashMap<String, Object>();

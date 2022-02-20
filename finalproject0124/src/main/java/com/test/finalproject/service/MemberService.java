@@ -111,6 +111,10 @@ public class MemberService {
 		return mapper.detatilQuestion(map);
 	}
 	
+	// 리뷰 글 개수
+	public int reviewCount(HashMap<String, Object> map) {
+		return mapper.count(map);
+	}
 	
 //	내가 작성란 리뷰 보기
 	public List<ReviewVo> myReview(String mid) {

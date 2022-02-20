@@ -36,7 +36,7 @@
     <br>
     <br>
     
-    <form:form method="post" action="${cp }/emailAuthVali">
+    <form:form method="post" action="${cp }/emailAuthVali" name="authForm">
     	<input type="hidden" name="num" value="${num}">
     	<div class=content>
     		<div class="textbox">
@@ -45,6 +45,21 @@
     		</div>
     	</div><br>
     	
-    	<input type="submit" id="check" value="인증번호 전송">
+    	<input type="button" id="check" value="인증번호 전송">
     </form:form>
 </div>
+
+<script>
+	let regExpEmailAuth = /^\d{6}/;
+
+	$("#check").on("click", function(){
+		if ($("#emailAuth").val() == "" || $("#emailAuth").val() == null) {
+			alert("인증번호를 입력해주세요.");
+			return false;
+		} else if (!regExpEmailAuth.test(document.authForm.emailAuth.value)) {
+			alert("인증번호는 숫자로 시작되어야 합니다.");
+			return false;
+		} 
+		document.authForm.submit();
+	});
+</script>
