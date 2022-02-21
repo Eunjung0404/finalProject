@@ -71,8 +71,9 @@
 }
 
 #top5 {
-	position: relative;
-	left: 430px;
+	position: absolute;
+	display: flex;
+	justify-content: center;
 }
 
 #top5 li {
@@ -102,8 +103,8 @@
 }
 
 #top5 li figure {
-	width: 300px;
-	height: 400px
+	width: 150px;
+	height: 200px
 }
 
 #top5 li:hover figcaption, #poster li:focus figcaption {
@@ -111,11 +112,13 @@
 	opacity: 1;
 }
 
-@keyframes cardRotate {from { transform:rotateY(0deg);
+@keyframes cardRotate
+{
+ from { transform:rotateY(0deg);
 	
 }
 
-to {
+ to {
 	transform: rotateY(360deg);
 }
 

@@ -3,20 +3,32 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="data.mybatis.mapper.ChaAdminMapper">
-	<!-- 극장리스트 -->
-	<select id="getTheaterList" resultType="com.test.finalproject.vo.TheaterVo">
-		select * from theater
-		where state=1
+	<!-- theatercode가져오기 -->
+	<select id="getTheaterCode" resultType="int"
+		parameterType="string">
+		select theatercode from theater
+		where
+		theatername=#{theatername}
 	</select>
 	<!-- 상영영화리스트 -->
 	<select id="getTheaterMovieList" parameterType="int"
-		resultType="hashmap">
-		select m.moviename from theater_move tm, movie_m m where
-		tm.moviecode=m.moviecode and tm.theatercode=#{theatercode};
+		resultType="com.test.finalproject.vo.ChaAdminScheduleVo">
+		select m.moviecode,m.moviename,tm.startdate,tm.enddate,tm.state from
+		theater_move tm, movie_m m
+		where
+		tm.moviecode=m.moviecode and
+		tm.theatercode=#{theatercode}
 	</select>
 	<!-- 상영관리스트 -->
 	<select id="getscreenList" parameterType="int"
 		resultType="com.test.finalproject.vo.ScreenVo">
-		select * from screen where theatercode=#{theatercode};
+		select * from screen where theatercode=#{theatercode}
+	</select>
+
+	<!-- 상영중 영화데이터 가져오기 -->
+	<select id="getCurrnetMovie"
+		resultType="com.test.finalproject.vo.Movie_MVo">
+		select * from movie_m where state=1 or state=2 order by
+		count desc
 	</select>
 </mapper>
