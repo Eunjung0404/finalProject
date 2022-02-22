@@ -117,8 +117,9 @@
     			dataType: "json",
     			success: function(data){
     				location.href="${cp}/findPwdForm";
+    				let email = data.memail;
     			}, error: function(){
-    				alert("비밀번호 찾기에 문제가 발생했습니다.");
+    				alert("아이디 또는 전화번호가 일치하지 않습니다.");
     			}
     		});    		
     	});
@@ -146,7 +147,7 @@
 //     				console.log(data);
     				location.href="${cp}/emailAuth?mid=" + mid + "&memail=" + memail;
     			}, error: function(){
-    				alert("비밀번호 찾기에 문제가 발생했습니다.");
+    				alert("아이디 또는 이메일이 일치하지 않습니다.");
     				console.log(data);
     			}
     		});    		

@@ -44,6 +44,7 @@ public class FindController {
 		return "member/findPwd.tiles";
 	}
 	
+	// 회원 이름과 전화번호로 아이디 찾기
 	@RequestMapping(value = "/findId", method=RequestMethod.POST)
 	@ResponseBody
 	public MemberVo findId(String mname) {
@@ -59,6 +60,7 @@ public class FindController {
 		return vo;
 	}
 	
+	// 회원 이름과 이메일로 아이디 찾기
 	@RequestMapping(value = "/findId2", method=RequestMethod.POST)
 	@ResponseBody
 	public MemberVo findId2(String mname) {
@@ -78,6 +80,8 @@ public class FindController {
 		return vo;
 	}
 	
+	
+//	회원아이디와 이메일로 비밀번호 찾기(이메일 인증 해야 함)
 	@RequestMapping(value = "/findPwd", method=RequestMethod.POST)
 	@ResponseBody
 	public MemberVo findPwd(String mid) {
@@ -91,10 +95,13 @@ public class FindController {
 		map.put("memail", memail);
 //		System.out.println("맵에 잘 담겼는가?" + map);
 		MemberVo vo = service.findPwd(map);
+		session.setAttribute("getMpwd", vo.getMpwd());
 		
 		return vo;
 	}
 	
+	
+//	회원 아이디와 전화번호로 아이디 찾기
 	@RequestMapping(value = "/findPwd2", method=RequestMethod.POST)
 	@ResponseBody
 	public MemberVo findPwd2(String mid) {
@@ -109,6 +116,7 @@ public class FindController {
 	
 		MemberVo vo = service.findPwd2(map);
 		
+		session.setAttribute("getMemail", vo.getMemail());
 		session.setAttribute("getMpwd", vo.getMpwd());
 		
 		return vo;

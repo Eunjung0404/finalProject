@@ -14,5 +14,6 @@ public class ScreenVo {
 	private String name;
 	private int state;
 	private String screentype;
+	private int seatcount;
 	
 }

@@ -15,7 +15,7 @@
 
 
 	<insert id="addMember" parameterType="com.test.finalproject.vo.MemberVo">
-		insert into member_m values(#{mid}, #{mpwd}, #{mname}, #{memail}, #{maddr}, #{mphone}, #{birth}, 1, '1', sysdate)
+		insert into member_m values(#{mid}, #{mpwd}, #{mname}, #{memail}, #{detailaddress}, #{mphone}, #{birth}, 1, '1', sysdate, #{postcode}, #{roadaddress}, #{jibunaddress})
 	</insert>
 	
 	<insert id="addAuth" parameterType="hashmap">
@@ -34,7 +34,7 @@
 
 	<!-- 회원 정보 변경 -->
 	<update id="doMyinfo" parameterType="com.test.finalproject.vo.MemberVo">
-		update member_m set mpwd=#{mpwd}, mname=#{mname}, memail=#{memail}, maddr=#{maddr}, mphone=#{mphone}
+		update member_m set mpwd=#{mpwd}, memail=#{memail}, mname=#{mname}, detailaddress=#{detailaddress}, mphone=#{mphone}, postcode=#{postcode}, roadaddress=#{roadaddress}, jibunaddress=#{jibunaddress}
 		where mid=#{mid} and mpwd=#{mpwd}
 	</update>
 
@@ -55,6 +55,13 @@
 		update member_m
 		set mpwd=#{mpwd}
 		where memail=#{memail}
+	</update>
+	
+	<!-- 새로운 비밀번호 입력(비밀번호 변경) -->
+	<update id="changePwd2" parameterType="com.test.finalproject.vo.MemberVo">
+		update member_m
+		set mpwd=#{mpwd}
+		where mid=#{mid}
 	</update>
 
 	<!-- 비밀번호 찾기(아이디와 이메일) -->
@@ -111,13 +118,12 @@
 		<include refid="search"/>
 	</select>
 
-<!-- 	문의 내역 상세보기 -->
+	<!-- 문의 내역 상세보기 -->
 	<select id="detatilQuestion" parameterType="hashmap" resultType="com.test.finalproject.vo.MemberQnaVo">
 		select *
 		from member_m m, qna q
 		where m.mid=#{mid}	and q.qnacode=#{qnacode}
 	</select>
-	
 	
 	<!-- 전체 리뷰 글의 개수 -->
 	<select id="reviewCount" resultType="int" parameterType="hashmap">
@@ -125,8 +131,8 @@
 		where mid=#{mid}
 		<include refid="search"/>
 	</select>
-	
-<!-- 	내가 작성한 평점 보기 -->
+
+	<!-- 내가 작성한 평점 보기 -->
 	<select id="myReview" parameterType="hashmap" resultType="com.test.finalproject.vo.ReviewVo">
 		select * 
 		from movie_review

@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script type="text/javascript" src="${cp }/resources/js/jquery-3.6.0.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.6.0.js"></script>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>		<!-- daum post API -->
 
 <style type="text/css">
@@ -105,7 +105,7 @@ div .sign {
 				<option value="kakao.com">kakao.com</option>
 				<option  value="1" >직접입력</option>
 			</select>
-			<input type="hidden" id="totalEmail" name="memail" value="">
+			<input type="hidden" id="totalEmail" name="memail" >
 		</tr>
 		<tr>
 			<th>성명</th>
@@ -125,13 +125,12 @@ div .sign {
 		<tr>
 			<th>주소</th>
 			<td>
-				<input type="text" id="postcode" placeholder="우편번호" readonly="readonly" style="margin-bottom: 5px;">
+				<input type="text" id="postcode" name="postcode" placeholder="우편번호" readonly="readonly" style="margin-bottom: 5px;">
 				<input type="button" id="execPostCode" value="우편번호 찾기"><br>
-				<input type="text" id="roadAddress" placeholder="도로명주소" readonly="readonly" style="margin-bottom: 5px;">
-				<input type="text" id="jibunAddress" placeholder="지번주소" readonly="readonly">
+				<input type="text" id="roadAddress" name="roadaddress" placeholder="도로명주소" readonly="readonly" style="margin-bottom: 5px;">
+				<input type="text" id="jibunAddress" name="jibunaddress" placeholder="지번주소" readonly="readonly">
 				<span id="guide" style="color:#999;display:none"></span><br>
-				<input type="text" id="detailAddress" placeholder="상세주소">
-				<input type="hidden" name="maddr" id="totalAddress">
+				<input type="text" id="detailAddress" name="detailaddress" placeholder="상세주소">
 		</tr>
 	</table><br>
 
@@ -296,8 +295,13 @@ div .sign {
  			document.signupForm.mname.select();
  			return false;
  		}
+ 		if ($("#birth").val() == "" || $("#birth").val() == null) {
+ 			alert("생년월일을 입력해주세요!");
+ 			$("#birth").focus();
+ 			return false;
+ 		}
  		if (!regExpPhone.test(document.signupForm.mphone.value)){
- 			alert("연락처 입력을 확인해주세요!");
+ 			alert("전화번호 입력을 확인해주세요!");
  			document.signupForm.mphone.focus();
  			return false;
  		}
@@ -305,40 +309,44 @@ div .sign {
  			alert("주소를 입력해주세요.");
  			return false;
  		}
-//  		if (document.getElementById("roadAddress").value == "" && document.getElementById("jibunAddress").value == ""){
-//  			alert("주소를 입력해주세요.");
-//  			return false;
-//  		} 		
-//  		if (document.getElementById("detailAddress").value == ""){
-//  			alert("상세주소를 입력해주세요.");
-//  			return false;
-//  		} 		
+ 		if (document.getElementById("roadAddress").value == "" && document.getElementById("jibunAddress").value == ""){
+ 			alert("주소를 입력해주세요.");
+ 			return false;
+ 		} 		
+ 		if (document.getElementById("detailAddress").value == ""){
+ 			alert("상세주소를 입력해주세요.");
+ 			return false;
+ 		} 		
 
  		if (cnt == 0) {
  			alert("아이디 중복검사를 해주세요.");
  			return false;
  		}
- 		$("#totalEmail").val($("#memail1").val() + $("#middle").text() + $("#memail2").val()); 
  		
- 		// 무지성 주소 조건문
- 		if (document.getElementById("roadAddress").value != ""){		// 도로명 주소만 있을 경우
- 			document.getElementById("totalAddress").value = document.getElementById("roadAddress").value + " " + document.getElementById("detailAddress").value;
- 			document.signupForm.submit();
- 			return alert("회원이 되신 것을 축하합니다!");
- 		}
- 		if (document.getElementById("jibunAddress").value != "") {		// 지번주소만 있을 경우{
- 			document.getElementById("totalAddress").value = document.getElementById("jibunAddress").value + " " +document.getElementById("detailAddress").value;
- 			document.signupForm.submit();
- 			return alert("회원이 되신 것을 축하합니다!");
- 		} 
- 		if (document.getElementById("roadAddress").value != "" && document.getElementById("jibunAddress").value != "") {		// 도로명과 지번주소 모두 있을 경우
- 			document.getElementById("totalAddress").value = document.getElementById("roadAddress").value + " " + document.getElementById("detailAddress").value;
- 			document.signupForm.submit();
- 			return alert("회원이 되신 것을 축하합니다!");
- 		}
- 		if (document.getElementById("roadAddress").value == "" && document.getElementById("jibunAddress").value == "") {		// 도로명 주소와 지번 주소 모두 없을 경우
- 			return false;
- 		}
+//  		// 무지성 주소 조건문
+//  		if (document.getElementById("roadAddress").value != ""){		// 도로명 주소만 있을 경우
+//  			document.getElementById("totalAddress").value = document.getElementById("roadAddress").value + " " + document.getElementById("detailAddress").value;
+//  			document.signupForm.submit();
+//  			return alert("회원이 되신 것을 축하합니다!");
+//  		}
+//  		if (document.getElementById("jibunAddress").value != "") {		// 지번주소만 있을 경우{
+//  			document.getElementById("totalAddress").value = document.getElementById("jibunAddress").value + " " +document.getElementById("detailAddress").value;
+//  			document.signupForm.submit();
+//  			return alert("회원이 되신 것을 축하합니다!");
+//  		} 
+//  		if (document.getElementById("roadAddress").value != "" && document.getElementById("jibunAddress").value != "") {		// 도로명과 지번주소 모두 있을 경우
+//  			document.getElementById("totalAddress").value = document.getElementById("roadAddress").value + " " + document.getElementById("detailAddress").value;
+//  			document.signupForm.submit();
+//  			return alert("회원이 되신 것을 축하합니다!");
+//  		}
+//  		if (document.getElementById("roadAddress").value == "" && document.getElementById("jibunAddress").value == "") {		// 도로명 주소와 지번 주소 모두 없을 경우
+//  			return false;
+//  		}
+		$("#totalEmail").val($("#memail1").val() + $("#middle").text() + $("#memail2").val());		// 이메일 결합
+		document.signupForm.submit();
+		alert("회원이 되신 것을 축하합니다!");
+		let m = "location.href='${cp}/login'";
+		return m;
  	}
 
  	$("#cancle").click(function(){

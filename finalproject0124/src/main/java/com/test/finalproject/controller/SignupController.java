@@ -22,12 +22,9 @@ public class SignupController {
 
 	@PostMapping("/signup")
 	public String singup(MemberVo vo, Model model) {
-		try {
-			int n = service.addMember(vo);
-//			System.out.println("회원가입 결과: " + n);
-		} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("code", "fail");
+		int n = service.addMember(vo);
+		if (n == 0) {
+			return null;
 		}
 		return "member/login.tiles";
 	}

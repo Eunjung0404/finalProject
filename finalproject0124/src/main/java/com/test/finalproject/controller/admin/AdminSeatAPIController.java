@@ -22,7 +22,7 @@ import com.test.finalproject.service.SeatService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping(value = "/test/theater/{theatername}/{screencode}"
+@RequestMapping(value = "/admin/theater/{theatername}/{screencode}"
 			, produces = {MediaType.APPLICATION_JSON_VALUE})
 @RequiredArgsConstructor
 public class AdminSeatAPIController {
@@ -35,11 +35,14 @@ public class AdminSeatAPIController {
 				BindingResult bindingResult,
 				@PathVariable int screencode
 			) {
+		
 		if(bindingResult.hasErrors()) {
 			throw new FormBindException("잘 못된 입력");
 		}
+		
 		list.forEach(System.out::println);
-		System.out.println(service.insert(list, screencode));
+		service.insert(list, screencode);
+		
 		return new ResultForm("success", "등록 되었습니다.");
 	}
 	
@@ -49,10 +52,13 @@ public class AdminSeatAPIController {
 				BindingResult bindingResult,
 				@PathVariable int screencode
 			) {
+		
 		if(bindingResult.hasErrors()) {
 			throw new FormBindException("잘 못된 입력");
 		}
+		
 		service.update(screencode, list);
+		
 		return new ResultForm("success", "수정 되었습니다.");
 	}
 	

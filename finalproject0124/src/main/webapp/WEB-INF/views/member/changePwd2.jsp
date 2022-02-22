@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
+<script type="text/javascript" src="${cp }/resources/js/jquery-3.6.0.js"></script>
 
 <!-- 비밀번호 찾기 했을 때 요청되는 페이지 -->
 <style>
@@ -78,7 +78,8 @@
 <p>•현재 비밀번호를 입력한 후 새로 사용할 비밀번호를 입력하세요.</p>
 
 <form:form class="changePwdForm" name="changePwdForm"  id="changePwdForm">
-	<input type="hidden" name="mpwdNow" id="mpwdNow"  value="${mpwd }">
+	<input type="hidden" name="mpwdNow" id="mpwdNow"  value="${getMpwd }">
+	<input type="hidden" name="memail" id="memail" value="${getMemail }">		<!-- 비밀번호 변경하기 위해서 이메일 데이터를 넘겨줘야 하는데 사용자에게 보여지지 않도록 히든으로 처리 -->
 	<table class="board-form">
 		<tbody>
 			<tr>
@@ -95,11 +96,8 @@
 			</tr>		
 		</tbody>
 	</table>
-	
 	<br>
 	<br>
-	
-	<input type="hidden" name="memail" value="${getMemail}">		<!-- 비밀번호 변경하기 위해서 이메일 데이터를 넘겨줘야 하는데 사용자에게 보여지지 않도록 히든으로 처리 -->
 </form:form>
 
 <p>•생년월일, 전화번호 등 개인 정보와 관련된 숫자, 연속된 숫자와 같이 쉬운 비밀번호는 다른 사람이 쉽게 알아낼 수 있으니 사용을 자제해 주세요.</p>
@@ -111,13 +109,13 @@
 	</div>
 </div>
 
-<form:form method="post" action="${cp }/logout" name="logoutForm">
-</form:form>
-
-
 <script>
 	$("#check").click(function(){
 		let changePwdForm = $("#changePwdForm").serialize();
+		console.log("현재 비밀번호:" + $("#mpwdNow").val());
+		console.log("새 비밀번호:" + $("#mpwd1").val());
+		console.log("이메일:" + $("#memail").val());
+		console.log("폼데이터: " + changePwdForm);
 		if (document.getElementById("mpwd1").value == "") {
 			alert("새로운 비밀번호를 입력해주세요!");
 			document.getElementById("mpwd1").focus();
@@ -130,15 +128,20 @@
 			return false;
 		}
 		$.ajax({
-			url: "${cp}/member/changePwd",
+			url: "${cp}/changePwd",
 			type: "post",
 			data: changePwdForm,
 			dataType: "json",
 			success: function(data){
-				alert("비밀번호가 변경되었습니다. \n변경하신 비밀번호로 다시 로그인해주세요.");
-				document.logoutForm.submit();
+				if (data == 0){
+					alert("비밀번호 변경이 안 됨.");
+					return false;
+				} else {
+					alert("비밀번호가 변경되었습니다. \n변경하신 비밀번호로 로그인해주세요.");
+					location.href="${cp}/login";					
+				}
 			}, error: function(){
-				alert("에러");
+				alert("이메일로 비밀번호 찾기로 비밀번호 변경 요청 에러");
 			}
 		});		
 	});

@@ -56,8 +56,8 @@ public class MemberService {
 	}		
 	
 //	회원 정보 변경
-	public String myInfoEdit(MemberVo vo) {
-		return mapper.myInfoEdit(vo);
+	public int doMyinfo(MemberVo vo) {
+		return mapper.doMyinfo(vo);
 	}
 	
 //	이름과 전화번호로 아이디 찾기

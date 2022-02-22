@@ -8,26 +8,33 @@
 	<select id="getList"
 		resultType="com.test.finalproject.vo.SeatVo"
 	>
-		select * from seat where screencode=#{screencode}
+		select /*+ INDEX_ASC(seat ix_seat) */ * 
+		from seat where screencode=#{screencode}
 	</select>
 	
 	<!-- 좌석 등록 -->
 	<insert id="insert">
-		<selectKey resultType="int" order="AFTER">
-			select count(*) from seat 
-			where screencode=#{screencode} and state=1
-		</selectKey>
 		<foreach item="seat" collection="list" separator=" " 
 			open="INSERT ALL" close="select * from dual"
 		>
 			into seat values (get_seq_seat_nextval, #{seat.screencode}
 			, #{seat.seatrow}, #{seat.seatcol}, #{seat.code}, #{seat.state})
 		</foreach>
+		<selectKey keyProperty="screen.seatcount" resultType="int" order="AFTER">
+			select count(*) seatcount from seat 
+			where state=1 and screencode=#{screen.screencode}
+		</selectKey>
 	</insert>
 	
 	<!-- 좌석 삭제 -->
 	<delete id="delete">
 		delete from seat where screencode=#{screencode}
 	</delete>
+	
+	<!-- 상영관 좌석수 등록 -->
+	<update id="updateCnt">
+		update screen set seatcount=#{seatcount}
+		where screencode=#{screencode}
+	</update>
 	
 </mapper>
