@@ -24,7 +24,7 @@ public class MovieListController {
 		HashMap<String, Object> map1=new HashMap<String, Object>();
 		
 		int totalRowCount=service.getCount(map1);
-		PageUtil pu=new PageUtil(pageNum, 5, 10, totalRowCount);
+		PageUtil pu=new PageUtil(pageNum, 10, 10, totalRowCount);
 		
 		int startRow=pu.getStartRow();
 		int endRow=pu.getEndRow();

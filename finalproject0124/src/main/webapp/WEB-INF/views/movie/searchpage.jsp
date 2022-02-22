@@ -9,7 +9,10 @@
 <title>검색</title>
 <style type="text/css">
 	#backgroundColor{background-color: #f5f5f5; width: 100%; height: 100%;}
-	.maincontainer{width:900px; border-width: none; margin: auto;}
+	.maincontainer{margin: auto;}
+	
+	#poster{width:200px; height:100%; border:none; float:left; margin-right:30px; margin-left: 450px;}
+	#moviebox{width:700px; height:100%; border:none; float:left;}
 	
 	#btnReserve{width:160px; height:55px; text-align: center; color:white; background:#ec6159; border:0;}
 	.title{font: boldder;}
@@ -32,25 +35,22 @@
 	<c:when test="${fn: length(list) > 0 }">
 		<c:forEach var="vo" items="${list }">
 			<div class="row" id="mainposter">
-				<div class="col-md-4 text-center" id="poster">
+				<div id="poster">
 					<a href="${cp }/movie/detail?moviecode=${vo.moviecode}"><img class="" src="${cp }/resources/images/movieupload/${vo.movieimg}" style="width:200px; height:100%;"></a>
 				</div>
-				<div class="col-md-7" id="moviebox">
-					<div class="col-sm-12 text-left" >
-						<h4 class="title">${vo.moviename }</h4><br>
-						<span id="movietext">${vo.opendate } 개봉</span>
-						<span class="movietext1">${vo.runtime }분</span>
-						<span class="movietext1">${vo.rating }</span>
-						<span class="movietext1">${vo.genre }</span>
-						<span class="movietext1">${vo.country }</span><br><br>
-						<span class="movietext2">감독 : </span><span>${vo.director }</span><br>
-						<span class="movietext2">배우 : </span><span>${vo.actorinfo }</span><br><br>
-						<button type="button" id="btnReserve" onclick="">예매</button>
-						
-					</div>
+				<div id="moviebox">
+					<h4 class="title">${vo.moviename }</h4><br>
+					<span id="movietext">${vo.opendate } 개봉</span>
+					<span class="movietext1">${vo.runtime }분</span>
+					<span class="movietext1">${vo.rating }</span>
+					<span class="movietext1">${vo.genre }</span>
+					<span class="movietext1">${vo.country }</span><br><br>
+					<span class="movietext2">감독 : </span><span>${vo.director }</span><br>
+					<span class="movietext2">배우 : </span><span>${vo.actorinfo }</span><br><br>
+					<button type="button" id="btnReserve" onclick="location.href='${cp}/ticket?moviecode=${vo.moviecode}'">예매</button>
 				</div>
 			</div>
-			<p><hr></p>
+			<p><hr style="width:800px; margin:auto;"></p>
 		</c:forEach>
 	</c:when>
 	<c:otherwise>
