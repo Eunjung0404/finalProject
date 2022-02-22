@@ -49,8 +49,8 @@ public class EmailAuthController {
 		System.out.println("email: " + email);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("memail", email);
 		map.put("mid", id);
+		map.put("memail", email);
 
 		MemberVo vo = service.findPwd(map);
 		

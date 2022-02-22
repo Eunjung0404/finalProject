@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
+<script type="text/javascript" src="${cp }/resources/js/jquery-3.6.0.js"></script>
 <!-- 마이페이지에서 비밀번호 변경할 때 요청되는 페이지 -->
 
 <style>
@@ -84,7 +84,7 @@
 				<th scope="row">
 					<label for="pwnow">현재 비밀번호</label>
 				</th>
-				<td><input type="password" name="mpwdNow" id="mpwdNow"  value="${getMpwd }"></td>
+				<td><input type="password" name="mpwdNow" id="mpwdNow"  value="${getMpwd }" readonly="readonly"></td>
 			</tr>
 			<tr>
 				<th scope="row">
@@ -104,7 +104,7 @@
 	<br>
 	<br>
 	
-	<input type="hidden" name="memail" value="${getMemail}">		<!-- 비밀번호 변경하기 위해서 이메일 데이터를 넘겨줘야 하는데 사용자에게 보여지지 않도록 히든으로 처리 -->
+	<input type="hidden" name="memail" id="memail" value="${getMemail}">		<!-- 비밀번호 변경하기 위해서 이메일 데이터를 넘겨줘야 하는데 사용자에게 보여지지 않도록 히든으로 처리 -->
 </form:form>
 
 <p>•생년월일, 전화번호 등 개인 정보와 관련된 숫자, 연속된 숫자와 같이 쉬운 비밀번호는 다른 사람이 쉽게 알아낼 수 있으니 사용을 자제해 주세요.</p>
@@ -123,6 +123,10 @@
 <script>
 	$("#check").click(function(){
 		let changePwdForm = $("#changePwdForm").serialize();
+		console.log("현재 비밀번호:" + $("#mpwdNow").val());
+		console.log("새 비밀번호:" + $("#mpwd1").val());
+		console.log("이메일:" + $("#memail").val());
+		console.log("폼데이터: " + changePwdForm);
 		if (document.getElementById("mpwd1").value == "") {
 			alert("새로운 비밀번호를 입력해주세요!");
 			document.getElementById("mpwd1").focus();
@@ -140,10 +144,11 @@
 			data: changePwdForm,
 			dataType: "json",
 			success: function(data){
+				console.log(data);
 				alert("비밀번호가 변경되었습니다. \n변경하신 비밀번호로 다시 로그인해주세요.");
 				document.logoutForm.submit();
 			}, error: function(){
-				alert("에러");
+				alert("마이페이지에서 비밀번호 변경 요청 에러");
 			}
 		});		
 	});

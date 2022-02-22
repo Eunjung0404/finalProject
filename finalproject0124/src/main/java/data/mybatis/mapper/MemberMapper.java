@@ -23,7 +23,7 @@ public interface MemberMapper {
 	int idCheck(String mid);
 	
 //	회원 정보 변경
-	String myInfoEdit(MemberVo vo);
+	int doMyinfo(MemberVo vo);
 	
 //	이름과 전화번호로 아이디 찾기
 	MemberVo findId(HashMap<String, Object> map);
