@@ -25,10 +25,11 @@ public class AdminTheaterManageController {
 	}
 	
 	@GetMapping("/{theatername}")
+	@AdminLevel(2)
 	public String localTheaterPage(
 				@PathVariable String theatername, Model model
 			) {
-		model.addAttribute("screen", service.getTheaterByName(theatername));
+		model.addAttribute("theater", service.getTheaterByName(theatername));
 		return "admin/theater";
 	}
 	

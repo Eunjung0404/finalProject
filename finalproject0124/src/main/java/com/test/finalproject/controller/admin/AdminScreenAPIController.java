@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.test.finalproject.aop.annotation.AdminLevel;
 import com.test.finalproject.error.exception.FormBindException;
 import com.test.finalproject.form.ResultForm;
 import com.test.finalproject.form.ScreenForm;
@@ -20,7 +21,7 @@ import com.test.finalproject.service.ScreenService;
 import lombok.RequiredArgsConstructor;
 
 @RestController
-@RequestMapping(value = "/test/theater/{theatername}"
+@RequestMapping(value = "/admin/theater/{theatername}"
 			, produces = {MediaType.APPLICATION_JSON_VALUE})
 @RequiredArgsConstructor
 public class AdminScreenAPIController {
@@ -28,32 +29,43 @@ public class AdminScreenAPIController {
 	private final ScreenService service;
 	
 	@PostMapping
+	@AdminLevel(2)
 	public ResultForm insert(
 				@Valid @RequestBody ScreenForm form,
 				BindingResult bindingResult
 			) {
+		
 		if(bindingResult.hasErrors()) {
 			throw new FormBindException("잘 못된 입력");
 		}
+		
 		service.insert(form);
+		
 		return new ResultForm("success", "등록 되었습니다.");
 	}
 	
 	@PutMapping
+	@AdminLevel(2)
 	public ResultForm update(
 				@Valid @RequestBody ScreenForm form,
 				BindingResult bindingResult
 			) {
+		
 		if(bindingResult.hasErrors()) {
 			throw new FormBindException("잘 못된 입력");
 		}
+		
 		service.update(form);
+		
 		return new ResultForm("success", "수정 되었습니다.");
 	}
 	
 	@DeleteMapping("/{screencode}")
+	@AdminLevel(2)
 	public ResultForm delete(@PathVariable int screencode) {
+		
 		service.delete(screencode);
+		
 		return new ResultForm("success", "삭제 되었습니다.");
 	}
 	

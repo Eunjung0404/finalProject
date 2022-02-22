@@ -23,7 +23,7 @@
 		parameterType="com.test.finalproject.form.ScreenForm"
 	>
 		insert into screen values(seq_screen.nextval, #{theatercode}, 
-								#{name}, #{state}, #{screentype})
+								#{name}, #{state}, #{screentype}, 0)
 	</insert>
 	
 	<!-- 상영관 정보 수정 -->
