@@ -10,19 +10,27 @@
 <style type="text/css">
 	#backgroundColor{background-color:#f5f5f5;}
 	
-	div.comment_cont{position:relative; padding:30px 180px 30px 30px; width:1198px; height:134px;}
+	#poster{width: 290px; height: 413.45px; margin-right: 40px; margin-left: 450px;}
+	#moviebox{width: 700px; height: 100%; border: none; float: left; }
+	
+	#movieYouTube{ left: 30%; width: 1000px; height: 500px; margin: auto; margin-top: 60px;}
+	
+	.slidshow-container{width: 1000px; height: 600px; margin:0 auto; margin-top: 80px;}
+	
+	#commentsForm{position: relative; left: 24%; margin-top: 30px;}
+	div.comment_cont{width:1000px; height:134px;}
 	#btnadd{position:absolute; width:146px; height:134px; color:#fff; background:#ec6159; cursor:pointer; border:none;}
 	#btnNotLogin{position:absolute; width:146px; height:134px; color:#fff; background:#ec6159; cursor:pointer; border:none;}
 	
-	#star_span{color:#ec6159; border-color:#ec6159;}
+	#star_span{color:#ec6159; border-color:#ec6159; font-size: 23px;}
 	
-	#btnReserve{width:160px; height:55px; text-align: center; color:black; background:none; border:1px solid black;}
+	#btnReserve{width:160px; height:55px; text-align: center; color:black; background:none; border:1px solid black; margin-top: 70px;}
 	#btnReserve:hover{color:#ec6159; border-color:#ec6159;}
 	
-	div.comm1{width:400px; height:120px; border:1px solid #aaa; padding:5px; margin-top:5px;}
+	div.comm1{width:1000px; height:120px; padding:9px; margin-top:2px; background-color: #fff}
 	
 	textarea{
-		height: 134px; width: 510px; border: none; font-size:13px; text-align:left; padding-top: 38px; resize:none;
+		height: 134px; width: 854px; border: none; font-size:13px; text-align:left; padding-top: 45px; resize:none;
 	}
 	
 	/* 별점 관련 */
@@ -58,10 +66,17 @@
 	  max-width:30em;
 	  padding:2em;
 	}
+	#delBtn{border: 0; outline: 0; color:#BDBDBD; float: right; background-color:transparent;}
 	
-	/* 스틸컷 관련*/
-	.slider {height:300px; }
 	
+	/* 스틸컷 관련 */
+	.slider{margin:0 auto;}
+	.bx-viewport{height: 500px !important;}
+	
+	/* 페이징 관련 */
+	.page{text-align: center; width: 50%; margin-top:20px; margin-bottom:20px;}
+	#pageBtn1{color: blue; border: 1px solid #ccc; margin-right: 2px;}
+	#pageBtn2{color: gray; border: 1px solid #ccc;}
 	
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
@@ -72,12 +87,12 @@
 	//스틸컷
 	$(document).ready(function(){ 
 		$(".slider").bxSlider({
-			auto:true,
-			speed:500,
-			autoHover: true,
-			slideWidth:700,
-			adaptiveHeight: true, 
-			mode: 'fade'
+			mode:'horizontal',
+			speed:3000, //슬라이드 넘어가는 시간, 3초
+			pause:5000, //슬라이드 멈추는 시간, 3초
+			pager:true, //페이지 표시
+			slideWidth:1150,
+			autoHover: true
 		});
 	});
 
@@ -158,8 +173,8 @@
 						span += "<span id='star_span'>★</span>";
 					}
 					html += span + "<br>";
-					html += comments + "<br>";
-					html += mid + "  |  " + regdate;
+					html += "<span id='com' style='line-height:35px;'>" + comments + "</span><br>";
+					html += "<span id='idreg' style='font-size:12px; color:#8C8C8C; line-height:35px;'>"+ mid + "  |  " + regdate +"</span>";
 					
 					//로그인 했을 때 삭제버튼  표시
 					let username=$("#mid").val();
@@ -186,9 +201,9 @@
 				
 				for(let i=startPage; i<=endPage; i++){
 					if(i==pageNum){
-						pageHTML += "<a href='javascript:reviewlist(" + i + ")'><span style='color:bule'>[" + i + "]</span></a>";
+						pageHTML += "<a href='javascript:reviewlist(" + i + ")'><span id='pageBtn1'>" + i + "</span></a>";
 					}else{
-						pageHTML += "<a href='javascript:reviewlist(" + i + ")'><span style='color:gray'>[" + i + "]</span></a>";
+						pageHTML += "<a href='javascript:reviewlist(" + i + ")'><span id='pageBtn2'>" + i + "</span></a>";
 					}
 				}
 				
@@ -196,7 +211,7 @@
 				if(endPage<pageCount){
 					pageHTML += "<a href='javascript:reviewlist(" + (endPage+1) + ")'>다음</a>";
 				}
-				$("#page").html(pageHTML);
+				$(".page").html(pageHTML);
 				
 			}
 		     //error:function(request,status,error){
@@ -222,53 +237,54 @@
 <body>
 <form method="post" action="${cp }/movie/addmovieimg?${_csrf.parameterName}=${_csrf.token}"></form>
 <div id="backgroundColor">
-	<div class="maincontainer" id=""> 
+	<div class="maincontainer"> 
 		<!-- 포스터 영화 내용 -->
 		<div class="row" id="mainposter">
-			<div class="col-md-4 text-center" id="poster">
+			<div id="poster">
 				<img class="" src="${cp }/resources/images/movieupload/${vo.movieimg}" style="width:290px; height:413.45px;">
 			</div>
-			<div class="col-md-8" id="moviebox">
-				<div class="col-sm-12 text-left"> 
-				<h2 class="title" style="font-weight: bold; font-size: 50px;">${vo.moviename }</h2>
-				
+			<div id="moviebox">
+				<h2 class="title" style="font-weight: bold; font-size: 50px; margin-top: 30px;">${vo.moviename }</h2>
+					
 				<p class="starAvg">평점 ${avg.avgscore }</p>
-				
+					
 				<p class="content">${vo.opendate } 개봉 | ${vo.runtime }분 | ${vo.rating } | ${vo.genre } | ${vo.country }</p>
-				배우정보: ${vo.actorinfo }<br>
-					<br><button type="button" id="btnReserve" onclick="">예매</button>
+					배우정보: ${vo.actorinfo }<br>
+				<br><button type="button" id="btnReserve" onclick="location.href='${cp}/ticket?moviecode=${vo.moviecode}'">예매</button>
 			</div>
 		</div>
 	</div>
 	
-	<h3>동영상</h3>
-	<iframe width="1246" height="701" src="${vo.video }" title="YouTube video player" 
-	frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 	
 	
-	
-	
+	<div id="movieYouTube">
+		<h4>동영상</h4>
+		<iframe width="1046" height="501" src="${vo.video }" title="YouTube video player" 
+		frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+		</iframe>
 	</div>
-	<!-- 기본정보 배우정보 및 영상, 스틸컷 등등 -->
-	<h3>스틸컷</h3>
-		<div class="slidshow-container">
-		<div class="slider">
+	
+	
+
+	<!-- 영상, 스틸컷 등등 -->
+	<div class="slidshow-container">
+		<h4>스틸컷</h4>
+		<div class="slider" style="width:1000px; height: 500px;">
 			<c:forEach var="imglist" items="${imglist }">
 				<img src="${cp }/resources/images/stillcutupload/${imglist.imgname}">
 			</c:forEach>
 		</div>
-		</div>
+	</div>
 		
 		
 		
 		<!-- 평점 -->
-		
-	<p id="reviewtitle">평점</p>
+
 		<div id="commentsForm">
-			<div class="comment_top">
-				<form action="commentWriteOk">
-					<span>나의 평점</span>
-					<div class="star-rating">
+		<h4>평점</h4>
+			<div class="comment_top" style="margin-bottom: 50px;">
+					<div class="ag_tit" style="float:left; margin-top: 22px; margin-right: 5px;">나의 평점</div>
+					<div class="star-rating" style="float:left;">
 						<input type="radio" id="1-stars" name="score" value="5" /><label
 							for="1-stars" class="star">★</label> <input type="radio"
 							id="2-stars" name="score" value="4" /><label for="2-stars"
@@ -278,7 +294,7 @@
 							for="4-stars" class="star">★</label> <input type="radio"
 							id="5-star" name="score" value="1" checked="checked" /><label for="5-star"
 							class="star">★</label>
-					</div>
+					</div><br>
 					
 					<div class="comment_cont">
 						<sec:authorize access="isAuthenticated()"> <!-- 로그인 했을 경우 -->
@@ -298,16 +314,17 @@
 							<input type="button" value="등록" id="btnNotLogin">
 						</div>
 					</sec:authorize>
-				</form>
+
 			</div>
+			
 			<div id="commentsList">
 			</div>
-			<div id="page"></div>
+			<div class="page">
+			</div>
 			<!--  <button id="moreList"><span>더보기</span></button> -->
 		</div> 
 		
-		
-	</div> <!-- 배경색 div -->
+</div> <!-- 배경색 div -->
 </body>
 
 
