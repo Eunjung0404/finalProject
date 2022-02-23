@@ -34,6 +34,7 @@ public class AdminTheaterManageController {
 	}
 	
 	@GetMapping("/{theatername}/{screencode}")
+	@AdminLevel(2)
 	public String seatPage() {
 		return "admin/seat";
 	}

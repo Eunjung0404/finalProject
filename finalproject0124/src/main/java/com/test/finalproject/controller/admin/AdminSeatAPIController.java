@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.test.finalproject.aop.annotation.AdminLevel;
 import com.test.finalproject.error.exception.FormBindException;
 import com.test.finalproject.form.ResultForm;
 import com.test.finalproject.form.SeatForm;
@@ -30,6 +31,7 @@ public class AdminSeatAPIController {
 	private final SeatService service;
 	
 	@PostMapping
+	@AdminLevel(2)
 	public ResultForm insert(
 				@Valid @RequestBody List<SeatForm> list,
 				BindingResult bindingResult,
@@ -40,13 +42,13 @@ public class AdminSeatAPIController {
 			throw new FormBindException("잘 못된 입력");
 		}
 		
-		list.forEach(System.out::println);
 		service.insert(list, screencode);
 		
 		return new ResultForm("success", "등록 되었습니다.");
 	}
 	
 	@PutMapping
+	@AdminLevel(2)
 	public ResultForm update(
 				@Valid @RequestBody List<SeatForm> list,
 				BindingResult bindingResult,
@@ -63,8 +65,11 @@ public class AdminSeatAPIController {
 	}
 	
 	@DeleteMapping("/seat")
+	@AdminLevel(2)
 	public ResultForm delete(@PathVariable int screencode) {
+		
 		service.delete(screencode);
+		
 		return new ResultForm("success", "삭제 되었습니다.");
 	}
 	
