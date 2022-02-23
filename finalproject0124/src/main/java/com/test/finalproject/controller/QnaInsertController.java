@@ -24,13 +24,7 @@ public class QnaInsertController {
 	@PreAuthorize("isAuthenticated()")
 	public String insert(QnaVo vo, Model model) {
 		
-//	public String insert(int qnacode, int theatercode,
-//						 String mid, int pwd, String title,
-//						 String content, Date regdate,
-//						 Model model) {
-	
 		try {
-		//	QnaVo vo = new QnaVo(0, theatercode, mid, pwd, title, content, regdate);
 			service.insert(vo);
 			model.addAttribute("result","success");
 		}catch (Exception e) {

@@ -16,8 +16,8 @@ public class QnaUpdateController {
 	
 	@PreAuthorize("principa.username == #vo.mid")
 	@GetMapping("/qna/update")
-	public String insertForm(int num, Model model) {
-		QnaVo vo = service.detail(num);
+	public String insertForm(int qnacode, Model model) {
+		QnaVo vo = service.detail(qnacode);
 		model.addAttribute("vo", vo);
 		return "qna/update.tiles";
 	}

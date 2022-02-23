@@ -8,18 +8,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.test.finalproject.service.QnaCommentService;
-import com.test.finalproject.vo.QnaCommentVo;
 
 @RestController
-public class QnaCommentController {
+public class QnaCommentDeleteController {
 	@Autowired private QnaCommentService service;
 	
-	@GetMapping(value="/comment/insert", produces = {MediaType.APPLICATION_JSON_VALUE})
-	public HashMap<String, Object> insert(QnaCommentVo vo){
-		//System.out.println("aaa" + vo);
+	@GetMapping(value="/comment/delete", produces={MediaType.APPLICATION_JSON_VALUE})
+	public HashMap<String, Object> delete(int commentcode){
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		try {
-			int n = service.insert(vo);
+			service.delete(commentcode);
 			map.put("code", "success");
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -27,5 +25,4 @@ public class QnaCommentController {
 		}
 		return map;
 	}
-		
 }

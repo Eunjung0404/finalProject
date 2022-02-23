@@ -39,6 +39,7 @@
 				</c:forEach>
 			</tbody>
 		</table>
+		
 		<div>
 			<c:forEach var="i" begin="${pu.startPageNum }"
 				end="${pu.endPageNum }">

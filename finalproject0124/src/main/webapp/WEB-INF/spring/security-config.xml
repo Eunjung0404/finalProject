@@ -21,7 +21,7 @@
 	<sec:http>
 		<sec:intercept-url pattern="/member/**"
 			access="hasRole('ROLE_MEMBER')" />
-		<sec:intercept-url pattern="/qna/insert"
+		<sec:intercept-url pattern="/qna/**"
 			access="hasRole('ROLE_MEMBER')" />
 		<sec:intercept-url pattern="/admin/**"
 			access="hasRole('ROLE_ADMIN')" />
