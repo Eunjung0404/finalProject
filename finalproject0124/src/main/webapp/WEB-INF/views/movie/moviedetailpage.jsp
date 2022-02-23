@@ -10,8 +10,8 @@
 <style type="text/css">
 	#backgroundColor{background-color:#f5f5f5;}
 	
-	#mainposter{margin: auto; margin-top: 50px;}
-	#poster{width: 290px; height: 413.45px; margin-right: 40px; margin-left: 450px;}
+	#mainposter{flex-direction: row; align-content: center; justify-content: center;}
+	#poster{width: 290px; height: 413.45px; margin-right: 40px;}
 	#moviebox{width: 700px; height: 100%; border: none; float: left; }
 	#movietext{color: #777;}
 	.movietext1{color: #777; border-left:1px solid #e5e5e5; padding-left: 10px; margin-right: 5px;}
@@ -22,7 +22,8 @@
 	
 	.slidshow-container{width: 1000px; height: 600px; margin:0 auto; margin-top: 80px;}
 	
-	#commentsForm{position: relative; margin-top: 30px; padding-left: 450px;}
+	#commentsForm{display: flex; margin-top: 30px; flex-direction: column; align-content: center; justify-content: center; align-items: center;}
+	#ratingh4{float: left; width: 1000px}
 	
 	div.comment_cont{width:1000px; height:134px;}
 	#btnadd{position:absolute; width:146px; height:134px; color:#fff; background:#ec6159; cursor:pointer; border:none;}
@@ -273,10 +274,10 @@
 	
 	<div id="movieYouTube">
 		<h4>동영상</h4>
-		<iframe width="1046" height="501" src="${vo.video }" title="YouTube video player" 
+		<iframe width="1000" height="500" src="${vo.video }" title="YouTube video player" 
 		frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
 		</iframe>
-	</div>
+	</div><br>
 	
 	
 
@@ -295,7 +296,7 @@
 		<!-- 평점 -->
 
 		<div id="commentsForm">
-		<h4>평점</h4>
+		<h4><div id="ratingh4">평점</div></h4>
 			<div class="comment_top" style="margin-bottom: 50px; ">
 					<div class="ag_tit" style="float:left; margin-top: 22px; margin-right: 5px;">나의 평점</div>
 					<div class="star-rating" style="float:left;">

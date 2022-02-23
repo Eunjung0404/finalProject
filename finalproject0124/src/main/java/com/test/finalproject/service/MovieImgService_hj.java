@@ -25,4 +25,8 @@ public class MovieImgService_hj {
 	public List<MovieImgVo> movieimglist(int moviecode) {
 		return mapper.movieimglist(moviecode);
 	}
+	
+	public int moviedelete(int moviecode) {
+		return mapper.moviedelete(moviecode);
+	}
 }

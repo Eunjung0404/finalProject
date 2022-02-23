@@ -10,4 +10,6 @@ public interface MovieImgMapper {
 	List<MovieImgVo> movieimglistall();
 	
 	List<MovieImgVo>  movieimglist(int moviecode);
+	
+	int moviedelete(int moviecode);
 }

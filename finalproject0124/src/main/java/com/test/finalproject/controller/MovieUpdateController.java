@@ -34,7 +34,7 @@ public class MovieUpdateController {
 		MultipartFile file1=data.getFile1();
 		try {
 			if(!(file1.isEmpty())) {
-				String path=sc.getRealPath("/resources/images/movieupload");
+				String path=sc.getRealPath("/resources/images/movieupload/removeupload");
 				String movieimg=file1.getOriginalFilename();
 				//중복파일명은 제외
 				InputStream is=file1.getInputStream();
