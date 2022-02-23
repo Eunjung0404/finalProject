@@ -534,13 +534,14 @@
 						if (lis[z].id == num.value) {
 							lis[z].click();
 							//console.log("z="+z);
-							if (lis[z].parentNode.id=="Tab2") {
+							if (lis[z].parentNode.id == "Tab2") {
 								accordionctrl('flush-collapseTwo',
-										'flush-collapseOne', document.getElementById('flushbtn2'),
+										'flush-collapseOne', document
+												.getElementById('flushbtn2'),
 										'flushbtn1')
-										//console.log();
+								//console.log();
 							}
-							
+
 						}
 					}
 				}
@@ -567,7 +568,7 @@
 			flush.className += ' show';
 			flush2.classList.remove('show');
 			event.target.classList.remove('collapsed');
-			console.log("테스트="+event.target.classList)
+			console.log("테스트=" + event.target.classList)
 			btn.className += " collapsed"
 		}
 
@@ -1046,7 +1047,7 @@
 	//상영날짜 정보 가져오기 
 	function getScreenTime(moviecode, theatercode) {
 		let xhr = new XMLHttpRequest();
-		console.log("들어왔다");
+		//console.log("들어왔다");
 		xhr.onreadystatechange = function() {
 			if (xhr.readyState == 4 && xhr.status == 200) {
 
@@ -1073,34 +1074,46 @@
 
 						if (td[j].id == json.result[i].screendate) {
 
-							td[j].className += " time";
-							td[j].onclick = function(event) {
-								//버튼비활성화
-								let nextpage = document
-										.getElementById('nextpage');
-								nextpage.disabled = true;
-								nextpage.className = 'nextpage';
-								let timearea = document
-										.getElementById('select-time');
-								let day = new Date(event.target.id);
-								timearea.innerText = event.target.id + ' ('
-										+ weekday[day.getDay()] + ')';
-								timearea.style.color = "white";
-								for (var s = 0; s < td.length; s++) {
-
-									td[s].classList.remove('clickli');
-
+							let cdate=new Date();
+							let ndate=new Date(json.result[i].screendate);
+							if(ndate>cdate)
+								{
+								td[j].className += " time";
 								}
-								event.target.className += " clickli";
-								let sd = document.getElementById("screendate");
-								let mc = document.getElementById("moviecode");
-								let tc = document.getElementById("theatercode");
-								sd.value = event.target.id;
-								if (mc.value != "" && tc.value != "") {
+							//td[j].className += " time";
+							td[j].onclick = function(event) {
+								if (event.target.classList.contains('time')) {
+									//버튼비활성화
+									let nextpage = document
+											.getElementById('nextpage');
+									nextpage.disabled = true;
+									nextpage.className = 'nextpage';
+									let timearea = document
+											.getElementById('select-time');
+									let day = new Date(event.target.id);
+									timearea.innerText = event.target.id + ' ('
+											+ weekday[day.getDay()] + ')';
+									timearea.style.color = "white";
+									for (var s = 0; s < td.length; s++) {
 
-									console.log("정보불러오기!" + mc.value + ","
-											+ tc.value);
-									getScreeninfo(mc.value, tc.value, sd.value);
+										td[s].classList.remove('clickli');
+
+									}
+									event.target.className += " clickli";
+									let sd = document
+											.getElementById("screendate");
+									let mc = document
+											.getElementById("moviecode");
+									let tc = document
+											.getElementById("theatercode");
+									sd.value = event.target.id;
+									if (mc.value != "" && tc.value != "") {
+
+										console.log("정보불러오기!" + mc.value + ","
+												+ tc.value);
+										getScreeninfo(mc.value, tc.value,
+												sd.value);
+									}
 								}
 							}
 						}

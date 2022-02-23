@@ -31,4 +31,49 @@
 		select * from movie_m where state=1 or state=2 order by
 		count desc
 	</select>
+	<!-- 상영 영화 추가 -->
+	<insert id="addTheaterMovie" parameterType="com.test.finalproject.vo.TheaterMovieVo">
+	insert into THEATER_MOVE values(SEQ_THEATERMOVIE.nextval,#{theatercode},#{moviecode},#{startdate},#{enddate},#{state})
+	</insert>
+	<!-- 무비코드로 영화가져오기 -->
+	<select id="getmoviename" parameterType="int" resultType="com.test.finalproject.vo.Movie_MVo">
+	select * from movie_m where moviecode=#{moviecode}
+	</select>
+	<!-- 스크린 기본 좌석 가져오기 -->
+	<select id="getSeat" parameterType="int" resultType="com.test.finalproject.vo.SeatVo">
+	select * from seat where screencode=#{screencode}
+	</select>
+	<!-- 스크린별 스케쥴 가져오기 -->
+	<select id="getScreenTime" parameterType="int" resultType="com.test.finalproject.vo.ScreenTimeVo">
+	select * from screen_time where screencode=#{screencode}
+	</select>
+	<!-- 스케쥴 insert -->
+	<insert id="addScreenTime" parameterType="com.test.finalproject.vo.ScreenTimeVo">
+	insert into screen_time values(SEQ_SCREENTIME.nextval,#{screencode},#{moviecode},#{starttime},#{endtime},#{event},#{screendate},#{state})
+	</insert>
+	<!-- 좌석info insert -->
+	<insert id="insertseatinfo" parameterType="com.test.finalproject.vo.SeatInfoVo">
+		insert into seat_info
+		values(SEQ_SEAT_INFO.nextval,#{seatcode},#{timecode},'0')
+	</insert>
+		<!-- timcode 가져오기 -->
+	<select id="getTimecode" resultType="int">
+	<![CDATA[select timecode FROM screen_time where ROWNUM <= 1 order by timecode desc]]>
+	</select>
+	<!-- 스케쥴 업데이트 -->
+	
+	<!-- 스케쥴별 좌석info가져오기 -->
+	<select id="getSeatinfo" parameterType="int" resultType="com.test.finalproject.vo.SeatInfoVo" >
+	select * from seat_info where timecode=#{timecode}
+	</select>
+	<!-- seat 행,렬 가져오기 -->
+	<select id="getseatrow" resultType="int" parameterType="int">
+		select
+		max(seatrow) from seat where screencode=#{screencode}
+	</select>
+
+	<select id="getseatcol" resultType="int">
+		select max(seatcol) from seat
+		where screencode=#{screencode}
+	</select>
 </mapper>

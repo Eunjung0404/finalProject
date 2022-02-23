@@ -9,7 +9,7 @@
 		<choose>
 			<when test="moviecode!=null and moviecode!=''">
 				and tm.moviecode=#{moviecode} and
-				tm.theatercode=t.theatercode and tm.state=1
+				tm.theatercode=t.theatercode and (tm.state=1 or tm.state=2)
 			</when>
 		</choose>
 	</sql>
