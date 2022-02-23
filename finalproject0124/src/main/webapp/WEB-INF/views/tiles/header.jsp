@@ -74,6 +74,10 @@
 			<li class="nav-item"><a href="/finalproject/qna/qnahome"
 				class="nav-link text-white px-2">고객센터</a></li>
 
+			<sec:authorize access="hasRole('ROLE_ADMIN')">
+			<li class="nav-item"><a href="/finalproject/admin/login"
+				class="nav-link text-white px-2">관리자 페이지</a></li>
+			</sec:authorize>
 
 		</ul>
 	</div>
