@@ -10,14 +10,20 @@
 <style type="text/css">
 	#backgroundColor{background-color:#f5f5f5;}
 	
+	#mainposter{margin: auto; margin-top: 50px;}
 	#poster{width: 290px; height: 413.45px; margin-right: 40px; margin-left: 450px;}
 	#moviebox{width: 700px; height: 100%; border: none; float: left; }
+	#movietext{color: #777;}
+	.movietext1{color: #777; border-left:1px solid #e5e5e5; padding-left: 10px; margin-right: 5px;}
+	.movietext2{color: #777;}
+	.director1{font-weight: number 600;}
 	
 	#movieYouTube{ left: 30%; width: 1000px; height: 500px; margin: auto; margin-top: 60px;}
 	
 	.slidshow-container{width: 1000px; height: 600px; margin:0 auto; margin-top: 80px;}
 	
-	#commentsForm{position: relative; left: 24%; margin-top: 30px;}
+	#commentsForm{position: relative; margin-top: 30px; padding-left: 450px;}
+	
 	div.comment_cont{width:1000px; height:134px;}
 	#btnadd{position:absolute; width:146px; height:134px; color:#fff; background:#ec6159; cursor:pointer; border:none;}
 	#btnNotLogin{position:absolute; width:146px; height:134px; color:#fff; background:#ec6159; cursor:pointer; border:none;}
@@ -27,7 +33,7 @@
 	#btnReserve{width:160px; height:55px; text-align: center; color:black; background:none; border:1px solid black; margin-top: 70px;}
 	#btnReserve:hover{color:#ec6159; border-color:#ec6159;}
 	
-	div.comm1{width:1000px; height:120px; padding:9px; margin-top:2px; background-color: #fff}
+	div.comm1{width:1000px; height:120px; padding:9px; margin-top:2px; background-color: #fff;}
 	
 	textarea{
 		height: 134px; width: 854px; border: none; font-size:13px; text-align:left; padding-top: 45px; resize:none;
@@ -74,9 +80,12 @@
 	.bx-viewport{height: 500px !important;}
 	
 	/* 페이징 관련 */
-	.page{text-align: center; width: 50%; margin-top:20px; margin-bottom:20px;}
-	#pageBtn1{color: blue; border: 1px solid #ccc; margin-right: 2px;}
-	#pageBtn2{color: gray; border: 1px solid #ccc;}
+	.page{text-align:center; margin-top:20px; margin-bottom:20px; }
+	.page span{text-align:center; color:black; text-align: center; padding: 8px 16px; text-decoration: none; border-radius:30%;}
+	.page span.active{background-color: #ec6159; color: white;}
+	.page span:hover:not(.active){background-color: #ec6159; color: white;}
+	
+	#pageBtn1{margin-right: 5px;}
 	
 </style>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
@@ -248,8 +257,13 @@
 					
 				<p class="starAvg">평점 ${avg.avgscore }</p>
 					
-				<p class="content">${vo.opendate } 개봉 | ${vo.runtime }분 | ${vo.rating } | ${vo.genre } | ${vo.country }</p>
-					배우정보: ${vo.actorinfo }<br>
+				<span id="movietext">${vo.opendate } 개봉</span>
+				<span class="movietext1">${vo.runtime }분</span>
+				<span class="movietext1">${vo.rating }</span>
+				<span class="movietext1">${vo.genre }</span>
+				<span class="movietext1">${vo.country }</span><br><br>
+				<span class="movietext2">감독 : </span><span class="director1">${vo.director }</span><br>
+				<span class="movietext2">배우 : </span><span class="director1">${vo.actorinfo }</span><br>
 				<br><button type="button" id="btnReserve" onclick="location.href='${cp}/ticket?moviecode=${vo.moviecode}'">예매</button>
 			</div>
 		</div>
@@ -282,7 +296,7 @@
 
 		<div id="commentsForm">
 		<h4>평점</h4>
-			<div class="comment_top" style="margin-bottom: 50px;">
+			<div class="comment_top" style="margin-bottom: 50px; ">
 					<div class="ag_tit" style="float:left; margin-top: 22px; margin-right: 5px;">나의 평점</div>
 					<div class="star-rating" style="float:left;">
 						<input type="radio" id="1-stars" name="score" value="5" /><label
@@ -319,10 +333,11 @@
 			
 			<div id="commentsList">
 			</div>
-			<div class="page">
-			</div>
+			
 			<!--  <button id="moreList"><span>더보기</span></button> -->
 		</div> 
+		<div class="page">
+		</div>
 		
 </div> <!-- 배경색 div -->
 </body>
