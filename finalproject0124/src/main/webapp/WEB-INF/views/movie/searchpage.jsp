@@ -11,7 +11,9 @@
 	#backgroundColor{background-color: #f5f5f5; width: 100%; height: 100%;}
 	.maincontainer{margin: auto;}
 	
-	#poster{width:200px; height:100%; border:none; float:left; margin-right:30px; margin-left: 450px;}
+	#mainposter{display: flex; flex-direction: row; flex-wrap: nowrap; align-content: center;
+				justify-content: center; align-items: center;}
+	#poster{width:200px; height:100%; border:none; float:left; margin-right:30px;}
 	#moviebox{width:700px; height:100%; border:none; float:left;}
 	
 	#btnReserve{width:160px; height:55px; text-align: center; color:white; background:#ec6159; border:0;}
@@ -34,7 +36,7 @@
 	<c:choose>
 	<c:when test="${fn: length(list) > 0 }">
 		<c:forEach var="vo" items="${list }">
-			<div class="row" id="mainposter">
+			<div id="mainposter">
 				<div id="poster">
 					<a href="${cp }/movie/detail?moviecode=${vo.moviecode}"><img class="" src="${cp }/resources/images/movieupload/${vo.movieimg}" style="width:200px; height:100%;"></a>
 				</div>
@@ -50,7 +52,7 @@
 					<button type="button" id="btnReserve" onclick="location.href='${cp}/ticket?moviecode=${vo.moviecode}'">예매</button>
 				</div>
 			</div>
-			<p><hr style="width:800px; margin:auto;"></p>
+			<br><hr style="margin:auto; width: 934px;"><br>
 		</c:forEach>
 	</c:when>
 	<c:otherwise>
