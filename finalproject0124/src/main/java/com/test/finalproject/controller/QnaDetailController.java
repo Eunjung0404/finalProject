@@ -3,6 +3,7 @@ package com.test.finalproject.controller;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ public class QnaDetailController {
 	@GetMapping("/qna/detail")
 	public String passwordform(int num, Model model) {
 		model.addAttribute("num", num);
+		model.addAttribute("vo", service.detail(num));
 		return "qna/password.tiles";
 	}
 	@PostMapping("/qna/detail")

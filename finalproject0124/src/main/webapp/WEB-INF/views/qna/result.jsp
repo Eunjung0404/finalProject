@@ -10,6 +10,9 @@
 <body>
 <c:choose>
 	<c:when test="${result=='success' }">
+	<div>
+		
+	</div>
 		<script type="text/javascript">
 			alert("등록 되었습니다.");
 			location.href="${cp}/qna/list";

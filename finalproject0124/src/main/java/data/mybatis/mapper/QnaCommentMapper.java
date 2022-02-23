@@ -1,5 +1,6 @@
 package data.mybatis.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -9,13 +10,9 @@ import com.util.PageUtil;
 
 public interface QnaCommentMapper {
 
-	public int insert(QnaCommentVo vo);
-	
-	public QnaCommentVo read(int commentcode);  //특정댓글읽기
-	
-	public int delete(int commentcode);
-	
-	public int update(QnaCommentVo content);
-	
-	public List<QnaCommentVo> listPaging(@Param("pu")PageUtil pu, @Param("qnacode")int qnacode);
+	int insert(QnaCommentVo vo);
+	int delete(int commentcode);
+	int update(QnaCommentVo vo);
+	List<QnaCommentVo> selectAll(HashMap<String, Object> map);
+	int count(int qnacode);
 }

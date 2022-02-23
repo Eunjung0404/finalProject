@@ -9,7 +9,13 @@
 		values(seq_qna.nextval, #{mid}, #{pwd},
 		#{title}, #{content}, sysdate)
 	</insert>
-
+	<update id="update">
+		update qna set content=#{content}, pwd=#{pwd}
+		where qnacode=#{qnacode}
+	</update>
+	<delete id="delete">
+		delete from qna where qnacode=#{qnacode}
+	</delete>
 	<!-- 검색 -->
 	<sql id="search">
 		<if test="field!=null and field!=''">

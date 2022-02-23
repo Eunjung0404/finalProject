@@ -25,4 +25,7 @@ public class NoteService {
 	public List<NoteVo> notelist() {
 		return mapper.notelist();
 	}
+	public int detail(NoteVo vo) {
+		return mapper.detail(vo);
+	}
 }

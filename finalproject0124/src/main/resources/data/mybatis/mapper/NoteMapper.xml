@@ -8,7 +8,13 @@
 		insert into note
 		values(seq_note.nextval, #{title}, #{content}, sysdate)
 	</insert>
-
+	<update id="update">
+		update note set title=#{title}, content=#{content}
+		where notecode=#{notecode}
+	</update>
+	<delete id="delete">
+		delete from note where notecode=#{notecode}
+	</delete>
 	<select id="list" parameterType="hashmap" resultType="com.test.finalproject.vo.NoteVo">
 		select * from
 		(

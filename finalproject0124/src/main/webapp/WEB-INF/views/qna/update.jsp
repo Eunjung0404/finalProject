@@ -13,22 +13,17 @@
 		<table>
 			<tr>
 				<th><label for="qnacode">글번호</label></th>
-				<td><input type="text" name="qnacode" value="${vo.num }" disabled="disabled"></td>
+				<td><input type="text" name="qnacode" value="${vo.qnacode }" readonly="readonly"></td>
 			</tr>
 			<tr>
 				<th><label for="mid">작성자</label></th>
-				<td><input type="text" name="mid" id="mid" disabled="disabled"
+				<td><input type="text" name="mid" id="mid" readonly="readonly"
 					value="${vo.mid }"></td>
 			</tr>
 			<tr>
 				<th><label for="title">문의제목</label></th>
-				<td><select name="title" size="1" id="title" disabled="disabled">
-						<option>::분류 선택::</option>
-						<option value="영화예매 문의">영화예매 문의</option>
-						<option value="결제/취소 문의">결제/취소 문의</option>
-						<option value="시사회/이벤트 문의">시사회/이벤트 문의</option>
-						<option value="기타">기타</option>
-				</select></td>
+				<td><input type="text" name="title" id="title" readonly="readonly"
+					value="${vo.title }"></td>
 			</tr>
 			<tr>
 				<th><label for="content">문의내용</label></th>

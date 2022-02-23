@@ -4,23 +4,30 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="data.mybatis.mapper.QnaCommentMapper">
-	<insert id="insert">
-		insert into qna_comment (commentcode, qnacode, content, id)
-		values (seq_qnacomment.nextval, #{qnacode}, #{content}, #{id})
-	</insert>
-	<select id="read" resultType="com.test.finalproject.vo.QnaCommentVo">
-		select * from qna_comment where commentcode=#{commentcode}
+	<select id="count" resultType="int" parameterType="int">
+		select NVL(count(*),0) from qna_comment where qnacode=#{qnacode}
 	</select>
-	<delete id="delete">
+	<insert id="insert" parameterType="com.test.finalproject.vo.QnaCommentVo">
+		insert into qna_comment
+		values (seq_qnacomment.nextval, #{id}, #{qnacode}, #{content}, sysdate)
+	</insert>
+	<select id="selectAll" parameterType="hashmap" resultType="com.test.finalproject.vo.QnaCommentVo">
+	<![CDATA[
+		select * from
+		(
+			select aa.*,rownum rnum from 
+			(
+				select * from qna_comment where qnacode=#{qnacode} order by commentcode desc
+			)aa
+		)
+		where rnum>=#{startRowNum} and rnum<=#{endRowNum}
+	]]>
+	</select>
+	
+	<delete id="delete" parameterType="int">
 		delete from qna_comment where commentcode=#{commentcode}
 	</delete>
-	<update id="update">
+	<update id="update" parameterType="com.test.finalproject.vo.QnaCommentVo">
 		update qna_comment set content=#{content}, regdate=sysdate where commentcode=#{commentcode}
 	</update>
-	<select id="listPaging" resultType="com.test.finalproject.vo.QnaCommentVo">
-		select commentcode, qnacode, content, id, regdate
-		from qna_comment
-		where qnacode=#{qnacode}
-		order by commentcode asc
-	</select>
 </mapper>
