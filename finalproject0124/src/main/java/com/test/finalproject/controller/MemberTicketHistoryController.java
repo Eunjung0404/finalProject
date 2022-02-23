@@ -10,40 +10,40 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.test.finalproject.service.MemberService;
-import com.test.finalproject.vo.MyReviewVo;
-import com.test.finalproject.vo.ReviewVo;
+import com.test.finalproject.vo.MemberTicketHistoryVo;
 import com.util.PageUtil;
 
 @RestController
-public class MemberMyReviewController {
+public class MemberTicketHistoryController {
 	@Autowired
 	private MemberService service;
-	
-	@RequestMapping(value = "/member/myreview", method=RequestMethod.GET)
-	public HashMap<String, Object> myReview(@RequestParam(value="pageNum", defaultValue = "1")int pageNum, String field, String keyword, String mid) {
-//		System.out.println("아이디:" + mid);
+
+	@RequestMapping(value = "/member/ticketHistory", method=RequestMethod.GET)
+	public HashMap<String, Object> ticketHistory(@RequestParam(value="pageNum", defaultValue = "1")int pageNum, String field, String keyword, String mid){
 		HashMap<String, Object> pmap = new HashMap<String, Object>();
 		pmap.put("field", field);
 		pmap.put("keyword", keyword);
 		pmap.put("mid", mid);
 		
-		int totalRowCount = service.reviewCount(pmap);
-		PageUtil pageutil = new PageUtil(pageNum, 5, 5, totalRowCount);
+		int totalRowCount = service.ticketingCount(pmap);
+		PageUtil pageutil = new PageUtil(pageNum, 2, 5, totalRowCount);
 		pmap.put("startRow", pageutil.getStartRow());
 		pmap.put("endRow", pageutil.getEndRow());
 		
-		List<MyReviewVo> reviewList = service.myReview(pmap);
-//		System.out.println("리뷰리스트:" + reviewList);
-//		System.out.println("전체 글의 수" + totalRowCount);
-//		System.out.println("페이지 수: " + pageutil.getTotalPageCount());
+		List<MemberTicketHistoryVo> ticketList = service.ticketHistory(pmap);
+		
+		System.out.println("예매내역 리스트: " + ticketList);
+		
+		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("reviewList", reviewList);
+		map.put("ticketList", ticketList);
 		map.put("startPageNum", pageutil.getStartPageNum());
 		map.put("endPageNum", pageutil.getEndPageNum());
 		map.put("pageCount", pageutil.getTotalPageCount());
 		map.put("rowBlockCount", pageutil.getRowBlockCount());
 		map.put("field", field);
 		map.put("keyword", keyword);
+		
 		
 		return map;
 	}

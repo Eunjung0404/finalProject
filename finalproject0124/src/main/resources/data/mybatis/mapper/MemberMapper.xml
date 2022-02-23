@@ -94,7 +94,7 @@
 
 	<sql id="search">
 		<if test="field != null and field != ''">
-			where ${field} like '%' || #{keyword} || '%' 
+			and ${field} like '%' || #{keyword} || '%' 
 		</if>
 	</sql>
 
@@ -108,7 +108,8 @@
 				<include refid="search"/>	
 				order by qnacode desc
      		)aa
-	 <![CDATA[	) where rnum>=#{startRow} and rnum<=#{endRow} ]]>
+     		)
+	 <![CDATA[ where rnum >= #{startRow} and rnum <= #{endRow} ]]>
 	</select>
 
 	<!-- 전체 글의 개수 -->
@@ -132,12 +133,58 @@
 		<include refid="search"/>
 	</select>
 
+
+
 	<!-- 내가 작성한 평점 보기 -->
-	<select id="myReview" parameterType="hashmap" resultType="com.test.finalproject.vo.ReviewVo">
-		select * 
-		from movie_review
-		where mid=#{mid}
-		order by reviewcode asc
+	<select id="myReview" parameterType="hashmap" resultType="com.test.finalproject.vo.MyReviewVo">
+	select * from
+	(
+		select mm.*, rownum rnum from
+		(
+			select *
+			from movie_m m,
+				(
+				select r.moviecode rmoviecode, r.comments, r.reviewcode, r.regdate, r.score, r.mid
+				from movie_review r
+				where r.mid=#{mid}
+				)
+			where m.moviecode = rmoviecode
+		)mm 
+	)
+	<![CDATA[ where rnum >= #{startRow} and rnum <= #{endRow} ]]>
 	</select>
+	
+	
+	<!-- 전체 예매 개수 -->
+	<select id="ticketingCount" resultType="int" parameterType="hashmap">
+		select NVL(count(*),0) cnt from reservation
+		where mid=#{mid}
+		<include refid="search"/>
+	</select>
+
+	<!-- 예매 정보 -->
+	<select id="ticketHistory" parameterType="hashmap" resultType="com.test.finalproject.vo.MemberTicketHistoryVo">
+		select * from
+		(
+			select mm.*, rownum rnum from
+			(
+				select *
+				from screen_time s,
+					(
+					select r.timecode tc, r.mid, r.moviename, r.people, r.theatername, r.screenname, r.reservationcode, rs.seatname
+					from reservation r, reservation_seat rs
+					where r.mid=#{mid} and r.reservationcode = rs.reservationcode
+					)
+				where s.timecode = tc
+			)mm 
+		)
+	<![CDATA[ where rnum >= #{startRow} and rnum <= #{endRow} ]]>
+	</select>
+
+	<!-- 예매 취소 -->
+	<delete id="ticketingCancle" parameterType="int">
+		delete from reservation
+		where reservationcode = #{reservationcode}
+	</delete>
 
 </mapper>

@@ -4,15 +4,14 @@ package data.mybatis.mapper;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.ibatis.annotations.Param;
 
 import com.test.finalproject.security.CustomUserDetail;
 import com.test.finalproject.vo.AuthoritiesVo;
 import com.test.finalproject.vo.MemberQnaVo;
+import com.test.finalproject.vo.MemberTicketHistoryVo;
 import com.test.finalproject.vo.MemberVo;
-import com.test.finalproject.vo.ReviewVo;
+import com.test.finalproject.vo.MyReviewVo;
 
 public interface MemberMapper {
 	int addMember(MemberVo vo);
@@ -58,6 +57,15 @@ public interface MemberMapper {
 	int reviewCount(HashMap<String, Object> map);
 	
 	//내가 작성한 리뷰 보기
-	List<ReviewVo> myReview(String mid);
+	List<MyReviewVo> myReview(HashMap<String, Object> map);
+	
+	// 예매 개수
+	int ticketingCount(HashMap<String, Object> map);
+	
+	// 예매내역
+	List<MemberTicketHistoryVo> ticketHistory(HashMap<String, Object> map);
+	
+	// 예매 취소
+	int ticketingCancle(int reservationcode);
 } 
 

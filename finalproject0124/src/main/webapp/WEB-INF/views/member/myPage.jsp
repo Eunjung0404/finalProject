@@ -5,8 +5,9 @@
 <script type="text/javascript" src="${cp }/resources/js/jquery-3.6.0.js"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 
 <style>
 
@@ -41,9 +42,19 @@ div #textBox {
 	padding: 0 30px;
 	border-radius: 4px;
 }
+#ticketCancle {
+	border: 0;
+	color: #fff;
+	background-color: #503396;
+	height: 46px;
+	padding: 0 30px;
+	border-radius: 4px;
+	margin-right: 10px;
+	float: right;
+}
 
 .w3-teal {
-	background-color: #49434e;
+	background-color: #503396;
 	color: #fff!important;
 }
 
@@ -55,7 +66,7 @@ div #textBox {
 }
 
 ul.pagination {
-	padding-left: 50%;
+	padding-left: 160%;
 	margin-top: 50px;
 }
 
@@ -84,10 +95,38 @@ table#ticketList {
 a#detailQuestion:hover {
 	color: #8041D9;
 }
+div#review {
+	padding-top: 3%;
+}
+table#searchTable {
+	width: 100%;
+}
+span#star_span{
+	color: #503396;
+}
+div#mySidebar{
+	text-decoration: none;
+}
+div#mySidebar a:hover {
+	color: red;
+	text-decoration: none;
+}
+div#mySidebar a:active {
+	color: red;
+	background-color: red;
+}
+div#ticketingShow{
+	margin-bottom: 50px;
+    width: 500px;
+   	height: 300px;
+    padding-left: 20px;
+    padding-top: 10px;
+    margin-left: 10%;
+}
 
 </style>
 
-<%
+<%-- <%
 Cookie[] cookies = request.getCookies();
 String id = "";
 for (Cookie c : cookies) {
@@ -96,22 +135,23 @@ for (Cookie c : cookies) {
 		id = c.getValue();
 	}
 }
-%>
+%> --%>
 
-	<input type="hidden" value="<%=id %>" id="idData">
+
+<input type="hidden" value="${getMid }" id="idData">
 
 <div class="w3-sidebar w3-bar-block w3-card w3-animate-left" style="display:none" id="mySidebar">
   <button class="w3-bar-item w3-button w3-large"
   onclick="w3_close()">Close &times;</button>
-  <input type="button" id="ticketHistoryBtn" value="예매 및 취소 내역" class="w3-bar-item w3-button" >
-  <input type="button" id="reviewBtn" value="나의 평점 모아보기" class="w3-bar-item w3-button" >
-  <input type="button"  value="나의 문의내역" id="questionBtn" class="w3-bar-item w3-button" >
-  <input type="button" id="changeInfoBtn" class="w3-bar-item w3-button" value="개인정보 수정" >
+  <a type="button" id="ticketHistoryBtn" class="w3-bar-item w3-button" >예매 및 취소 내역</a>
+  <a type="button" id="reviewBtn" class="w3-bar-item w3-button" >나의 평점 모아보기</a>
+  <a type="button" id="questionBtn" class="w3-bar-item w3-button" >나의 문의내역</a>
+  <a type="button" id="changeInfoBtn" class="w3-bar-item w3-button"  >개인정보 수정</a>
 </div>
 
 <div id="main">
 
-<div class="w3-teal">
+<div class="w3-teal" >
   <button id="openNav" class="w3-button w3-teal w3-xlarge" onclick="w3_open()">&#9776;</button>
   <div class="w3-container">
     <h1>My Page</h1>
@@ -140,14 +180,21 @@ for (Cookie c : cookies) {
 
 <div class="w3-container" id="questionTable" style="display: none;">
 <h3><strong>나의 문의내역</strong></h3>
-<input type="button" value="1:1 문의하기" id="qnaBtn" style="margin-left: 66.5%; background-color: #FFFFFF; border-width: 1px; border-radius: 4px; height: 40px; border-color: #503396; color: #503396;">
-<div>
-	<select style="margin-left: 55%; height: 40px; margin-right: 1%; border-radius: 4px; width: 70px; text-align: center;">
+<input type="button" value="1:1 문의하기" id="qnaBtn" style="margin-left: 65%; background-color: #FFFFFF; border-width: 1px; border-radius: 4px; height: 40px; border-color: #503396; color: #503396;">
+<div id="search" >
+	<form:form id="keywordForm" >
+	<select name="field" style="margin-left: 55%; height: 40px; margin-right: 1%; border-radius: 4px; width: 70px; text-align: center;">
 		<option>전체</option>
-		<option>미답변</option>
-		<option>답변</option>
+		<option value="title" <c:if test="${field=='title'}">selected</c:if>>제목</option>
+		<option value="regdate" <c:if test="${field=='regdate'}">selected</c:if>>작성일</option>
 	</select>
-	<input type="text" placeholder="검색어를 입력해주세요." style="border: 0.1px solid gray; margin-left: 0%; margin-top: 1%; height: 40px; border-radius: 4px;">
+	<input type="text" name="keyword" placeholder="검색어를 입력해주세요." style="border: 0.1px solid gray; margin-left: 0%; margin-top: 1%; height: 40px; border-radius: 4px;">
+	<input type="hidden" name="mid" value="${getMid }">
+	<button	type="button" style="border-style: solid; border-width: 0px; background-color: white;" >
+		<span class="material-icons-outlined" id="searchBtn"
+					style="color: gray; font-size: 30px;">search</span>
+	</button>
+	</form:form>
 </div>
 <hr>
   <table class="w3-table" id="question" >
@@ -166,7 +213,11 @@ for (Cookie c : cookies) {
 <div id="reviewList">
 </div>
 
-<div class="container mt-3" id="ticketingList" style="display: none;">
+<div class="container mt-3" id="ticketingList" style="display: none; margin-bottom: 10%;">
+</div>
+
+<div id="searchShow">
+
 </div>
 
 <form:form id="idDataFrom">
@@ -185,6 +236,7 @@ for (Cookie c : cookies) {
 	function w3_open() {
 		document.getElementById("main").style.marginLeft = "25%";
 		document.getElementById("questionTable").style.marginLeft = "25%";
+		document.getElementById("searchShow").style.marginLeft = "25%";
 		document.getElementById("detail").style.marginLeft = "25%";
 		document.getElementById("textBox").style.marginLeft = "15%";
 		document.getElementById("reviewList").style.marginLeft = "25%";
@@ -196,21 +248,23 @@ for (Cookie c : cookies) {
 	function w3_close() {
 		document.getElementById("main").style.marginLeft = "0%";
 		document.getElementById("questionTable").style.marginLeft = "3%";
+		document.getElementById("searchShow").style.marginLeft = "3%";
 		document.getElementById("textBox").style.marginLeft = "0%";
 		document.getElementById("reviewList").style.marginLeft = "3%";
 		document.getElementById("ticketingList").style.marginLeft = "0%";
 		document.getElementById("mySidebar").style.display = "none";
 		document.getElementById("openNav").style.display = "inline-block";
-		$("#questionTable").hide();
+		$("#questionTable").empty();
 		$("#detail").empty();
 		$("#reviewList").empty();						// 리뷰내역 페이지 숨김
 		$("#textBox").hide();				// 개인정보 변경 비밀번호 입력 페이지 숨김
 		$("#ticketingList").empty();
+		$("#searchShow").empty();
 	}
 
 	
 	// QnA 상세 보기
-	let idForm = $("#idDataFrom").serialize();
+// 	let idForm = $("#idDataFrom").serialize();
 	//.log(data.qnacode);
 	function detailQuesion(qnacode,id){
 		$("#question").empty();
@@ -242,6 +296,7 @@ for (Cookie c : cookies) {
 		$("#reviewList").empty();
 		$("#detail").empty();
 		$("#ticketingList").empty();
+		$("#searchShow").empty();
 	});
 	
 	$("#btn1").click(function() {
@@ -263,17 +318,19 @@ for (Cookie c : cookies) {
 	
 // 	문의내역 결과물 출력
 	function page(pageNum) {
+		let id = $("#idData").val();
 		$("#question").empty();
 		$.ajax({
 			url : "${cp}/member/question",
 			type : "post",
-			data: {"mid": document.getElementById("idData").value,pageNum:pageNum},
+			data: {"mid": id,pageNum:pageNum},
 			dataType : "JSON",
 			success : function(data) {
 				let output = '';
+				let search = '';
 				output += '<thead>';
 				output += '<tr>';
-				output += '<th style="width: 0px;">글번호</th><th>제목</th><th>작성일</th>';
+				output += '<th style="width: 20%;">글번호</th><th>제목</th><th>작성일</th>';
 				output += '</tr>';
 				output += '</thead>';
 				
@@ -286,8 +343,8 @@ for (Cookie c : cookies) {
 					+ data.list[i].title + "</a></td><td>"
 					+ data.list[i].regdate + "</td>";
 
-						output += '</tr>';
-						output += '</tbody>';
+					output += '</tr>';
+					output += '</tbody>';
 					}
 					// 페이징 처리
 					let startPage = data.startPageNum;
@@ -295,28 +352,23 @@ for (Cookie c : cookies) {
 					let pageCount = data.pageCount;
 					let pagination = "";
 					
-// 					pagination += "<div class='w3-center'>";
 					pagination += "<ul class='pagination'>";
  					if (startPage > 10) {
  						pagination += "<li class='page-item'><a class='page-link' id='pageNum' href='javascript:page(" + (startPage-1) + ")' >&laquo;</a>'";
  					}
  					for (let i = startPage; i <= endPage; i++) {
  						if (i == pageNum) {
-//  							pagination += "<div class='w3-bar'>";
 							
  							pagination += "<li class='page-item active'><a class='page-link' id='pageNum' href='javascript:page(" + i + ")'>" + i + "</a>";
-//  							pagination += "</div>";
  						} else {
-//  							pagination += "<div class='w3-bar'>";
  							pagination += "<li class='page-item'><a class='page-link' id='pageNum' href='javascript:page(" + i + ")'>" + i + "</a>";
-//  							pagination += "</div>";
  						}
  					}
  					if (endPage < data.pageCount) {
  						pagination += "<li class='page-item'><a class='page-link' id='pageNum' href='javascript:page(" + (endPage+1) + ")'>&raquo;</a>";
  					}
  					pagination += "</ul>";
-//  					pagination += "</div>";
+ 					
  					$("#question").append(output);					// 문의내역 테이블 정보 출력
  					$("#question").append(pagination);			// 페이징 정보 출력
 			}, error: function(){
@@ -334,23 +386,26 @@ for (Cookie c : cookies) {
 		$("#reviewList").empty();						// 리뷰내역 페이지 숨김
 		$("#textBox").hide();				// 개인정보 변경 비밀번호 입력 페이지 숨김
 		$("#ticketingList").empty();			// 예매내역 페이지 숨김
+		$("#searchShow").empty();
 	});
 	
 	// 	리뷰 내역 결과 출력하기
 	function reviewPage(pageNum) {
 		let id = document.getElementById("idData").value;
+		console.log("reviewPage" + pageNum);
 		$.ajax({
 			url: "${cp}/member/myreview",
 			type: "GET",
 			dataType: "JSON",
 			data: {"mid": id, pageNum:pageNum},
 			success: function(data){
-// 				console.log(data.reviewList);
+				$("#reviewList").empty();
+				console.log(data.reviewList);
 				let output = "";
 				
 				for(let i=0; i < data.reviewList.length; i++) {
 					output += "<div id='review'>"; 
-// 					console.log(data.reviewList[i].score);
+					output += "<a style='font-size: 20px;'><strong>" + data.reviewList[i].moviename + "</strong></a><br>" + "<a>평점: </a>";
 					for(let j=0; j < data.reviewList[i].score; j++) {
 						output += "<span id='star_span'>" + '★' + "</span>";
 					}
@@ -359,33 +414,37 @@ for (Cookie c : cookies) {
 					output += "</div>";
 					output += "<hr>";
 				}
+				
 				// 페이징 처리
 				let startPage = data.startPageNum;
 				let endPage = data.endPageNum;
 				let pageCount = data.pageCount;
-				let pagination = "";
-				
+				let rowBlockCount = data.rowBlockCount;
+				let pagination = ""
+				console.log(startPage, endPage, pageCount, rowBlockCount);
 				pagination += "<div class='w3-center'>";
-					if (startPage > 10) {
-						pagination += "<a class='w3-bar-item w3-button' id='pageNum' href='javascript:questionList(" + (startPage-1) + ")' >&laquo;</a>'";
+					if (startPage > 5) {
+						pagination += "<a class='w3-bar-item w3-button' id='pageNum' href='javascript:reviewPage(" + (startPage-1) + ")' >&laquo;</a>'";
 					}
 					for (let i = startPage; i <= endPage; i++) {
 						if (i == pageNum) {
 							pagination += "<div class='w3-bar'>";
-							pagination += "<a class='w3-button' id='pageNum' href='javascript:page(" + i + ")'>" + i + "</a>";
+							pagination += "<a class='w3-button' id='pageNum' href='javascript:reviewPage(" + i + ")'>" + i + "</a>";
 							pagination += "</div>";
 						} else {
 							pagination += "<div class='w3-bar'>";
-							pagination += "<a class='w3-button' id='pageNum' href='javascript:page(" + i + ")'>" + i + "</a>";
+							pagination += "<a class='w3-button' id='pageNum' href='javascript:reviewPage(" + i + ")'>" + i + "</a>";
 							pagination += "</div>";
 						}
 					}
 					if (endPage < data.pageCount) {
-						pagination += "<a class='w3-button' id='pageNum' href='javascript:page(" + (endPage+1) + ")'>&raquo;</a>";
+						pagination += "<a class='w3-button' id='pageNum' href='javascript:reviewPage(" + (endPage+1) + ")'>&raquo;</a>";
 					}
 				pagination += "</div>";
 					
 				$("#reviewList").append(output);
+				$("#reviewList").append(pagination);
+				
 			}
 		});
 	}
@@ -397,79 +456,195 @@ for (Cookie c : cookies) {
 		$("#detail").empty();
 		$("#textBox").hide();				// 개인정보 변경 비밀번호 입력 페이지 숨김
 		$("#ticketingList").hide();		// 예매내역 페이지 숨김
+		$("#searchShow").empty();
 	});
 	
 // 	// 예매 내역 결과 출력하기
-	function ticketHistoryPage() {
-// 		let id = document.getElementById("idData").value;
-// 		$.ajax({
-// 			url: "${cp}/member/myTicketingHistory",
-// 			type: "GET",
-// 			dataType: "JSON",
-// 			data: {"mid": id, pageNum:pageNum},
-// 			success: function(data){
-// // 				console.log(data.reviewList);
-// 				let output = "";
-				
-// 				for(let i=0; i < data.ticketHistoryList.length; i++) {
-// 					output += "<div id='ticket'>"; 
-// 					output += "</div>";
-// 				}
-// 				$("#ticketingList").append(output);
-// 			}
-// 		});
-		let output = "";
-		output += "<h2>" + '예매 내역' + "</h2><br>";
-		output += "<table class='table' id='ticketList'>";
-		output += "<thead>";
-		output += "<tr>";
-		output += "<th>" + '예매번호' + "</th>";
-		output += "<th>" + '영화명' + "</th>";
-		output += "<th>" + '극장/상영관' + "</th>";
-		output += "<th>" + '관람일시' + "</th>";
-		output += "<th>" + '관람인원' + "</th>";
-		output += "<th>" + '관람좌석' + "</th>";
-		output += "</tr>";
-		output += "</thead>";
-		output += "<tbody>";
-		output += "<tr>";
-		output += "<td>" + '9521-603-41525' + "</td>";
-		output += "<td>" + '더배트맨' + "</td>";
-		output += "<td>" + '강남/1관' + "</td>";
-		output += "<td>" + '2022.03.06(일) 15:20' + "</td>";
-		output += "<td>" + '성인 1명' + "</td>";
-		output += "<td>" + 'H열 8' + "</td>";
-		output += "</tr>";
-		output += "<tr>";
-		output += "<td>" + '9521-603-41525' + "</td>";
-		output += "<td>" + '언차티드' + "</td>";
-		output += "<td>" + '강남/1관' + "</td>";
-		output += "<td>" + '2022.03.06(일) 15:20' + "</td>";
-		output += "<td>" + '성인 1명' + "</td>";
-		output += "<td>" + 'H열 8' + "</td>";
-		output += "</tr>";
-		output += "</tbody>";
-		output += "</table>";
-		
-		$("#ticketingList").append(output);
-	}
-	$("#ticketHistoryBtn").on("click", function(){
+	function ticketHistoryPage(pageNum) {
 		$("#ticketingList").empty();
-		ticketHistoryPage();
+		let id = document.getElementById("idData").value;
+		let output = '';
+		$.ajax({
+			url: "${cp}/member/ticketHistory",
+			type: "GET",
+			dataType: "JSON",
+			data: {"mid": id, pageNum:pageNum},
+			success: function(data){
+				console.log(data.ticketList);
+// 				output += "<h2>" + '예매 내역' + "</h2><br>";
+// 				output += "<table class='table' id='ticketList'>";
+// 				output += "<thead>";
+// 				output += "<tr>";
+// 				output += "<th>" + '예매번호' + "</th>";
+// 				output += "<th>" + '영화명' + "</th>";
+// 				output += "<th>" + '극장/상영관' + "</th>";
+// 				output += "<th>" + '관람일시' + "</th>";
+// 				output += "<th>" + '관람인원' + "</th>";
+// // 				output += "<th>" + '관람좌석' + "</th>";
+// 				output += "</tr>";
+// 				output += "</thead>";
+// 				output += "<tbody>";
+				output += "<h2 style='padding-top: 2%; padding-left: 5%;'>예매내역" + "</h2>";
+				output += "<hr>";
+				for(let i=0; i < data.ticketList.length; i++) {
+					let reservationcode = data.ticketList[i].reservationcode;
+					
+					output += "<div id='ticketingShow' style='border: 1px solid; border-radius: 8px;'>";
+					output += "<p><strong style='padding-right: 10%;'>예매번호</strong>" + reservationcode + "</p>"
+					output += "<p><strong style='padding-right: 13%;'>영화명</strong>" + data.ticketList[i].moviename + "</p>";
+					output += "<p><strong style='padding-right: 5%;'>극장/상영관</strong>" + data.ticketList[i].theatername + '/' + data.ticketList[i].screendate + "</p>";
+					output += "<p><strong style='padding-right: 10%;'>관람인원</strong>" + data.ticketList[i].people + "</p>";
+					output += "<p><strong style='padding-right: 10%;'>관람일시</strong>" +  data.ticketList[i].screendate + '&nbsp;'+ data.ticketList[i].starttime + "</p>";
+					output += "<p><strong style='padding-right: 10%;'>관람좌석</strong>" + data.ticketList[i].seatname + "</p>";
+					output += "<input type='button' value='예매취소' id='ticketCancle' onclick='ticketingCancle(" + reservationcode + ")'>";
+					output += "</div>";
+// 					output += "<tr>";
+// 					output += "<td>" + data.ticketList[i].reservationcode + "</td>";
+// 					output += "<td>" + data.ticketList[i].moviename + "</td>";
+// 					output += "<td>" + data.ticketList[i].theatername + '/' + data.ticketList[i].screenname + "</td>";
+// 					output += "<td>" + data.ticketList[i].screendate + "</td>";
+// 					output += "<td>" + data.ticketList[i].people + "</td>";
+// 					output += "<td>" + 'H열 8' + "</td>";
+// 					output += "<td><a href='#'>취소" + "</a></td>";
+// 					output += "<a type='button' id='cancleBtn' onclick='ticketingCancle(" + reservationcode + ")'>" + '취소' + "</a>";
+// 					output += "</tr>";
+				}
+// 				output += "</tbody>";
+// 				output += "</table>";
+				
+				// 페이징 처리
+				let startPage = data.startPageNum;
+				let endPage = data.endPageNum;
+				let pageCount = data.pageCount;
+				let rowBlockCount = data.rowBlockCount;
+				let pagination = "";
+				console.log(startPage, endPage, pageCount, rowBlockCount);
+				pagination += "<div class='w3-center'>";
+					if (startPage > 2) {
+						pagination += "<a class='w3-bar-item w3-button' id='pageNum' href='javascript:ticketHistoryPage(" + (startPage-1) + ")' >&laquo;</a>'";
+					}
+					for (let i = startPage; i <= endPage; i++) {
+						if (i == pageNum) {
+							pagination += "<div class='w3-bar'>";
+							pagination += "<a class='w3-button' id='pageNum' href='javascript:ticketHistoryPage(" + i + ")'>" + i + "</a>";
+							pagination += "</div>";
+						} else {
+							pagination += "<div class='w3-bar'>";
+							pagination += "<a class='w3-button' id='pageNum' href='javascript:ticketHistoryPage(" + i + ")'>" + i + "</a>";
+							pagination += "</div>";
+						}
+					}
+					if (endPage < data.pageCount) {
+						pagination += "<a class='w3-button' id='pageNum' href='javascript:ticketHistoryPage(" + (endPage+1) + ")'>&raquo;</a>";
+					}
+				pagination += "</div>";
+				
+				$("#ticketingList").append(output);
+				$("#ticketingList").append(pagination);
+			}
+		});
+	}
+	
+	$("#ticketHistoryBtn").on("click", function(){
+		ticketHistoryPage(1);
 		$("#ticketingList").show();
 		$("#questionTable").hide();
 		$("#detail").empty();
 		$("#reviewList").empty();						// 리뷰내역 페이지 숨김
 		$("#textBox").hide();				// 개인정보 변경 비밀번호 입력 페이지 숨김
+		$("#searchShow").empty();
 	});
 
+	
+	// 예매 취소
+	function ticketingCancle(reservationcode){
+		if (confirm("예매를 취소하시겠습니까?") == false) {
+			return false;
+		}
+		$.ajax({
+			url: "${cp}/member/ticketingCancle",
+			data: {"reservationcode": reservationcode},
+			dataType: "JSON",
+			success: function(data){
+				if (data == 1) {
+					ticketHistoryPage(1);
+				} else {
+					alert("예매를 취소할 수 없습니다. 관리자에 문의해주세요.");
+				}
+			}
+		});
+	}
 	
 
 	$("#qnaBtn").on("click", function() {
 		location.href = "${cp}/qna/insert";
 	});
 	
+	// 검색기능
+	$("#searchBtn").on("click", function(){
+		let searchForm = $("#keywordForm").serialize();
+		$.ajax({
+			url:"${cp}/member/question",
+			type: "post",
+			dataType: "JSON",
+			data: searchForm,
+			success: function(data) {
+				console.log(data.list);
+// 				$("#searchShow").empty();
+				let output = '';
+				output += '<table id="searchTable" >';
+				output += '<thead>';
+				output += '<tr>';
+				output += '<th style="width: 20%;">글번호</th><th>제목</th><th>작성일</th>';
+				output += '</tr>';
+				output += '</thead>';
+				for (let i = 0; i < data.list.length; i++) {
+					let id= data.list[i].mid;
+					output += '<tbody>';
+					output += '<tr>';
+					output += "<td>" + data.list[i].qnacode +"</td><td><a type='button' id='detailQuestion' onclick='detailQuesion("+ data.list[i].qnacode +",\""+ id +"\")'>"
+					+ data.list[i].title + "</a></td><td>"
+					+ data.list[i].regdate + "</td>";
+					output += '</tr>';
+					output += '</tbody>';
+					}
+				output += '</table>';
+					// 페이징 처리
+				let startPage = data.startPageNum;
+				let endPage = data.endPageNum;
+				let pageCount = data.pageCount;
+				let pagination = "";
+					
+				pagination += "<ul class='pagination'>";
+				if (startPage > 10) {
+					pagination += "<li class='page-item'><a class='page-link' id='pageNum' href='javascript:page(" + (startPage-1) + ")' >&laquo;</a>'";
+				}
+				for (let i = startPage; i <= endPage; i++) {
+				if (i == pageNum) {
+					
+						pagination += "<li class='page-item active'><a class='page-link' id='pageNum' href='javascript:page(" + i + ")'>" + i + "</a>";
+					} else {
+						pagination += "<li class='page-item'><a class='page-link' id='pageNum' href='javascript:page(" + i + ")'>" + i + "</a>";
+					}
+				}
+				if (endPage < data.pageCount) {
+					pagination += "<li class='page-item'><a class='page-link' id='pageNum' href='javascript:page(" + (endPage+1) + ")'>&raquo;</a>";
+				}
+				pagination += "</ul>";
+					
+				$("#question").empty();
+				$("#question").append(output);
+				$("#question").append(pagination);
+ 					
+				
+ 					
+			}, error: function() {
+				alert("검색 기능 실패");
+			}
+		});
+	});
 	
+
 	// 마우스 오버
 	$("#qnaBtn").mouseover(function(){
 		$("#qnaBtn").css("background-color", "#EFF2FB")

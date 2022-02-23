@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 import com.test.finalproject.security.CustomUserDetail;
 import com.test.finalproject.vo.AuthoritiesVo;
 import com.test.finalproject.vo.MemberQnaVo;
+import com.test.finalproject.vo.MemberTicketHistoryVo;
 import com.test.finalproject.vo.MemberVo;
+import com.test.finalproject.vo.MyReviewVo;
 import com.test.finalproject.vo.ReviewVo;
 
 import data.mybatis.mapper.MemberMapper;
@@ -113,11 +115,26 @@ public class MemberService {
 	
 	// 리뷰 글 개수
 	public int reviewCount(HashMap<String, Object> map) {
-		return mapper.count(map);
+		return mapper.reviewCount(map);
 	}
 	
 //	내가 작성란 리뷰 보기
-	public List<ReviewVo> myReview(String mid) {
-		return mapper.myReview(mid);
+	public List<MyReviewVo> myReview(HashMap<String, Object> map) {
+		return mapper.myReview(map);
+	}
+	
+	// 예매 내역 수
+	public int ticketingCount(HashMap<String, Object> map) {
+		return mapper.ticketingCount(map);
+	}
+	
+	// 예매 내역
+	public List<MemberTicketHistoryVo> ticketHistory(HashMap<String, Object> map) {
+		return mapper.ticketHistory(map);
+	}
+	
+	// 예매 취소
+	public int ticketingCancle(int reservationcode) {
+		return mapper.ticketingCancle(reservationcode);
 	}
 }

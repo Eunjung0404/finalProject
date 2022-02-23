@@ -28,7 +28,7 @@ public class MemberQuestionController {
 		pmap.put("keyword", keyword);
 		pmap.put("mid", mid);
 		int totalRowCount = service.getCount(pmap);
-		PageUtil pageutil = new PageUtil(pageNum, 10, 10, totalRowCount);
+		PageUtil pageutil = new PageUtil(pageNum, 10, 5, totalRowCount);
 		pmap.put("startRow", pageutil.getStartRow());
 		pmap.put("endRow", pageutil.getEndRow());
 		List<MemberQnaVo> list = service.selectQuestion(pmap);
@@ -39,7 +39,7 @@ public class MemberQuestionController {
 		map.put("startPageNum", pageutil.getStartPageNum());
 		map.put("endPageNum", pageutil.getEndPageNum());
 		map.put("pageCount", pageutil.getTotalPageCount());
-//		System.out.println("list: " + list);
+		System.out.println("list: " + list);
 //		System.out.println("map:" + map);
 		
 		return map;
