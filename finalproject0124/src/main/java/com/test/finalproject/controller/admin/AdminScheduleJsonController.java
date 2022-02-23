@@ -31,29 +31,29 @@ public class AdminScheduleJsonController {
 		List<SeatVo> seatlistList = service.getSeat(screencode);
 
 		map.put("list", seatlistList);
-		map.put("row", service.getseatrow(screencode) + 1);
-		map.put("col", service.getseatcol(screencode) + 1);
+		map.put("row", service.getseatrow(screencode));
+		map.put("col", service.getseatcol(screencode));
 		return map;
 	}
-	//시트인포 가져오기
+
+	// 시트인포 가져오기
 	@GetMapping(value = "/seatinfo-list", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public @ResponseBody HashMap<String, Object> selectSeatinfo(int timecode) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		List<SeatInfoVo> seatinfolist=service.getSeatinfo(timecode);
+		List<SeatInfoVo> seatinfolist = service.getSeatinfo(timecode);
 		map.put("seatinfolist", seatinfolist);
 		return map;
 	}
-	
-	//스케쥴 가져오기
+
+	// 스케쥴 가져오기
 	@GetMapping(value = "/time", produces = { MediaType.APPLICATION_JSON_VALUE })
 	public @ResponseBody HashMap<String, Object> gettime(int screencode) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		List<ScreenTimeVo> timelist=service.getScreenTime(screencode);
-		ArrayList<String> movienamelist=new ArrayList<String>();
-		for(int i=0;i<timelist.size();i++)
-		{
-			Movie_MVo vo=service.getmoviename(Integer.parseInt(timelist.get(i).getMoviecode()));
-			String moviename=vo.getMoviename();
+		List<ScreenTimeVo> timelist = service.getScreenTime(screencode);
+		ArrayList<String> movienamelist = new ArrayList<String>();
+		for (int i = 0; i < timelist.size(); i++) {
+			Movie_MVo vo = service.getmoviename(Integer.parseInt(timelist.get(i).getMoviecode()));
+			String moviename = vo.getMoviename();
 			movienamelist.add(moviename);
 		}
 		map.put("movienamelist", movienamelist);

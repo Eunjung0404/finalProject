@@ -24,8 +24,8 @@ public class ChaSeatJsonController {
 		mapP.put("timecode", timecode);
 		List<HashMap<String, Object>> list=service.seatLsit(mapP);
 		map.put("list", list);
-		map.put("row", service.getseatrow(screencode)+1);
-		map.put("col", service.getseatcol(screencode)+1);
+		map.put("row", service.getseatrow(screencode));
+		map.put("col", service.getseatcol(screencode));
 		return map;
 	}
 }
