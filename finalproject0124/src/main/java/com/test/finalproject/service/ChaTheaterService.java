@@ -48,4 +48,12 @@ public class ChaTheaterService {
 	{
 		return mapper.selectScreenName(map);
 	}
+	public int getbookseat(int timecode)
+	{
+		return mapper.getbookseat(timecode);
+	}
+	public int getseatcount(int screencode)
+	{
+		return mapper.getseatcount(screencode);
+	}
 }

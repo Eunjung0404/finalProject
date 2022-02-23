@@ -3,6 +3,7 @@ package com.test.finalproject.controller;
 
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -78,6 +79,18 @@ public class TicketJsonController {
 		List<TiketScreenTimeVo> result=service.selectScreenTime(map1);
 		List<String> screenName=service.selectScreenName(map1);
 		System.out.println(map);
+		ArrayList<Integer> totalcountlist=new ArrayList<Integer>();
+		ArrayList<Integer> bookcountlist=new ArrayList<Integer>();
+
+		for(int i=0;i<result.size();i++)
+		{
+			int bcount=service.getbookseat(result.get(i).getTimecode());
+			int tcount=service.getseatcount(result.get(i).getScreencode());
+			totalcountlist.add(i,tcount);
+			bookcountlist.add(i, bcount);
+		}
+		map.put("totalcountlist", totalcountlist);
+		map.put("bookcountlist", bookcountlist);
 		map.put("result", result);
 		map.put("screenName", screenName);
 		return map;

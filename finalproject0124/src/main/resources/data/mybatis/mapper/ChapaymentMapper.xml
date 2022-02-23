@@ -16,7 +16,7 @@
 	<insert id="reservationSeatInsert" parameterType="hashmap">
 		insert into
 		RESERVATION_SEAT
-		values(SEQ_RESERVATIONSEAT.nextval,#{RESERVATIONCODE},#{SEATNAME})
+		values(SEQ_RESERVATIONSEAT.nextval,#{RESERVATIONCODE},#{SEATNAME},#{SEATCODE})
 
 	</insert>
 	<!-- 영화카운트 올리기 -->
@@ -26,7 +26,7 @@
 	<!-- 결제테이블 인서트 -->
 	<insert id="paymentInsert" parameterType="hashmap">
 		insert into PAYMENT
-		values(SEQ_PAYMENT.nextval,#{RESERVATIONCODE},#{TOTALPRICE},#{PAYMENTTYPE},sysdate)
+		values(SEQ_PAYMENT.nextval,#{RESERVATIONCODE},#{TOTALPRICE},#{PAYMENTTYPE},sysdate,1)
 	</insert>
 	<!-- seatinfo_update -->
 	<update id="seatInfoUpdate"

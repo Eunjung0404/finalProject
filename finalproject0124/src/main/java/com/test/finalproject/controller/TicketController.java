@@ -27,7 +27,7 @@ public class TicketController {
 	@GetMapping("/ctrl")
 	public String tiketPages() {
 
-		return "ticket/theaterlist";
+		return "ticket/texte";
 	}
 	@GetMapping("/ctrl2")
 	public String tiketPagesw() {
@@ -54,6 +54,7 @@ public class TicketController {
 		rmap.put("RESERVATIONCODE", reservationcode);
 		for (int i = 0; i < Integer.parseInt(vo.getCount()); i++) {
 			rmap.put("SEATNAME", vo.getSeatname().get(i));
+			rmap.put("SEATCODE", vo.getSeatcode().get(i));
 			service.reservationSeatInsert(rmap);
 		}
 		// 결제정보 인서트

@@ -438,8 +438,8 @@
 		</div>
 		<!--카카오페이 -->
 		<div class="tab_content" id="PayKAKAO_BANK-div">
-			<p class="rp_txt">※ 카카오페이는 무이자 할부 및 제휴카드 혜택 내용과 관계가 없으며,
-				별도의 카카오페이 기준에 따라 적용됩니다.</p>
+			<p class="rp_txt">※ 카카오페이는 무이자 할부 및 제휴카드 혜택 내용과 관계가 없으며, 별도의
+				카카오페이 기준에 따라 적용됩니다.</p>
 			<p class="rp_txt">※ 영화 예매시 별도의 카카오페이 포인트는 적립되지 않습니다.</p>
 		</div>
 		<!-- N페이 -->
@@ -457,8 +457,8 @@
 			<p class="rp_txt">네이버페이 카드 간편결제는 네이버페이에서 제공하는 카드사 별 무이자, 청구할인 혜택을
 				받을 수 있습니다.</p>
 			<br> <br>
-			<p class="rp_txt">※ 네이버페이는 무이자 할부 및 제휴카드 혜택 내용과 관계가 없으며,
-				별도의 네이버페이 기준에 따라 적용됩니다.</p>
+			<p class="rp_txt">※ 네이버페이는 무이자 할부 및 제휴카드 혜택 내용과 관계가 없으며, 별도의
+				네이버페이 기준에 따라 적용됩니다.</p>
 			<p class="rp_txt">※ 영화 예매시 별도의 네이버페이 포인트는 적립되지 않습니다.</p>
 		</div>
 	</div>
@@ -818,7 +818,13 @@
 					let moveleft = 28;
 
 					let span = document.createElement("span");
-					span.innerText = json.list[seatcount].CODE.substr(0, 1);
+					if (json.list[seatcount].CODE.substr(0, 1) != '@') {
+						span.innerText = json.list[seatcount].CODE.substr(0, 1);
+					}else
+						{
+						span.innerText = "";
+						}
+
 					span.className = 'seat-position';
 					//span.style.top = movetop;
 					span.style.left = "670px";

@@ -189,6 +189,18 @@
 	display: flex;
 	justify-content: space-between;
 }
+
+.inputsearch {
+	margin-left: 10px;
+	margin-right: 10px;
+	border: none;
+	border-bottom: 1px solid;
+}
+
+#screentable tr:hover {
+	background-color: #0d6efd;
+	color: white;
+}
 </style>
 </head>
 <div class="row">
@@ -213,89 +225,140 @@
 							<th>상영종료일</th>
 							<th>영화상태</th>
 						</tr>
-						<c:choose>
-							<c:when test="${fn:length(movielist)>10 }">
-								<c:forEach var="list" items="${movielist}">
-									<tr>
-										<td>${list.moviename }</td>
-										<td><fmt:formatDate value="${list.startdate}"
-												pattern="yy-MM-dd(E)" /></td>
-										<td><fmt:formatDate value="${list.enddate}"
-												pattern="yy-MM-dd(E)" /></td>
-										<c:choose>
-											<c:when test="${list.state eq '1'}">
-												<td>상영중</td>
-											</c:when>
-											<c:when test="${list.state eq '2'}">
-												<td>상영예정</td>
-											</c:when>
-											<c:when test="${list.state eq '3'}">
-												<td>임시등록</td>
-											</c:when>
-											<c:when test="${list.state eq '0'}">
-												<td>상영종료</td>
-											</c:when>
-											<c:otherwise>
+						<tbody id="screentable">
+							<c:choose>
+								<c:when test="${fn:length(movielist)>=9 }">
+									<c:forEach var="list" items="${movielist}">
+										<tr>
+											<td>${list.moviename }</td>
+											<td><fmt:formatDate value="${list.startdate}"
+													pattern="yy-MM-dd(E)" /></td>
+											<td><fmt:formatDate value="${list.enddate}"
+													pattern="yy-MM-dd(E)" /></td>
+											<c:choose>
+												<c:when test="${list.state eq '1'}">
+													<td>상영중</td>
+												</c:when>
+												<c:when test="${list.state eq '2'}">
+													<td>상영예정</td>
+												</c:when>
+												<c:when test="${list.state eq '3'}">
+													<td>임시등록</td>
+												</c:when>
+												<c:when test="${list.state eq '0'}">
+													<td>상영종료</td>
+												</c:when>
+												<c:otherwise>
 
-											</c:otherwise>
-										</c:choose>
+												</c:otherwise>
+											</c:choose>
 
-									</tr>
-								</c:forEach>
+										</tr>
+									</c:forEach>
 
-							</c:when>
-							<c:otherwise>
-								<c:forEach var="list" items="${movielist}">
-									<tr>
-										<td>${list.moviename }</td>
-										<td><fmt:formatDate value="${list.startdate}"
-												pattern="yy-MM-dd(E)" /></td>
-										<td><fmt:formatDate value="${list.enddate}"
-												pattern="yy-MM-dd(E)" /></td>
-										<c:choose>
-											<c:when test="${list.state eq '1'}">
-												<td>상영중</td>
-											</c:when>
-											<c:when test="${list.state eq '2'}">
-												<td>상영예정</td>
-											</c:when>
-											<c:when test="${list.state eq '3'}">
-												<td>임시등록</td>
-											</c:when>
-											<c:when test="${list.state eq '0'}">
-												<td>상영종료</td>
-											</c:when>
-											<c:otherwise>
+								</c:when>
+								<c:otherwise>
+									<c:forEach var="list" items="${movielist}">
+										<tr>
+											<td>${list.moviename }</td>
+											<td><fmt:formatDate value="${list.startdate}"
+													pattern="yy-MM-dd(E)" /></td>
+											<td><fmt:formatDate value="${list.enddate}"
+													pattern="yy-MM-dd(E)" /></td>
+											<c:choose>
+												<c:when test="${list.state eq '1'}">
+													<td>상영중</td>
+												</c:when>
+												<c:when test="${list.state eq '2'}">
+													<td>상영예정</td>
+												</c:when>
+												<c:when test="${list.state eq '3'}">
+													<td>임시등록</td>
+												</c:when>
+												<c:when test="${list.state eq '0'}">
+													<td>상영종료</td>
+												</c:when>
+												<c:otherwise>
 
-											</c:otherwise>
-										</c:choose>
+												</c:otherwise>
+											</c:choose>
 
-									</tr>
-								</c:forEach>
-								<c:forEach var="i" begin="0" end="${9-fn:length(movielist)}">
-									<tr>
-										<td colspan="4" style="text-align: center;">-</td>
-									</tr>
-								</c:forEach>
+										</tr>
+									</c:forEach>
+									<c:forEach var="i" begin="0" end="${9-fn:length(movielist)}">
+										<tr>
+											<td colspan="4" style="text-align: center;">-</td>
+										</tr>
+									</c:forEach>
 
-							</c:otherwise>
+								</c:otherwise>
 
-						</c:choose>
+							</c:choose>
 
 
 
-						<tr>
-							<td colspan="3" style="text-align: right;">
-								<!-- Button trigger modal -->
-								<button type="button" class="btn btn-primary"
-									onclick="Openmodal('addmoviemodal')">상영작 추가</button>
-							</td>
-							<td>
-								<button type="button" class="btn btn-primary" onclick="">상영작
-									삭제</button>
-							</td>
-						</tr>
+							<tr>
+								<td colspan="3" style="text-align: right;">
+									<!-- Button trigger modal -->
+									<button type="button" class="btn btn-primary"
+										onclick="Openmodal('addmoviemodal')">상영작 추가</button>
+								</td>
+								<td>
+									<button type="button" class="btn btn-primary" onclick="">상영작
+										삭제</button>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="4" align="center"><div>
+										<c:set var="cp" value="${pageContext.request.contextPath }"></c:set>
+										<c:forEach var="i" begin="${pu.startPageNum }"
+											end="${pu.endPageNum }">
+											<c:choose>
+												<c:when test="${i==param.pageNum }">
+													<a
+														href="${cp }/admin/schedule/${theatername}?pageNum=${i}&field=${field}&keyword=${keyword}"><span
+														style='color: blue'>${i }</span></a>
+												</c:when>
+												<c:otherwise>
+													<a
+														href="${cp }/admin/schedule/${theatername}?pageNum=${i}&field=${field}&keyword=${keyword}"><span
+														style='color: gray'>${i }</span></a>
+												</c:otherwise>
+											</c:choose>
+										</c:forEach>
+									</div></td>
+							</tr>
+							<tr>
+								<td colspan="1"></td>
+								<td colspan="3" align="right">
+
+									<form method="post"
+										action="${cp }/admin/schedule/${theatername}"
+										style="display: flex;">
+										<select name="field" onchange="searchactive()" id="ee">
+											<option value="moviename"
+												<c:if test="${field=='moviename' }">selected</c:if>>영화명</option>
+											<option value="startdate"
+												<c:if test="${field=='startdate' }">selected</c:if>>상영시작일</option>
+											<option value="state"
+												<c:if test="${field=='state' }">selected</c:if>>상태</option>
+										</select> <input type="text" name="keyword" id="moviename-keyword"
+											value="${keyword}"
+											style="display: block; margin-left: 10px; margin-right: 10px; border: none; border-bottom: 1px solid;">
+
+										<input type="submit" class="btn btn-primary" value="검색">
+
+
+									</form>
+
+
+
+								</td>
+							</tr>
+						</tbody>
 					</table>
+
+
 				</div>
 			</div>
 			<div class="tablediv">
@@ -305,33 +368,63 @@
 					<table class="tablecss" style="width: 400px;">
 						<tr>
 							<th>상영관이름</th>
+							<th>타입</th>
+							<th>좌석수</th>
 							<th>상태</th>
 						</tr>
-						<c:choose>
-							<c:when test="${fn:length(screenlist)>10}">
-								<c:forEach var="vo" items="${screenlist}">
-									<tr onclick="createSeat(${vo.screencode}, 'screen-time')">
-										<td>${vo.name }</td>
-										<td>${vo.state }</td>
-									</tr>
-								</c:forEach>
-							</c:when>
-							<c:otherwise>
-								<c:forEach var="vo" items="${screenlist}">
-									<tr onclick="createSeat(${vo.screencode}, 'screen-time')">
-										<td>${vo.name }</td>
-										<td>${vo.state }</td>
-									</tr>
-								</c:forEach>
-								<c:forEach var="i" begin="0" end="${9-fn:length(screenlist)}">
-									<tr>
-										<td colspan="2" style="text-align: center;">-</td>
-									</tr>
-								</c:forEach>
-							</c:otherwise>
-						</c:choose>
+						<tbody id="screentable">
+							<c:choose>
+								<c:when test="${fn:length(screenlist)>=9}">
+									<c:forEach var="vo" items="${screenlist}">
+										<tr onclick="createSeat(${vo.screencode}, 'screen-time')">
+											<td>${vo.name }</td>
+											<td>${vo.screentype }</td>
+											<td>${vo.seatcount }</td>
+											<c:choose>
+												<c:when test="${vo.state eq '0'}">
+													<td>사용안함</td>
+												</c:when>
+												<c:when test="${vo.state eq '1'}">
+													<td>정상등록</td>
+												</c:when>
+												<c:when test="${vo.state eq '2'}">
+													<td>임시등록</td>
+												</c:when>
+											</c:choose>
+										</tr>
+									</c:forEach>
+								</c:when>
+								<c:otherwise>
+									<c:forEach var="vo" items="${screenlist}">
+										<tr onclick="createSeat(${vo.screencode}, 'screen-time')">
+											<td>${vo.name }</td>
+											<td>${vo.screentype }</td>
+											<td>${vo.seatcount }</td>
+											<c:choose>
+												<c:when test="${vo.state eq '0'}">
+													<td>사용안함</td>
+												</c:when>
+												<c:when test="${vo.state eq '1'}">
+													<td>정상등록</td>
+												</c:when>
+												<c:when test="${vo.state eq '2'}">
+													<td>임시등록</td>
+												</c:when>
+											</c:choose>
+										</tr>
+									</c:forEach>
+									<c:forEach var="i" begin="0" end="${9-fn:length(screenlist)}">
+										<tr>
+											<td colspan="2" style="text-align: center;">-</td>
+										</tr>
+									</c:forEach>
 
+
+								</c:otherwise>
+							</c:choose>
+						</tbody>
 					</table>
+
 				</div>
 			</div>
 		</div>
@@ -411,8 +504,7 @@
 					<input type="hidden" value="" name="enddate" id="enddate-movie">
 					<!-- 상태 -->
 					<input type="hidden" value="" name="state" id="state-movie">
-					<button type="button" class="btn btn-primary"
-						onclick="submitbtn()">Save</button>
+					<button type="button" class="btn btn-primary" onclick="submitbtn()">Save</button>
 				</form:form>
 			</div>
 		</div>
@@ -460,6 +552,7 @@
 						<th>상영종류</th>
 						<th>상영일</th>
 						<th>상태</th>
+						<th>수정</th>
 					</tr>
 					<tbody id="timetable-data" class='timetabletbody'>
 
@@ -569,14 +662,170 @@
 		</div>
 	</div>
 </div>
+<div class="modal fade show" tabindex="-1"
+	aria-labelledby="exampleModalLiveLabel"
+	style="display: none; top: 200px;" aria-hidden="true"
+	id="updateschedulemodal">
+	<div class="modal-dialog" style="box-shadow: 0px 3px 5px grey;">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLiveLabel">스케줄 수정</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"
+					aria-label="Close" onclick="closemodal('updateschedulemodal')"></button>
+			</div>
+			<div class="modal-body">
+
+				<table>
+					<tr>
+						<td><span>영화이름</span></td>
+						<td><div
+								style="border: 1px solid; border-radius: 2px; width: 350px;"
+								onclick="activeSelectDiv('selectDiv3')" id="inputdiv3">영화
+								선택</div>
+							<div class="movieselectdiv" id="selectDiv3"
+								style="display: none;">
+								<ul id="modal-3">
+									<c:forEach var="vo" items="${movielist}">
+										<li id="${vo.moviecode }"
+											onmouseenter="chageClassEnter(event)"
+											onmouseout="chageClassOut(event)"
+											onclick="moviesSelectEvent(event,'inputdiv3','selectDiv3','moviecode-update')">${vo.moviename }</li>
+									</c:forEach>
+
+								</ul>
+							</div></td>
+					</tr>
+					<tr>
+						<td><span>상영시작시간</span></td>
+						<td><input type="time" id="starttime-detail"
+							onchange="inputhidden(event,'starttime-update')">></td>
+					</tr>
+					<tr>
+						<td><span>상영종료시간</span></td>
+						<td><input type="time" id="endtime-detail"
+							onchange="inputhidden(event,'endtime-update')">></td>
+					</tr>
+					<tr>
+						<td><span>상영일</span></td>
+						<td><input type="date" id="screendate-detail"
+							onchange="inputhidden(event,'screendate-update')"></td>
+					</tr>
+
+
+					<tr>
+						<td><span>이벤트</span></td>
+						<td><input type="text" id="event-detail"
+							onkeyup="inputhidden(event,'event-update')"></td>
+					</tr>
+					<tr>
+						<td><span>상태</span></td>
+						<td><select onclick="inputhidden(event,'state-update')"
+							id="state-detail">
+
+								<option value="0">선택</option>
+								<option value="1">상영중</option>
+								<option value="2">상영예정</option>
+
+						</select></td>
+					</tr>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary"
+					onclick="closemodal('updateschedulemodal')">Close</button>
+				<form:form method="post"
+					action="${pageContext.request.contextPath}/admin/schedule/${theatername }/timedelete"
+					id="deleteTimeForm">
+					<input type="hidden" name="timecode" value="" id="timecode-delete">
+					<button type="button" class="btn btn-primary"
+						onclick="submitbtnss('deleteTimeForm')">DELETE</button>
+				</form:form>
+				<form:form method="post"
+					action="${pageContext.request.contextPath}/admin/schedule/${theatername }/timeupdate"
+					id="updateTimeForm">
+					<input type="hidden" name="timecode" value="" id="timecode-update">
+					<input type="hidden" name="screencode" value="1">
+					<input type="hidden" name="moviecode" value=""
+						id="moviecode-update">
+					<input type="hidden" name="starttime" value=""
+						id="starttime-update">
+					<input type="hidden" name="endtime" value="" id="endtime-update">
+					<input type="hidden" name="screendate" value=""
+						id="screendate-update">
+					<input type="hidden" name="state" value="" id="state-update">
+					<input type="hidden" name="event" value="" id="event-update">
+					<button type="button" class="btn btn-primary"
+						onclick="submitbtnss('updateTimeForm')">UPDATE</button>
+				</form:form>
+			</div>
+		</div>
+	</div>
+</div>
+
 
 
 </html>
 <script type="text/javascript">
 
+
+
+
+
 	var today = new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0];
 	window.onload = function() {
 		setdatemin();
+
+	}
+	function submitbtnss(id)
+	{
+		document.getElementById(id).submit();
+	}
+	//디테일 가져오기
+	function getScreenTimedetail(id1,id) {
+		
+		activeSelectDiv(id);
+		let xhr = new XMLHttpRequest();
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && xhr.status == 200) {
+				let data = xhr.responseText;
+				let json = JSON.parse(data);
+				let inputdiv3=document.getElementById('inputdiv3');
+				inputdiv3.innerText=json.moviename;
+				let starttime=document.getElementById('starttime-detail');
+				starttime.value=json.vo.starttime;
+				let endtime=document.getElementById('endtime-detail');
+				endtime.value=json.vo.endtime;
+				let screendate=document.getElementById('screendate-detail');
+				let ndate=new Date(json.vo.screendate);
+				screendate.value=formatDate2(ndate);
+				let event=document.getElementById('event-detail');
+				event.value=json.vo.event;
+				let state=document.getElementById('state-detail');
+				state.value=json.vo.state;
+
+				////
+				let timecodeD=document.getElementById('timecode-delete');
+				timecodeD.value=id1;
+				////
+				let timecodeU=document.getElementById('timecode-update');
+				timecodeU.value=id1;
+				let moviecodeU=document.getElementById('moviecode-update');
+				moviecodeU.value=json.vo.moviecode;
+				let starttimeU=document.getElementById('starttime-update');
+				starttimeU.value=json.vo.starttime;
+				let endtimeU=document.getElementById('endtime-update');
+				endtimeU.value=json.vo.endtime;
+				let screendateU=document.getElementById('screendate-update');
+				screendateU.value=formatDate2(ndate);
+				let stateU=document.getElementById('state-update');
+				stateU.value=json.vo.state;
+				let eventU=document.getElementById('event-update');
+				eventU.value=json.vo.event;
+			}
+
+		}
+		xhr.open('get', '/finalproject/admin/schedule/time-detail?timecode='+ id1, true);
+		xhr.send();
 
 	}
 	function submitbtn() {
@@ -816,10 +1065,15 @@
 					tr.id=json.timelist[i].timecode;
 					let td=document.createElement("td");
 					td.innerText=json.movienamelist[i];
+					let td2=document.createElement("td");
+					let s="getScreenTimedetail('"+json.timelist[i].timecode+"','updateschedulemodal')";
+					td2.innerHTML='<button type="button" class="btn btn-primary"'+
+					'onclick='+s+'>수정</button>'
 					tr.onclick=function(event)
 					{
 						resetseat();
 						getseatinfo(event.target.parentNode.id);
+					
 					}
 					tr.appendChild(td);
 					for(key in json.timelist[i])  {
@@ -866,7 +1120,7 @@
 						}
 					
 					}
-					
+					tr.appendChild(td2);
 					timetable.appendChild(tr);
 					}
 				
@@ -932,6 +1186,38 @@
 		xhr.send();
 
 	}
+	
+ 
+    function formatDate(event) {
+        
+        var d = new Date(event.target.value),
+        
+        month = '' + (d.getMonth() + 1) , 
+        day = '' + d.getDate(), 
+        year = d.getFullYear();
+        
+        if (month.length < 2) month = '0' + month; 
+        if (day.length < 2) day = '0' + day; 
+        
+        return [year, month, day].join('/');
+        
+        }
+
+      function formatDate2(data) {
+        
+        var d = new Date(data),
+        
+        month = '' + (d.getMonth() + 1) , 
+        day = '' + d.getDate(), 
+        year = d.getFullYear();
+        
+        if (month.length < 2) month = '0' + month; 
+        if (day.length < 2) day = '0' + day; 
+        
+        return [year, month, day].join('-');
+        
+        }
+
 	
 	
 </script>

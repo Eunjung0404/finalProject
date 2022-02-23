@@ -15,7 +15,9 @@ import com.test.finalproject.vo.TheaterVo;
 public interface ChaAdminMapper {
 
 	int getTheaterCode(String theatername);
-	List<ChaAdminScheduleVo> getTheaterMovieList(int theatercode);
+	List<ChaAdminScheduleVo> getTheaterMovieList(HashMap<String, Object> map);
+	
+	int getTotalPageMoVie(HashMap<String, Object> map);
 	List<ScreenVo> getscreenList(int theatercode);
 	List<Movie_MVo> getCurrnetMovie();
 	///////
@@ -29,4 +31,18 @@ public interface ChaAdminMapper {
 	int getseatcol(int screencode);
 	Movie_MVo getmoviename(int moviecode);
 	int getTimecode();
+	
+	//////////////////////////////////////////
+	
+	int deleteTheatermovie(int tmovecode);
+	int deleteTime(int timecode);
+	
+	/////////////////////////////////////////
+	TheaterMovieVo getTheaterMovieDetail(int tmovecode);
+	ScreenTimeVo getTimeDetail(int timecode);
+	
+	/////////////////////////////////////////////
+	
+	int updateTheatermovie(TheaterMovieVo vo);
+	int updateTime(ScreenTimeVo vo);
 }

@@ -4,18 +4,26 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="data.mybatis.mapper.ChaTheaterMapper">
 
-<!-- 영화선택시추가 -->
+	<!-- 영화선택시추가 -->
 	<sql id="moviechoose">
 		<choose>
 			<when test="moviecode!=null and moviecode!=''">
-				and tm.moviecode=#{moviecode} and
-				tm.theatercode=t.theatercode and (tm.state=1 or tm.state=2)
+				and tm.moviecode=#{moviecode} and tm.theatercode=t.theatercode
+				and
+				tm.theatercode=any(select DISTINCT s.theatercode from
+				screen_time
+				st,
+				screen s where st.moviecode=#{moviecode} and
+				st.screencode=s.screencode and
+				  <![CDATA[st.screendate >= TO_CHAR(SYSDATE,'YY/MM/DD') )]]>
+
 			</when>
 		</choose>
 	</sql>
 	<sql id="choose">
 		<choose>
-		  <when test="moviecode!=null and moviecode!='' and theatercode!=null and theatercode!=''">
+			<when
+				test="moviecode!=null and moviecode!='' and theatercode!=null and theatercode!=''">
 				and st.moviecode=#{moviecode} and s.theatercode=#{theatercode}
 			</when>
 			<when test="moviecode!=null and moviecode!=''">
@@ -28,49 +36,74 @@
 	</sql>
 	<!-- 극장갯수 -->
 	<select id="areaCount" parameterType="hashmap" resultType="int">
-		select count(*) from theater t
+		select count(DISTINCT t.theatercode) from theater t
 		<if test="moviecode!=null and moviecode!=''">
-		, theater_move tm 
+			, theater_move tm
 		</if>
 		where t.area=#{area}
-		<include refid="moviechoose"/>
-		
+		<include refid="moviechoose" />
+
 	</select>
 	<!-- 극장리스트 -->
 	<select id="selectTheater" parameterType="hashmap"
 		resultType="hashmap">
-		select t.theatername ,t.theatercode, t.area from theater t
+		select DISTINCT t.theatername ,t.theatercode, t.area from theater t
 		<if test="moviecode!=null and moviecode!=''">
-		, theater_move tm 
+			, theater_move tm
 		</if>
-		 where area=#{area}
-		<include refid="moviechoose"/>
+		where area=#{area}
+		<include refid="moviechoose" />
 	</select>
 	<!-- 상영날짜 가져오기 -->
 	<select id="getScreenDate" parameterType="hashmap"
 		resultType="com.test.finalproject.vo.TiketScreenTimeVo">
 		select st.screendate,st.screencode,s.theatercode from screen_time
 		st,screen s where s.screencode=st.screencode
-		<include refid="choose"/>
+		<include refid="choose" />
 	</select>
-	
+
 	<select id="movielist" resultType="hashmap">
-	select rating,moviename,moviecode,movieimg from movie_m where state=1 order by count desc
+		select
+		rating,moviename,moviecode,movieimg from movie_m where state=1 order
+		by count desc
 	</select>
 	<!-- 상영스케쥴가져오기 -->
-	<select id="selectScreenTime" parameterType="hashmap" resultType="com.test.finalproject.vo.TiketScreenTimeVo">
-	select st.*,s.name from screen_time st, screen s where s.theatercode=#{theatercode} and st.screendate=#{screendate} and st.moviecode=#{moviecode} and st.screencode=s.screencode order by st.screendate,st.starttime asc
+	<select id="selectScreenTime" parameterType="hashmap"
+		resultType="com.test.finalproject.vo.TiketScreenTimeVo">
+		select st.*,s.name from screen_time st, screen s where
+		s.theatercode=#{theatercode} and st.screendate=#{screendate} and
+		st.moviecode=#{moviecode} and st.screencode=s.screencode order by
+		st.screendate,st.starttime asc
 	</select>
 	<!-- 상영관이름 가져오기 -->
-	<select id="selectScreenName" parameterType="hashmap" resultType="string">
-	select DISTINCT s.name from screen_time st, screen s where s.theatercode=#{theatercode} and st.screendate=#{screendate} and st.moviecode=#{moviecode} and st.screencode=s.screencode order by s.name asc
+	<select id="selectScreenName" parameterType="hashmap"
+		resultType="string">
+		select DISTINCT s.name from screen_time st, screen s where
+		s.theatercode=#{theatercode} and st.screendate=#{screendate} and
+		st.moviecode=#{moviecode} and st.screencode=s.screencode order by
+		s.name asc
 	</select>
 	<!-- 영화검색 -->
-	<select id="searchMovie" parameterType="string" resultType="hashmap">
-	select moviename,moviecode from movie_m where moviename like '%'||#{keyword}||'%' and state=1
+	<select id="searchMovie" parameterType="string"
+		resultType="hashmap">
+		select moviename,moviecode from movie_m where moviename
+		like
+		'%'||#{keyword}||'%' and state=1
 	</select>
 	<!-- 극장검색 -->
-	<select id="searchTheater" parameterType="string" resultType="hashmap">
-	select theatername,theatercode,area from  theater where theatername like '%'||#{keyword}||'%' and state=1
+	<select id="searchTheater" parameterType="string"
+		resultType="hashmap">
+		select theatername,theatercode,area from theater where
+		theatername like
+		'%'||#{keyword}||'%' and state=1
+	</select>
+	
+	<select id="getbookseat" parameterType="int"
+		resultType="int">
+	SELECT count(*) FROM seat_info where timecode=#{timecode} and state=0
+	</select>
+		<select id="getseatcount" parameterType="int"
+		resultType="int">
+	SELECT seatcount FROM screen where screencode=#{screencode}
 	</select>
 </mapper>

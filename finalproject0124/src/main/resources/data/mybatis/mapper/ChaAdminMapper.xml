@@ -3,6 +3,19 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="data.mybatis.mapper.ChaAdminMapper">
+
+	<sql id="searchMovie">
+
+		<choose>
+			<when test="field=='moviename'">
+				and m.${field} like '%'||#{keyword}||'%'
+			</when>
+			<when test="field!=null and field!=''">
+				and tm.${field} like '%'||#{keyword}||'%'
+			</when>
+		</choose>
+	</sql>
+
 	<!-- theatercode가져오기 -->
 	<select id="getTheaterCode" resultType="int"
 		parameterType="string">
@@ -11,13 +24,29 @@
 		theatername=#{theatername}
 	</select>
 	<!-- 상영영화리스트 -->
-	<select id="getTheaterMovieList" parameterType="int"
+	<select id="getTheaterMovieList" parameterType="hashmap"
 		resultType="com.test.finalproject.vo.ChaAdminScheduleVo">
-		select m.moviecode,m.moviename,tm.startdate,tm.enddate,tm.state from
+		select *from
+		(select theater_move.*, ROWNUM rown from
+		(
+		select
+		m.moviecode,m.moviename,tm.startdate,tm.enddate,tm.state from
 		theater_move tm, movie_m m
 		where
 		tm.moviecode=m.moviecode and
 		tm.theatercode=#{theatercode}
+		<include refid="searchMovie" />
+		order by tm.tmovecode
+		desc)theater_move)
+		 <![CDATA[where rown>=#{startRow} and rown<=#{endRow}]]>
+	</select>
+	<!-- 검색했을때 총 페이지 갯수 가져오기 -->
+	<select id="getTotalPageMoVie" resultType="int"
+		parameterType="hashmap">
+		select NVL(count(*),0) cnt from
+		theater_move tm, movie_m m where
+		tm.moviecode=m.moviecode
+		<include refid="searchMovie" />
 	</select>
 	<!-- 상영관리스트 -->
 	<select id="getscreenList" parameterType="int"
@@ -32,39 +61,49 @@
 		count desc
 	</select>
 	<!-- 상영 영화 추가 -->
-	<insert id="addTheaterMovie" parameterType="com.test.finalproject.vo.TheaterMovieVo">
-	insert into THEATER_MOVE values(SEQ_THEATERMOVIE.nextval,#{theatercode},#{moviecode},#{startdate},#{enddate},#{state})
+	<insert id="addTheaterMovie"
+		parameterType="com.test.finalproject.vo.TheaterMovieVo">
+		insert into THEATER_MOVE
+		values(SEQ_THEATERMOVIE.nextval,#{theatercode},#{moviecode},#{startdate},#{enddate},#{state})
 	</insert>
 	<!-- 무비코드로 영화가져오기 -->
-	<select id="getmoviename" parameterType="int" resultType="com.test.finalproject.vo.Movie_MVo">
-	select * from movie_m where moviecode=#{moviecode}
+	<select id="getmoviename" parameterType="int"
+		resultType="com.test.finalproject.vo.Movie_MVo">
+		select * from movie_m where moviecode=#{moviecode}
 	</select>
 	<!-- 스크린 기본 좌석 가져오기 -->
-	<select id="getSeat" parameterType="int" resultType="com.test.finalproject.vo.SeatVo">
-	select * from seat where screencode=#{screencode}
+	<select id="getSeat" parameterType="int"
+		resultType="com.test.finalproject.vo.SeatVo">
+		select * from seat where screencode=#{screencode}
 	</select>
 	<!-- 스크린별 스케쥴 가져오기 -->
-	<select id="getScreenTime" parameterType="int" resultType="com.test.finalproject.vo.ScreenTimeVo">
-	select * from screen_time where screencode=#{screencode}
+	<select id="getScreenTime" parameterType="int"
+		resultType="com.test.finalproject.vo.ScreenTimeVo">
+		select * from screen_time where screencode=#{screencode}
+		and (state=1 or state=2)
 	</select>
 	<!-- 스케쥴 insert -->
-	<insert id="addScreenTime" parameterType="com.test.finalproject.vo.ScreenTimeVo">
-	insert into screen_time values(SEQ_SCREENTIME.nextval,#{screencode},#{moviecode},#{starttime},#{endtime},#{event},#{screendate},#{state})
+	<insert id="addScreenTime"
+		parameterType="com.test.finalproject.vo.ScreenTimeVo">
+		insert into screen_time
+		values(SEQ_SCREENTIME.nextval,#{screencode},#{moviecode},#{starttime},#{endtime},#{event},#{screendate},#{state})
 	</insert>
 	<!-- 좌석info insert -->
-	<insert id="insertseatinfo" parameterType="com.test.finalproject.vo.SeatInfoVo">
+	<insert id="insertseatinfo"
+		parameterType="com.test.finalproject.vo.SeatInfoVo">
 		insert into seat_info
 		values(SEQ_SEAT_INFO.nextval,#{seatcode},#{timecode},'0')
 	</insert>
-		<!-- timcode 가져오기 -->
+	<!-- timcode 가져오기 -->
 	<select id="getTimecode" resultType="int">
 	<![CDATA[select timecode FROM screen_time where ROWNUM <= 1 order by timecode desc]]>
 	</select>
 	<!-- 스케쥴 업데이트 -->
-	
+
 	<!-- 스케쥴별 좌석info가져오기 -->
-	<select id="getSeatinfo" parameterType="int" resultType="com.test.finalproject.vo.SeatInfoVo" >
-	select * from seat_info where timecode=#{timecode}
+	<select id="getSeatinfo" parameterType="int"
+		resultType="com.test.finalproject.vo.SeatInfoVo">
+		select * from seat_info where timecode=#{timecode}
 	</select>
 	<!-- seat 행,렬 가져오기 -->
 	<select id="getseatrow" resultType="int" parameterType="int">
@@ -76,4 +115,39 @@
 		select max(seatcol) from seat
 		where screencode=#{screencode}
 	</select>
+
+	<!-- 영화삭제 -->
+	<update id="deleteTheatermovie" parameterType="int">
+		update
+		theater_move set state=0 where tmovecode=#{tmovecode}
+	</update>
+	<!-- 스케쥴삭제 -->
+	<update id="deleteTime" parameterType="int">
+		update screen_time set
+		state=0 where timecode=#{timecode}
+	</update>
+
+	<!-- 영화detail -->
+	<select id="getTheaterMovieDetail" parameterType="int"
+		resultType="com.test.finalproject.vo.TheaterMovieVo">
+		select * from theater_move where tmovecode=#{tmovecode}
+	</select>
+	<!-- 스케쥴detail -->
+	<select id="getTimeDetail" parameterType="int" resultType="com.test.finalproject.vo.ScreenTimeVo">
+		select * from screen_time where timecode=#{timecode}
+	</select>
+	<!-- 영화수정 -->
+	<update id="updateTheatermovie"
+		parameterType="com.test.finalproject.vo.TheaterMovieVo">
+		update theater_move set
+		MOVIECODE=#{moviecode},STARTDATE=#{startdate},ENDDATE=#{enddate},
+		STATE=#{state} where TMOVECODE=#{tmovecode}
+	</update>
+	<!-- 스케쥴수정 -->
+	<update id="updateTime"
+		parameterType="com.test.finalproject.vo.ScreenTimeVo">
+		update screen_time set
+		MOVIECODE=#{moviecode},STARTTIME=#{starttime},ENDTIME=#{endtime},
+		EVENT=#{event}, SCREENDATE=#{screendate} ,state=#{state} where TIMECODE=#{timecode}
+	</update>
 </mapper>

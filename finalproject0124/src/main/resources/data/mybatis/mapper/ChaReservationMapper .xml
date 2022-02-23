@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="data.mybatis.mapper.ChaReservationMapper">
+
+	<select id="count" parameterType="string" resultType="int">
+		select
+		NVL(count(*),0) from RESERVATION where mid=#{mid}
+	</select>
+
+	<!-- 예약리스트 조회 -->
+	<select id="ReservationSelect" parameterType="hashmap"
+		resultType="com.test.finalproject.vo.ReservationVo">
+		select * from(
+		select RESERVATION.*,ROWNUM rown from
+		(
+		select * from
+		RESERVATION where mid=#{mid}
+		order by reservationcode desc
+		)
+		<![CDATA[RESERVATION)where rown>=#{startRow} and rown<=#{endRow}]]>
+	</select>
+	<!-- 결제리스트 조회 -->
+	<select id="getpayment" parameterType="int"
+		resultType="com.test.finalproject.vo.PaymentVo">
+		select * from payment where
+		reservationcode=#{reservationcode}
+	</select>
+	<!-- 좌석정보가져오기 -->
+	<select id="getseatname" parameterType="int" resultType="string">
+		select
+		seatname from RESERVATION_SEAT reservationcode=#{reservationcode}
+	</select>
+
+
+	<!-- 예약취소 -->
+	<update id="CancelReservation" parameterType="int">
+		update RESERVATION
+		set state=0 where reservationcode=#{reservationcode}
+	</update>
+	<!-- 결제취소 -->
+	<update id="Cancelpayment" parameterType="int">
+		update payment set
+		state=0 where reservationcode=#{reservationcode}
+	</update>
+	<!-- 좌석코드가져오기~ -->
+	<select id="getinfocode" parameterType="int" resultType="string">
+		select
+		infocode from RESERVATION_SEAT where
+		reservationcode=#{reservationcode}
+	</select>
+	<!-- 좌석취소 -->
+	<update id="CancelSeat" parameterType="int">
+		update seat_info set
+		state=0 where infocode=#{infocode}
+	</update>
+
+
+	<select id="getscreendate" parameterType="int"
+		resultType="com.test.finalproject.vo.TiketScreenTimeVo">
+		select * from screen_time where timecode=#{timecode}
+	</select>
+	<!-- 영화코드가져오기 -->
+	<select id="getmoviecode" parameterType="string"
+		resultType="int">
+		select moviecode from movie_m where moviename=#{moviename}
+	</select>
+	<!-- 영화카운트 감소 -->
+	<update id="MinusCount" parameterType="int">
+		update movie_m set
+		count=count-1 where moviecode=#{moviecode}
+	</update>
+</mapper>

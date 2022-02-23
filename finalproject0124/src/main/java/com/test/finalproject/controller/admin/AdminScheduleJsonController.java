@@ -16,6 +16,7 @@ import com.test.finalproject.vo.Movie_MVo;
 import com.test.finalproject.vo.ScreenTimeVo;
 import com.test.finalproject.vo.SeatInfoVo;
 import com.test.finalproject.vo.SeatVo;
+import com.test.finalproject.vo.TheaterMovieVo;
 
 @RestController
 @RequestMapping("/admin/schedule")
@@ -58,6 +59,26 @@ public class AdminScheduleJsonController {
 		}
 		map.put("movienamelist", movienamelist);
 		map.put("timelist", timelist);
+		return map;
+	}
+	
+	//스케쥴 detail
+	@GetMapping(value = "/time-detail", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public @ResponseBody HashMap<String, Object> gettimedetail(int timecode) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ScreenTimeVo vo=service.getTimeDetail(timecode);
+		Movie_MVo vom = service.getmoviename(Integer.parseInt(vo.getMoviecode()));
+		map.put("vo", vo);
+		map.put("moviename",vom.getMoviename());
+		return map;
+	}
+	
+	//영화 detail
+	@GetMapping(value = "/tm-detail", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public @ResponseBody HashMap<String, Object> getTMDetail(int tmovecode) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		TheaterMovieVo vo=service.getTheaterMovieDetail(tmovecode);
+		map.put("vo", vo);
 		return map;
 	}
 

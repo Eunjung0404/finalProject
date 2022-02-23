@@ -128,6 +128,7 @@
 	align-content: center;
 	align-items: center;
 	margin: 10px;
+	flex-direction: column;
 }
 
 .screentime:hover {
@@ -328,10 +329,13 @@
 				<div style="width: 35%; border: 1px solid gray; height: 100%;">
 					<ul id="areas">
 						<li id="서울">서울<span></span></li>
-						<li id="부산">부산<span></span></li>
 						<li id="경기">경기<span></span></li>
-						<li id="대전">대전<span></span></li>
+						<li id="인천">인천<span></span></li>
+						<li id="대전/충청">대전/충청<span></span></li>
 						<li id="대구">대구<span></span></li>
+						<li id="부산/울산">부산/울산<span></span></li>
+						<li id="경상">경상<span></span></li>
+						<li id="광주/전라/제주">광주/전라/제주<span></span></li>
 					</ul>
 
 				</div>
@@ -624,6 +628,14 @@
 											//li배열에서 moviecode가 같을경우 해당 li click()이벤트 발생
 											if (lis[z].id == event.target.id) {
 												lis[z].click();
+												if (lis[z].parentNode.id == "Tab2") {
+													accordionctrl('flush-collapseTwo',
+															'flush-collapseOne', document
+																	.getElementById('flushbtn2'),
+															'flushbtn1')
+													//console.log();
+												}
+												
 											}
 										}
 									}
@@ -1074,11 +1086,19 @@
 
 						if (td[j].id == json.result[i].screendate) {
 
+							//같은날짜인지 확인
+							const datesAreOnSameDay = (first, second) =>
+						    first.getFullYear() === second.getFullYear() &&
+						    first.getMonth() === second.getMonth() &&
+						    first.getDate() === second.getDate();
 							let cdate=new Date();
 							let ndate=new Date(json.result[i].screendate);
-							if(ndate>cdate)
+							//날짜가 같거나 크면
+							if(ndate>cdate || datesAreOnSameDay(cdate,ndate))
 								{
+								//클래스를 변경
 								td[j].className += " time";
+								//console.log("데이터확인"+ndate+","+cdate);
 								}
 							//td[j].className += " time";
 							td[j].onclick = function(event) {
@@ -1132,6 +1152,7 @@
 	//다음달로 넘기기
 	function nextmonthbtn() {
 
+		
 		//기존 달력정보 삭제
 		for (var i = tbody.rows.length; i >= 0; i--) {
 			console.log(tbody.rows.length);
@@ -1192,16 +1213,28 @@
 									+ json.result[i].endtime;
 							infodiv.id = json.result[i].timecode;
 							infodiv.className = "screentime";
-
+						//	let countinfo = document.createElement('p');
+							//countinfo.style.fontSize="10px";
+							//countinfo.innerText=json.bookcountlist[i]+"/"+json.totalcountlist[i];
+							//infodiv.appendChild(countinfo);
+							
 							infodiv.name = json.result[i].screencode;
-
+							
+							
 							//상영관 이름 
 							let nameinput = document.createElement('input');
 							nameinput.setAttribute('type', 'hidden');
 							nameinput.value = json.result[i].name;
 							infodiv.appendChild(nameinput);
+							
 							//시간선택시
 							infodiv.onclick = function(event) {
+								let divs = document.getElementsByClassName('screentime clickli');
+								for(var i=0;i<divs.length;i++)
+									{
+									divs[i].classList.remove('clickli');
+									}
+								
 								//버튼활성화
 								let nextpage = document
 										.getElementById('nextpage');
