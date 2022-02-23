@@ -4,7 +4,7 @@
 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -365,7 +365,7 @@
 										<li id="${vo.moviecode }"
 											onmouseenter="chageClassEnter(event)"
 											onmouseout="chageClassOut(event)"
-											onclick="moviesSelectEvent(event,'inputdiv','selectDiv')">${vo.moviename }</li>
+											onclick="moviesSelectEvent(event,'inputdiv','selectDiv','moviecode-movie')">${vo.moviename }</li>
 									</c:forEach>
 
 								</ul>
@@ -373,17 +373,19 @@
 					</tr>
 					<tr>
 						<td><span>상영시작일</span></td>
-						<td><input type="date" id="startdate"></td>
+						<td><input type="date" id="startdate"
+							onchange="inputhidden(event,'startdate-movie')"></td>
 					</tr>
 
 					<tr>
 						<td><span>상영종료일</span></td>
-						<td><input type="date" id="enddate"></td>
+						<td><input type="date" id="enddate"
+							onchange="inputhidden(event,'enddate-movie')"></td>
 					</tr>
 
 					<tr>
 						<td><span>상태</span></td>
-						<td><select>
+						<td><select onchange="inputhidden(event,'state-movie')">
 
 								<option value="1">상영중</option>
 								<option value="2">상영예정</option>
@@ -398,7 +400,20 @@
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary"
 					onclick="closemodal('addmoviemodal')">Close</button>
-				<button type="button" class="btn btn-primary">Save</button>
+				<form:form method="post"
+					action="${pageContext.request.contextPath}/admin/schedule/${theatername }/movieadd"
+					id="insertMovieForm">
+					<!-- 영화코드 -->
+					<input type="hidden" value="" name="moviecode" id="moviecode-movie">
+					<!-- 상영시작일 -->
+					<input type="hidden" value="" name="startdate" id="startdate-movie">
+					<!-- 상영종료일 -->
+					<input type="hidden" value="" name="enddate" id="enddate-movie">
+					<!-- 상태 -->
+					<input type="hidden" value="" name="state" id="state-movie">
+					<button type="button" class="btn btn-primary"
+						onclick="submitbtn()">Save</button>
+				</form:form>
 			</div>
 		</div>
 	</div>
@@ -437,8 +452,6 @@
 				<table id="timetable" class="timetable">
 					<tr>
 						<td colspan="5"></td>
-						<td colspan="1"><button type="button" class="btn btn-primary"
-								onclick="Openmodal('addschedulemodal')">등록</button></td>
 					</tr>
 					<tr>
 						<th>상영영화</th>
@@ -458,7 +471,8 @@
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary"
 					onclick="closemodal('screen-time')">Close</button>
-				<button type="button" class="btn btn-primary">Save</button>
+				<button type="button" class="btn btn-primary"
+					onclick="Openmodal('addschedulemodal')">ADD</button>
 			</div>
 		</div>
 	</div>
@@ -466,7 +480,7 @@
 <!-- Modal -->
 <div class="modal fade show" tabindex="-1"
 	aria-labelledby="exampleModalLiveLabel"
-	style="display: block; top: 200px;" aria-hidden="true"
+	style="display: none; top: 200px;" aria-hidden="true"
 	id="addschedulemodal">
 	<div class="modal-dialog" style="box-shadow: 0px 3px 5px grey;">
 		<div class="modal-content">
@@ -487,11 +501,11 @@
 							<div class="movieselectdiv" id="selectDiv2"
 								style="display: none;">
 								<ul id="modal-3">
-									<c:forEach var="vo" items="${Cmovielist}">
+									<c:forEach var="vo" items="${movielist}">
 										<li id="${vo.moviecode }"
 											onmouseenter="chageClassEnter(event)"
 											onmouseout="chageClassOut(event)"
-											onclick="moviesSelectEvent(event,'inputdiv2','selectDiv2')">${vo.moviename }</li>
+											onclick="moviesSelectEvent(event,'inputdiv2','selectDiv2','moviecode-hidden')">${vo.moviename }</li>
 									</c:forEach>
 
 								</ul>
@@ -499,35 +513,58 @@
 					</tr>
 					<tr>
 						<td><span>상영시작시간</span></td>
-						<td><input type="time" id=""></td>
+						<td><input type="time" id="starttime"
+							onchange="inputhidden(event,'starttime-hidden')">></td>
 					</tr>
 					<tr>
 						<td><span>상영종료시간</span></td>
-						<td><input type="time" value=""id=""></td>
+						<td><input type="time" id="endtime"
+							onchange="inputhidden(event,'endtime-hidden')">></td>
 					</tr>
 					<tr>
 						<td><span>상영일</span></td>
-						<td><input type="date" id="screendate"></td>
+						<td><input type="date" id="screendate"
+							onchange="inputhidden(event,'screendate-hidden')"></td>
 					</tr>
 
 
 					<tr>
+						<td><span>이벤트</span></td>
+						<td><input type="text" id="event"
+							onkeyup="inputhidden(event,'event-hidden')"></td>
+					</tr>
+					<tr>
 						<td><span>상태</span></td>
-						<td><select>
+						<td><select onclick="inputhidden(event,'state-hidden')">
 
+								<option value="0">선택</option>
 								<option value="1">상영중</option>
 								<option value="2">상영예정</option>
-								<option value="3">임시등록</option>
 
 						</select></td>
 					</tr>
-
 				</table>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary"
 					onclick="closemodal('addschedulemodal')">Close</button>
-				<button type="button" class="btn btn-primary">Save</button>
+				<form:form method="post"
+					action="${pageContext.request.contextPath}/admin/schedule/${theatername }/insert"
+					id="insertTimeForm">
+					<input type="hidden" name="screencode" value=""
+						id="screencode-hidden">
+					<input type="hidden" name="moviecode" value=""
+						id="moviecode-hidden">
+					<input type="hidden" name="starttime" value=""
+						id="starttime-hidden">
+					<input type="hidden" name="endtime" value="" id="endtime-hidden">
+					<input type="hidden" name="screendate" value=""
+						id="screendate-hidden">
+					<input type="hidden" name="state" value="" id="state-hidden">
+					<input type="hidden" name="event" value="" id="event-hidden">
+					<button type="button" class="btn btn-primary"
+						onclick="submitinsertTimebtn()">Save</button>
+				</form:form>
 			</div>
 		</div>
 	</div>
@@ -536,10 +573,90 @@
 
 </html>
 <script type="text/javascript">
+
 	var today = new Date(+new Date() + 3240 * 10000).toISOString().split("T")[0];
 	window.onload = function() {
 		setdatemin();
 
+	}
+	function submitbtn() {
+		let moviecode=	document.getElementById('moviecode-movie');
+		if(moviecode.value==''||moviecode.value==null)
+		{
+		alert("상영작을 선택해주세요.");
+		return false;
+		}
+		let startdate=document.getElementById('startdate-movie');
+		if(startdate.value==''||startdate.value==null)
+		{
+		alert("상영시작일을 선택해주세요");
+		return false;
+		}
+		let enddate=document.getElementById('enddate-movie');
+		if(enddate.value==''||enddate.value==null)
+		{
+		alert("상영종료일을 선택해주세요");
+		return false;
+		}
+		let state=document.getElementById('state-movie');
+		if(state.value==''||state.value==null ||state.value== '선택')
+		{
+		alert("상태를 선택해주세요");
+		return false;
+		}
+		
+		document.getElementById('insertMovieForm').submit();
+	}
+	
+	function submitinsertTimebtn() {
+		let screencode=	document.getElementById('screencode-hidden');
+		if(screencode.value==''||screencode.value==null)
+			{
+			alert("상영관 정보가 누락되었습니다.");
+			return false;
+			}
+		let moviecode=	document.getElementById('moviecode-hidden');
+		if(moviecode.value==''||moviecode.value==null)
+			{
+			alert("상영작을 선택해주세요.");
+			return false;
+			}
+		let starttime=document.getElementById('starttime-hidden');
+		let endtime=document.getElementById('endtime-hidden');
+		if(starttime.value==''||starttime.value==null)
+			{
+			alert("상영시작시간을 선택해주세요");
+			return false;
+			}
+		if(endtime.value==''||endtime.value==null)
+		{
+		alert("상영종료시간을 선택해주세요");
+		return false;
+		}
+		if(parseInt(starttime.value.substr(0, 2))>parseInt(endtime.value.substr(0, 2)))
+		{
+		alert("상영시작시간보다 상영종료시간이 이릅니다.");
+		return false;
+		}
+		let screendate=document.getElementById('screendate-hidden');
+		if(screendate.value==''||screendate.value==null)
+		{
+		alert("상영일을 선택해주세요");
+		return false;
+		}
+		let state=document.getElementById('state-hidden');
+		if(state.value==''||state.value==null)
+		{
+		alert("상태를 선택해주세요");
+		return false;
+		}
+		let event=document.getElementById('event-hidden');
+		if(event.value==''||event.value==null)
+		{
+		alert("이벤트 타입을 입력해주세요");
+		return false;
+		}
+		document.getElementById('insertTimeForm').submit();
 	}
 	function chageClassEnter(event) {
 		event.target.className += " bg-primary text-white";
@@ -560,8 +677,19 @@
 		let selectDiv = document.getElementById(id);
 		selectDiv.style.display = "block";
 	}
+	//값넣기
+	function inputhidden(event,id) {
+		let hidden=document.getElementById(id);
+		hidden.value=event.target.value;
+	}
+	function inputhiddenID(event,id) {
+		let hidden=document.getElementById(id);
+		hidden.value=event.target.id;
+	}
+	
 	//영화 선택 이벤트
-	function moviesSelectEvent(event,id,id2) {
+	function moviesSelectEvent(event,id,id2,id3) {
+		inputhiddenID(event,id3)
 		let inputdiv = document.getElementById(id);
 		inputdiv.innerText = event.target.innerText;
 		event.target.className = " bg-primary text-white";
@@ -595,6 +723,8 @@
 	}
 	
 	function createSeat(screencode, id) {
+		let hidden=document.getElementById('screencode-hidden');
+		hidden.value=screencode;
 		let seatcount = 0;
 		getScreenTime(screencode, id);
 		Openmodal(id);
@@ -751,22 +881,28 @@
 
 	function resetseat()
 	{
-		let seat = document.getElementsByClassName("seat-list book");
 		
-		for(var i=0;i<seat.length; i++)
-		{
-			console.log(seat[i].child);
-			
-			if (i+ 1 < 10) {
-				seat[i].firstChild.innerText = seat[i].id.substr(1, 2);
+		
+		let seatArea = document.getElementById("seat");
+		let divs = seatArea.getElementsByTagName("div");
 
-			} else {
-				seat[i].firstChild.innerText = seat[i].id.substr(1, 2);
+		for (var z = 0; z < divs.length; z++) {
+			if (divs[z].classList.contains('book')) {
+			
+
+				if (z+ 1 < 10) {
+					divs[z].firstChild.innerText = divs[z].id.substr(1, 2);
+					divs[z].classList.remove("book");
+
+				} else {
+					divs[z].firstChild.innerText = divs[z].id.substr(1, 2);
+					divs[z].classList.remove("book");
+
+				}
 
 			}
-
-			seat[i].classList.remove("book");
 		}
+	
 	}
 	function getseatinfo(timecode) {
 		let xhr = new XMLHttpRequest();

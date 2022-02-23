@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 @Data
 public class TheaterMovieVo {
 
-	private int tmovecode;
-	private int theatercode;
-	private int moivecode;
+	private String tmovecode;
+	private String theatercode;
+	private String moviecode;
 	private Date startdate;
 	private Date enddate;
-	private int state;
+	private String state;
 }

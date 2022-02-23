@@ -49,13 +49,17 @@
 	</select>
 	<!-- 스케쥴 insert -->
 	<insert id="addScreenTime" parameterType="com.test.finalproject.vo.ScreenTimeVo">
-	insert into screen_time values(.nextval,#{screencode},#{moviecode},#{starttime},#{endtime},#{event},#{screenddate})
+	insert into screen_time values(SEQ_SCREENTIME.nextval,#{screencode},#{moviecode},#{starttime},#{endtime},#{event},#{screendate},#{state})
 	</insert>
 	<!-- 좌석info insert -->
 	<insert id="insertseatinfo" parameterType="com.test.finalproject.vo.SeatInfoVo">
 		insert into seat_info
 		values(SEQ_SEAT_INFO.nextval,#{seatcode},#{timecode},'0')
 	</insert>
+		<!-- timcode 가져오기 -->
+	<select id="getTimecode" resultType="int">
+	<![CDATA[select timecode FROM screen_time where ROWNUM <= 1 order by timecode desc]]>
+	</select>
 	<!-- 스케쥴 업데이트 -->
 	
 	<!-- 스케쥴별 좌석info가져오기 -->

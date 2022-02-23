@@ -28,4 +28,5 @@ public interface ChaAdminMapper {
 	int getseatrow(int screencode);
 	int getseatcol(int screencode);
 	Movie_MVo getmoviename(int moviecode);
+	int getTimecode();
 }

@@ -80,4 +80,9 @@ public class ChaAdminService {
 	{
 		return mapper.getmoviename(moviecode);
 	}
+	
+	public int getTimecode()
+	{
+		return mapper.getTimecode();
+	}
 }

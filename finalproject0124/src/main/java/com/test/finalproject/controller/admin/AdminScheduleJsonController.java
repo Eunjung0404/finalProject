@@ -52,7 +52,7 @@ public class AdminScheduleJsonController {
 		ArrayList<String> movienamelist=new ArrayList<String>();
 		for(int i=0;i<timelist.size();i++)
 		{
-			Movie_MVo vo=service.getmoviename(timelist.get(i).getMoviecode());
+			Movie_MVo vo=service.getmoviename(Integer.parseInt(timelist.get(i).getMoviecode()));
 			String moviename=vo.getMoviename();
 			movienamelist.add(moviename);
 		}

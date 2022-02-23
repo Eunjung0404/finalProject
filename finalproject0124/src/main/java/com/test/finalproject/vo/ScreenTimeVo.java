@@ -14,13 +14,13 @@ import lombok.NoArgsConstructor;
 public class ScreenTimeVo {
 
 	
-	private int timecode;
-	private int screencode;
-	private int moviecode;
+	private String timecode;
+	private String screencode;
+	private String moviecode;
 	private String starttime;
 	private String endtime;
 	private String event;
 	@JsonFormat(pattern = "yyyy/MM/dd", timezone = "Asia/Seoul")
 	private Date screendate;
-	private int state;
+	private String state;
 }
