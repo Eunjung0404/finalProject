@@ -19,5 +19,8 @@
 	<select id="movieimgdetail" parameterType="int" resultType="com.test.finalproject.vo.MovieImgVo">
 		select * from movie_img where minmgcode=#{mimgcode}
 	</select>
-
+	
+	<delete id="moviedelete" parameterType="int">
+		delete from movie_img where moviecode=#{moviecode}
+	</delete>
 </mapper>

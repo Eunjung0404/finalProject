@@ -17,16 +17,25 @@ import lombok.extern.slf4j.Slf4j;
 public class AdminLoginController {
 	
 	@GetMapping("/login")
-	public String loginForm() {
-		return "admin/login.tiles";
+	public String loginForm(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession(false);
+		if(session==null || session.getAttribute("admin")==null) {
+			return "admin/login.tiles";
+		}
+		
+		return "admin/main.tiles";
 	}
 	
 	@GetMapping("/logout")
 	public String logout(HttpServletRequest request) {
+		
 		HttpSession session = request.getSession();
 		log.info("관리자 로그아웃->{}",
 				((AdminVo)session.getAttribute("admin")).getAid());
+		
 		session.removeAttribute("admin");
+		
 		return "home.tiles";
 	}
 }
