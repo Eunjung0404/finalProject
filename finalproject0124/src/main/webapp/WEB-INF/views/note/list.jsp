@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,6 +42,7 @@
 	margin-top: 10px;
 	margin-bottom: 30px;
 }
+
 .page a {
 	color: gray;
 }
@@ -50,6 +53,15 @@
 		<div class="maindiv">
 			<h2>공지사항</h2>
 			<c:set var="cp" value="${pageContext.request.contextPath }" />
+			<input type="hidden" name="${_csrf.parameterName }"
+				value="${_csrf.token }">
+			<sec:authentication property="principal.username" var="pinfo" />
+
+			<sec:authorize access="isAuthenticated()">
+				<c:if test="${fn:startsWith(pinfo,'admin')}">
+					<a href="${cp }/admin/note/insert">공지쓰기</a>
+				</c:if>
+			</sec:authorize>
 			<table border="1" width="500" class="table table-hover">
 				<tr>
 					<th width="15%;">번호</th>
