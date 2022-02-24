@@ -10,5 +10,5 @@ public interface NoteMapper {
 	List<NoteVo> list(HashMap<String, Object> map);
 	int count(HashMap<String, Object> map);
 	List<NoteVo> notelist();
-	int detail(NoteVo vo);
+	NoteVo detail(int num);
 }

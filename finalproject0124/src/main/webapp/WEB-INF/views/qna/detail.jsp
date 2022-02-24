@@ -11,12 +11,63 @@
 <meta charset="UTF-8">
 <title>qna/detail.jsp</title>
 <style>
+#all {
+	background-color: #f5f5f5;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	align-items: center;
+}
+
 .comm1 {
 	width: 400px;
 	height: 100px;
 	border: 1px solid #aaa;
-	padding: 5px;
-	margin-top: 5px;
+	border-radius: 10px;
+	padding: 10px;
+	margin-top: 30px;
+	margin-bottom: 20px;
+}
+
+h2 {
+	text-align: center;
+	margin-top: 50px;
+	margin-bottom: 50px;
+}
+
+#list {
+	border: 1px solid gray;
+	border-radius: 10px;
+	border-style: groove;
+	background-color: #fcfcfc;
+	margin-bottom: 30px;
+}
+
+td a {
+	text-decoration: none;
+}
+
+.iddiv {
+	margin: 20px;
+}
+
+.commdiv {
+	margin: 10px;
+}
+
+.commdiv b {
+	position: relative;
+	bottom: 30px;
+}
+
+.commList {
+	margin-top: 30px;
+	margin-bottom: 10px;
+}
+#btnAdd{
+	width: 60px;
+	height: 30px;
 }
 </style>
 <script type="text/javascript"
@@ -96,9 +147,9 @@ function list(pageNum){
 			}		
 			for(let i=startPage;i<=endPage;i++){
 				if(i==pageNum){
-					pageHTML +="<a href='javascript:list("+ i + ")'><span>["+ i +"]</span></a>";
+					pageHTML +="<a href='javascript:list("+ i + ")'><span style='color:black'>["+ i +"]</span></a>";
 				}else{
-					pageHTML +="<a href='javascript:list("+ i + ")'><span>["+ i +"]</span></a>";
+					pageHTML +="<a href='javascript:list("+ i + ")'><span style='color:black'>["+ i +"]</span></a>";
 				}
 			}
 			if(endPage<pageCount){
@@ -112,77 +163,66 @@ function list(pageNum){
 </script>
 </head>
 <body>
-	<!-- <table class="table table-hover">
-		<thead>
-			<tr>
-				<th scope="col" _msthash="2586857" _msttexthash="4987255">형</th>
-				<th scope="col" _msthash="2586987" _msttexthash="15530073">열 제목</th>
-				<th scope="col" _msthash="2587117" _msttexthash="15530073">열 제목</th>
-				<th scope="col" _msthash="2587247" _msttexthash="15530073">열 제목</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr class="table-active">
-				<th scope="row" _msthash="2594735" _msttexthash="22410817">활동적인</th>
-				<td _msthash="2594449" _msttexthash="23261004">열 콘텐츠</td>
-				<td _msthash="2594579" _msttexthash="23261004">열 콘텐츠</td>
-				<td _msthash="2594709" _msttexthash="23261004">열 콘텐츠</td>
-			</tr>
-		</tbody>
-	</table> -->
-	<div>
+	<div id="all">
 		<h2>문의내역</h2>
-		<form action="${pageContext.request.contextPath }/qna/detail"
-			method="post">
-			<input type="hidden" name="${_csrf.parameterName }"
-				value="${_csrf.token }">
-			<table class="table table-hover">
-				<tr>
-					<td msthash="2594449" _msttexthash="23261004">글번호</td>
-					<td>${vo.qnacode }</td>
-				</tr>
-				<tr>
-					<td>작성자</td>
-					<td>${vo.mid }</td>
-				</tr>
-				<tr>
-					<td>제목</td>
-					<td>${vo.title }</td>
-				</tr>
-				<tr>
-					<td>내용</td>
-					<td>
-						<div style="width: 400px; height: 200px">${vo.content }</div>
-					</td>
-				</tr>
-				<tr>
-					<td>작성일</td>
-					<td>${vo.regdate }</td>
-				</tr>
-				<sec:authentication property="principal" var="pinfo" />
-				<sec:authorize access="isAuthenticated()">
-					<c:if test="${pinfo.username eq vo.mid }">
-						<tr>
-							<th>수정</th>
-							<td><a href="${cp }/qna/update?qnacode=${vo.qnacode}">수정</a></td>
-						</tr>
-						<tr>
-							<th>삭제</th>
-							<td><a href="${cp }/qna/delete?qnacode=${vo.qnacode}">삭제</a></td>
-						</tr>
-					</c:if>
-				</sec:authorize>
-			</table>
-		</form>
-	</div>
-	<div id="commList"></div>
-	<div id="page"></div>
-	<div id="commentForm">
-		<b>아이디</b> <input type="text" id="id" name="id"
-			value='<sec:authentication property="principal.username"/>'
-			readonly="readonly"> <br> <b>댓글</b>
-		<textarea rows="3" cols="40" id="content1"></textarea>
-		<br> <input type="button" value="등록" id="btnAdd">
+		<div id="list">
+			<form action="${pageContext.request.contextPath }/qna/detail"
+				method="post">
+				<input type="hidden" name="${_csrf.parameterName }"
+					value="${_csrf.token }">
+				<table class="table table-hover">
+					<tr>
+						<th>글번호</th>
+						<td>${vo.qnacode }</td>
+					</tr>
+					<tr>
+						<th>작성자</th>
+						<td>${vo.mid }</td>
+					</tr>
+					<tr>
+						<th>제목</th>
+						<td>${vo.title }</td>
+					</tr>
+					<tr>
+						<th>내용</th>
+						<td>
+							<div style="width: 400px; height: 200px">${vo.content }</div>
+						</td>
+					</tr>
+					<tr>
+						<th>작성일</th>
+						<td>${vo.regdate }</td>
+					</tr>
+					<sec:authentication property="principal" var="pinfo" />
+					<sec:authorize access="isAuthenticated()">
+						<c:if test="${pinfo.username eq vo.mid }">
+							<tr>
+								<th>수정</th>
+								<td><a href="${cp }/qna/update?qnacode=${vo.qnacode}">수정</a></td>
+							</tr>
+							<tr>
+								<th>삭제</th>
+								<td><a href="${cp }/qna/delete?qnacode=${vo.qnacode}" style="color:red">삭제</a></td>
+							</tr>
+						</c:if>
+					</sec:authorize>
+				</table>
+			</form>
+		</div>
+		<div id="commentForm">
+			<div class="iddiv">
+				<b>ID</b> <input type="text" id="id" name="id"
+					value='<sec:authentication property="principal.username"/>'
+					readonly="readonly"> <br>
+			</div>
+			<div class="commdiv">
+				<b>댓글</b>
+				<textarea rows="3" cols="40" id="content1"></textarea>
+			</div>
+			<br> <input type="button" value="등록" id="btnAdd">
+		</div>
+		<div id="commList"></div>
+		<div id="page"></div>
 	</div>
 </body>
 </html>

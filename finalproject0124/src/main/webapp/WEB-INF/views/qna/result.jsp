@@ -14,13 +14,13 @@
 		
 	</div>
 		<script type="text/javascript">
-			alert("등록 되었습니다.");
+			alert("작업 성공");
 			location.href="${cp}/qna/list";
 		</script>
 	</c:when>
 	<c:otherwise>
 		<script type="text/javascript">
-			alert("실패 되었습니다.");
+			alert("잘못된 입력입니다.");
 			location.href="${cp}/qna/qnahome";
 		</script>
 	</c:otherwise>

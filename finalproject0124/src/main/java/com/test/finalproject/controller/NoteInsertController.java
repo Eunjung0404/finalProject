@@ -13,11 +13,11 @@ import com.test.finalproject.vo.NoteVo;
 public class NoteInsertController {
 	@Autowired private NoteService service;
 	
-	@GetMapping("/note/insert")
+	@GetMapping("/admin/note/insert")
 	public String noteform() {
 		return "note/insert.tiles";
 	}
-	@PostMapping("/note/insert")
+	@PostMapping("/admin/note/insert")
 	public String insert(NoteVo vo, Model model) {
 		try {
 			service.insert(vo);

@@ -165,8 +165,12 @@ a.btn_more {
 
 .customer_guide_area li {
 	float: left;
-	margin-right: 50px;
+	margin-right: 70px;
 	list-style-type: none;
+}
+.customer_guide_area span{
+	font-size: 50px;
+	margin-top: 20px;
 }
 </style>
 </head>
@@ -197,9 +201,9 @@ a.btn_more {
 									</div>
 									<div id="collapseOne" class="collapse" data-parent="#accordion">
 										<div class="card-body">
-											<strong>A.</strong> 예스24영화 홈페이지 혹은 모바일웹/APP 로그인 상태에서만 예매가
+											<strong>A.</strong> MOVIEONE 홈페이지 혹은 모바일웹/APP 로그인 상태에서만 예매가
 											가능합니다.<br>자세한 예매 방법은 아래 페이지에서 확인하실 수 있습니다.<br> <br>
-											<br> <a href=#> 예매안내 바로가기 </a>
+											<br> <a href="${cp }/qna/salehelp"> 예매안내 바로가기 </a>
 										</div>
 									</div>
 								</div>
@@ -213,8 +217,8 @@ a.btn_more {
 									</div>
 									<div id="collapseTwo" class="collapse" data-parent="#accordion">
 										<div class="card-body">
-											<strong>A.</strong> 개인정보 보호를 위해 전화예매는 지원해드리고 있지 않습니다.<br>예스24영화
-											홈페이지 혹은 예스24영화 모바일웹/APP을 통해 예매해주시기 바랍니다.
+											<strong>A.</strong> 개인정보 보호를 위해 전화예매는 지원해드리고 있지 않습니다.<br>MOVIEONE
+											홈페이지 혹은 MOVIEONE 모바일웹/APP을 통해 예매해주시기 바랍니다.
 										</div>
 									</div>
 								</div>
@@ -229,7 +233,7 @@ a.btn_more {
 									<div id="collapseThree" class="collapse"
 										data-parent="#accordion">
 										<div class="card-body">
-											<strong>A.</strong> YES24 영화는 영화 및 비디오진흥에 관한 법률 (이하 영비법)을
+											<strong>A.</strong> MOVIEONE 영화는 영화 및 비디오진흥에 관한 법률 (이하 영비법)을
 											준수합니다.<br>등급 기준<br> <br>* 전체 관람가 : 모든 연령의 관람객이
 											관람 할 수 있는 영화 - 12세 관람가 : 만 12세 미만의 관람객은 관람 할 수 없는 영화 (보호자 동반
 											시 12세 미만 관람가)<br>* 15세 관람가 : 만 15세 미만의 관람객은 관람 할 수 없는 영화
@@ -258,10 +262,10 @@ a.btn_more {
 											금지되었습니다.<br>따라서, 주민등록번호를 통한 실명인증을 하지 않으며, 영화예매 및 예매권,
 											할인권 등록을 위해서는 휴대폰 혹은 아이핀(I-Pin)을 통해 인증을 해주셔야만 합니다. 회원가입 시 반드시
 											휴대폰 인증 혹은 아이핀 인증 중 하나를 선택하셔서 본인인증을 해주십시오. <br>→ <b><a
-												href=https://www.yes24.com/Member/FTMemAcc.aspx> 회원인증 </a></b><br>
+												href="#"> 회원인증 </a></b><br>
 											<br>비실명인증인 SMS인증이나 이메일 인증으로 가입을 하셨다면 회원 정보 관리 에서 '인증수단
 											변경'을 하셔야만 합니다. <br>→ <b><a
-												href=https://www.yes24.com/Member/FTMemUpt.aspx> 회원정보 관리
+												href="#"> 회원정보 관리
 											</a></b>
 										</div>
 									</div>
@@ -277,8 +281,8 @@ a.btn_more {
 										data-parent="#accordion">
 										<div class="card-body">
 											<strong>A.</strong> 영화 예매 후, 취소 가능시간 내에 인터넷에서 취소를 하면 예매 수수료
-											포함 전액이 환불됩니다.<br> <br> <br> <br> <b>YES머니,
-												YES상품권, 예매권, 할인권, 예치금, 가족계좌, OK캐시백</b> : 결제 취소시 자동 환불. 단 YES상품권,
+											포함 전액이 환불됩니다.<br> <br> <br> <br> <b>ONE머니,
+												ONE상품권, 예매권, 할인권, 예치금, 가족계좌, OK캐시백</b> : 결제 취소시 자동 환불. 단 ONE상품권,
 											예매권F, 할인권의 경우 사용기간이 지난 시점이라면 환불 불가<br> <br> <br>
 											<br> <b>신용카드</b> : 결제일과 취소일이 다를 경우 영업일 기준 3~5일 정도 소요<br>
 											<br> <br> <br> <b>체크카드</b> : 결제일과 취소일이 다를 경우
@@ -315,7 +319,7 @@ a.btn_more {
 						</p>
 						<ul class="board_list" id="list">
 							<c:forEach var="note" items="${list2 }">
-								<li><a href="${cp }/note/detail?num=${note.notecode}">${note.title }</a></li>
+								<li>${note.title }</li>
 							</c:forEach>
 						</ul>
 					</div>

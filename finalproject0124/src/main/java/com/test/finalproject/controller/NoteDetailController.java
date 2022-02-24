@@ -1,7 +1,5 @@
 package com.test.finalproject.controller;
 
-import java.util.HashMap;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,17 +10,18 @@ import com.test.finalproject.vo.NoteVo;
 
 @Controller
 public class NoteDetailController {
-	@Autowired private NoteService service;
-	
+	@Autowired
+	private NoteService service;
+
 	@GetMapping("/note/detail")
-	public String detail(NoteVo vo, Model model) {
-		try {
-			service.detail(vo);
-			model.addAttribute("result", "success");
-		}catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("result", "success");
-		}
-		return "note/result.tiles";
-	}
+	public String detail(int num, Model model) {
+			NoteVo vo = service.detail(num);
+			String content = vo.getContent().replaceAll("\n", "<br>");
+			vo.setContent(content);
+			model.addAttribute("vo", vo);
+			
+		// 현재글
+		model.addAttribute("vo", vo);
+		return "note/detail.tiles";
+	} 
 }

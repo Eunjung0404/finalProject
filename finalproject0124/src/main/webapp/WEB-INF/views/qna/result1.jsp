@@ -17,7 +17,7 @@
 	</c:when>
 	<c:otherwise>
 		<script type="text/javascript">
-			alert("등록 실패");
+			alert("잘못된 입력입니다.");
 			location.href="${cp}/qna/list";
 		</script>
 	</c:otherwise>
