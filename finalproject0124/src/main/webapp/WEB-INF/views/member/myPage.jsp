@@ -463,87 +463,192 @@ for (Cookie c : cookies) {
 	function ticketHistoryPage(pageNum) {
 		$("#ticketingList").empty();
 		let id = document.getElementById("idData").value;
-		let output = '';
-		$.ajax({
-			url: "${cp}/member/ticketHistory",
-			type: "GET",
-			dataType: "JSON",
-			data: {"mid": id, pageNum:pageNum},
-			success: function(data){
-				console.log(data.ticketList);
-// 				output += "<h2>" + '예매 내역' + "</h2><br>";
-// 				output += "<table class='table' id='ticketList'>";
-// 				output += "<thead>";
-// 				output += "<tr>";
-// 				output += "<th>" + '예매번호' + "</th>";
-// 				output += "<th>" + '영화명' + "</th>";
-// 				output += "<th>" + '극장/상영관' + "</th>";
-// 				output += "<th>" + '관람일시' + "</th>";
-// 				output += "<th>" + '관람인원' + "</th>";
-// // 				output += "<th>" + '관람좌석' + "</th>";
-// 				output += "</tr>";
-// 				output += "</thead>";
-// 				output += "<tbody>";
-				output += "<h2 style='padding-top: 2%; padding-left: 5%;'>예매내역" + "</h2>";
-				output += "<hr>";
-				for(let i=0; i < data.ticketList.length; i++) {
-					let reservationcode = data.ticketList[i].reservationcode;
-					
-					output += "<div id='ticketingShow' style='border: 1px solid; border-radius: 8px;'>";
-					output += "<p><strong style='padding-right: 10%;'>예매번호</strong>" + reservationcode + "</p>"
-					output += "<p><strong style='padding-right: 13%;'>영화명</strong>" + data.ticketList[i].moviename + "</p>";
-					output += "<p><strong style='padding-right: 5%;'>극장/상영관</strong>" + data.ticketList[i].theatername + '/' + data.ticketList[i].screendate + "</p>";
-					output += "<p><strong style='padding-right: 10%;'>관람인원</strong>" + data.ticketList[i].people + "</p>";
-					output += "<p><strong style='padding-right: 10%;'>관람일시</strong>" +  data.ticketList[i].screendate + '&nbsp;'+ data.ticketList[i].starttime + "</p>";
-					output += "<p><strong style='padding-right: 10%;'>관람좌석</strong>" + data.ticketList[i].seatname + "</p>";
-					output += "<input type='button' value='예매취소' id='ticketCancle' onclick='ticketingCancle(" + reservationcode + ")'>";
-					output += "</div>";
-// 					output += "<tr>";
-// 					output += "<td>" + data.ticketList[i].reservationcode + "</td>";
-// 					output += "<td>" + data.ticketList[i].moviename + "</td>";
-// 					output += "<td>" + data.ticketList[i].theatername + '/' + data.ticketList[i].screenname + "</td>";
-// 					output += "<td>" + data.ticketList[i].screendate + "</td>";
-// 					output += "<td>" + data.ticketList[i].people + "</td>";
-// 					output += "<td>" + 'H열 8' + "</td>";
-// 					output += "<td><a href='#'>취소" + "</a></td>";
-// 					output += "<a type='button' id='cancleBtn' onclick='ticketingCancle(" + reservationcode + ")'>" + '취소' + "</a>";
-// 					output += "</tr>";
-				}
-// 				output += "</tbody>";
-// 				output += "</table>";
-				
-				// 페이징 처리
-				let startPage = data.startPageNum;
-				let endPage = data.endPageNum;
-				let pageCount = data.pageCount;
-				let rowBlockCount = data.rowBlockCount;
-				let pagination = "";
-				console.log(startPage, endPage, pageCount, rowBlockCount);
-				pagination += "<div class='w3-center'>";
-					if (startPage > 2) {
-						pagination += "<a class='w3-bar-item w3-button' id='pageNum' href='javascript:ticketHistoryPage(" + (startPage-1) + ")' >&laquo;</a>'";
-					}
-					for (let i = startPage; i <= endPage; i++) {
-						if (i == pageNum) {
-							pagination += "<div class='w3-bar'>";
-							pagination += "<a class='w3-button' id='pageNum' href='javascript:ticketHistoryPage(" + i + ")'>" + i + "</a>";
-							pagination += "</div>";
-						} else {
-							pagination += "<div class='w3-bar'>";
-							pagination += "<a class='w3-button' id='pageNum' href='javascript:ticketHistoryPage(" + i + ")'>" + i + "</a>";
-							pagination += "</div>";
+		$
+				.ajax({
+					url : "/finalproject/member/history",
+					type : "GET",
+					dataType : "JSON",
+					data : {
+						"mid" : id,
+						pageNum : pageNum
+					},
+					success : function(data) {
+						console.log(data.reviewList);
+						let output = "";
+
+						output += "<h2>" + '예매 내역' + "</h2><br>";
+						output += "<table class='table' id='ticketList'>";
+						output += "<thead>";
+						output += "<tr>";
+						output += "<th>" + '예매번호' + "</th>";
+						output += "<th>" + '영화명' + "</th>";
+						output += "<th>" + '극장/상영관' + "</th>";
+						output += "<th>" + '관람일시' + "</th>";
+						output += "<th>" + '관람인원' + "</th>";
+						output += "<th>" + '상태' + "</th>";
+						output += "<th>" + '취소' + "</th>";
+						output += "</tr>";
+						output += "</thead>";
+						output += "<tbody>";
+						$(data.list)
+								.each(
+										function(index, result) {
+
+											output += "<tr id='"+result.reservationcode +"'>";
+											output += "<td>"
+													+ result.reservationcode
+													+ "</td>";
+											output += "<td>" + result.moviename
+													+ "</td>";
+											output += "<td>"
+													+ result.theatername + "/"
+													+ result.screenname
+													+ "</td>";
+											output += "<td>" +data.datelist[index] + "</td>";
+											output += "<td>" + result.people
+													+ "</td>";
+											if (result.state == 1) {
+												output += "<td>예매완료</td>";
+											} else if (result.state == 2) {
+												output += "<td>관람완료</td>";
+											} else if (result.state == 0) {
+												output += "<td>취소완료</td>";
+											}
+										
+											if (result.state == 1) {
+												output += "<td>"
+														+ "<a href='javascript:cancel("
+														+'"'+ result.reservationcode +'",'
+														+ '"'+data.codelist[index]+'"'+")'><span>예매취소</span></a>"
+														+ "</td>";
+											} else {
+												output += "<td>-</td>";
+											}
+											output += "</tr>";
+											//cancel(reservationcode,moviename)
+										});
+						output += "</tbody>";
+						output += "</table>";
+
+						//페이징 
+						let startPage = data.startPageNum;
+						let endPage = data.endPageNum;
+						let pageCount = data.totalPageCount;
+						let PageHtml = "";
+						if (startPage > 5) {
+							PageHtml += "<a href='javascript:ticketHistoryPage("
+									+ (startPage - 1) + ")'><span>[이전]</span>"
 						}
+						for (let i = startPage; i <= endPage; i++) {
+							if (i == pageNum) {
+								PageHtml += "<a href='javascript:ticketHistoryPage("
+										+ i
+										+ ")'><span style='color:blue'>["
+										+ i + "]</span>"
+							} else {
+								PageHtml += "<a href='javascript:ticketHistoryPage("
+										+ i
+										+ ")'><span style='color:gray'>["
+										+ i + "]</span>"
+							}
+						}
+						if (endPage < pageCount) {
+							PageHtml += "<a href='javascript:ticketHistoryPage("
+									+ (endPage + 1) + ")'><span>[다음]</span>"
+						}
+
+						//$("#ticketingList").append(output);
+						$("#ticketingList").append(output);
+						$("#ticketingList").append(PageHtml);
 					}
-					if (endPage < data.pageCount) {
-						pagination += "<a class='w3-button' id='pageNum' href='javascript:ticketHistoryPage(" + (endPage+1) + ")'>&raquo;</a>";
-					}
-				pagination += "</div>";
-				
-				$("#ticketingList").append(output);
-				$("#ticketingList").append(pagination);
-			}
-		});
+
+				});
+
 	}
+
+// 		$("#ticketingList").empty();
+// 		let id = document.getElementById("idData").value;
+// 		let output = '';
+// 		$.ajax({
+// 			url: "${cp}/member/ticketHistory",
+// 			type: "GET",
+// 			dataType: "JSON",
+// 			data: {"mid": id, pageNum:pageNum},
+// 			success: function(data){
+// 				console.log(data.ticketList);
+// // 				output += "<h2>" + '예매 내역' + "</h2><br>";
+// // 				output += "<table class='table' id='ticketList'>";
+// // 				output += "<thead>";
+// // 				output += "<tr>";
+// // 				output += "<th>" + '예매번호' + "</th>";
+// // 				output += "<th>" + '영화명' + "</th>";
+// // 				output += "<th>" + '극장/상영관' + "</th>";
+// // 				output += "<th>" + '관람일시' + "</th>";
+// // 				output += "<th>" + '관람인원' + "</th>";
+// // // 				output += "<th>" + '관람좌석' + "</th>";
+// // 				output += "</tr>";
+// // 				output += "</thead>";
+// // 				output += "<tbody>";
+// 				output += "<h2 style='padding-top: 2%; padding-left: 5%;'>예매내역" + "</h2>";
+// 				output += "<hr>";
+// 				for(let i=0; i < data.ticketList.length; i++) {
+// 					let reservationcode = data.ticketList[i].reservationcode;
+					
+// 					output += "<div id='ticketingShow' style='border: 1px solid; border-radius: 8px;'>";
+// 					output += "<p><strong style='padding-right: 10%;'>예매번호</strong>" + reservationcode + "</p>"
+// 					output += "<p><strong style='padding-right: 13%;'>영화명</strong>" + data.ticketList[i].moviename + "</p>";
+// 					output += "<p><strong style='padding-right: 5%;'>극장/상영관</strong>" + data.ticketList[i].theatername + '/' + data.ticketList[i].screenname + "</p>";
+// 					output += "<p><strong style='padding-right: 10%;'>관람인원</strong>" + data.ticketList[i].people + "</p>";
+// 					output += "<p><strong style='padding-right: 10%;'>관람일시</strong>" +  data.ticketList[i].screendate + '&nbsp;'+ data.ticketList[i].starttime + "</p>";
+// 					output += "<p><strong style='padding-right: 10%;'>관람좌석</strong>" + data.ticketList[i].seatname + "</p>";
+// 					output += "<input type='button' value='예매취소' id='ticketCancle' onclick='ticketingCancle(" + reservationcode + ")'>";
+// 					output += "</div>";
+// // 					output += "<tr>";
+// // 					output += "<td>" + data.ticketList[i].reservationcode + "</td>";
+// // 					output += "<td>" + data.ticketList[i].moviename + "</td>";
+// // 					output += "<td>" + data.ticketList[i].theatername + '/' + data.ticketList[i].screenname + "</td>";
+// // 					output += "<td>" + data.ticketList[i].screendate + "</td>";
+// // 					output += "<td>" + data.ticketList[i].people + "</td>";
+// // 					output += "<td>" + 'H열 8' + "</td>";
+// // 					output += "<td><a href='#'>취소" + "</a></td>";
+// // 					output += "<a type='button' id='cancleBtn' onclick='ticketingCancle(" + reservationcode + ")'>" + '취소' + "</a>";
+// // 					output += "</tr>";
+// 				}
+// // 				output += "</tbody>";
+// // 				output += "</table>";
+				
+// 				// 페이징 처리
+// 				let startPage = data.startPageNum;
+// 				let endPage = data.endPageNum;
+// 				let pageCount = data.pageCount;
+// 				let rowBlockCount = data.rowBlockCount;
+// 				let pagination = "";
+// 				console.log(startPage, endPage, pageCount, rowBlockCount);
+// 				pagination += "<div class='w3-center'>";
+// 					if (startPage > 2) {
+// 						pagination += "<a class='w3-bar-item w3-button' id='pageNum' href='javascript:ticketHistoryPage(" + (startPage-1) + ")' >&laquo;</a>'";
+// 					}
+// 					for (let i = startPage; i <= endPage; i++) {
+// 						if (i == pageNum) {
+// 							pagination += "<div class='w3-bar'>";
+// 							pagination += "<a class='w3-button' id='pageNum' href='javascript:ticketHistoryPage(" + i + ")'>" + i + "</a>";
+// 							pagination += "</div>";
+// 						} else {
+// 							pagination += "<div class='w3-bar'>";
+// 							pagination += "<a class='w3-button' id='pageNum' href='javascript:ticketHistoryPage(" + i + ")'>" + i + "</a>";
+// 							pagination += "</div>";
+// 						}
+// 					}
+// 					if (endPage < data.pageCount) {
+// 						pagination += "<a class='w3-button' id='pageNum' href='javascript:ticketHistoryPage(" + (endPage+1) + ")'>&raquo;</a>";
+// 					}
+// 				pagination += "</div>";
+				
+// 				$("#ticketingList").append(output);
+// 				$("#ticketingList").append(pagination);
+// 			}
+// 		});
+// 	}
 	
 	$("#ticketHistoryBtn").on("click", function(){
 		ticketHistoryPage(1);
@@ -557,23 +662,38 @@ for (Cookie c : cookies) {
 
 	
 	// 예매 취소
-	function ticketingCancle(reservationcode){
-		if (confirm("예매를 취소하시겠습니까?") == false) {
-			return false;
-		}
-		$.ajax({
-			url: "${cp}/member/ticketingCancle",
-			data: {"reservationcode": reservationcode},
-			dataType: "JSON",
-			success: function(data){
-				if (data == 1) {
+// 	function ticketingCancle(reservationcode){
+		function cancel(reservationcode,moviecode) {
+			$.ajax({
+				url : '/finalproject/member/cancel', 
+				data:{"reservationcode":reservationcode,"moviecode":moviecode},
+				dataType : 'json',
+				success : function(data)
+				{
+
+					alert("취소가 완료되었습니다.");
 					ticketHistoryPage(1);
-				} else {
-					alert("예매를 취소할 수 없습니다. 관리자에 문의해주세요.");
 				}
-			}
-		});
-	}
+				});
+		}
+		
+// 		function ticketHistoryPage(pageNum) {			
+// 			if (confirm("예매를 취소하시겠습니까?") == false) {
+// 				return false;
+// 			}
+// 			$.ajax({
+// 				url: "${cp}/member/ticketingCancle",
+// 				data: {"reservationcode": reservationcode},
+// 				dataType: "JSON",
+// 				success: function(data){
+// 					if (data == 1) {
+// 						ticketHistoryPage(1);
+// 					} else {
+// 						alert("예매를 취소할 수 없습니다. 관리자에 문의해주세요.");
+// 					}
+// 				}
+// 			});
+// 		}
 	
 
 	$("#qnaBtn").on("click", function() {
