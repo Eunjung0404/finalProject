@@ -461,6 +461,7 @@ for (Cookie c : cookies) {
 	
 // 	// 예매 내역 결과 출력하기
 	function ticketHistoryPage(pageNum) {
+		$("#ticketingList").empty();
 		let id = document.getElementById("idData").value;
 		$
 				.ajax({
@@ -555,10 +556,10 @@ for (Cookie c : cookies) {
 							PageHtml += "<a href='javascript:ticketHistoryPage("
 									+ (endPage + 1) + ")'><span>[다음]</span>"
 						}
-						$("#pageCount").html(PageHtml);
 
 						//$("#ticketingList").append(output);
-						$("#ticketingList").html(output);
+						$("#ticketingList").append(output);
+						$("#ticketingList").append(PageHtml);
 					}
 
 				});
