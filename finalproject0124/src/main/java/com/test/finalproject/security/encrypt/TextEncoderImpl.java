@@ -9,6 +9,7 @@ import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
 import org.springframework.stereotype.Component;
+import org.springframework.util.Base64Utils;
 
 @Component
 public class TextEncoderImpl implements TextEncoder {
@@ -29,15 +30,15 @@ public class TextEncoderImpl implements TextEncoder {
 	public String doEncrypt(String text, SecretKey secretKey) throws Exception {
 		Cipher cipher = Cipher.getInstance("AES");
 		cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-		return new String(cipher.doFinal(text.getBytes()), "UTF-8");
+		return String.valueOf(Base64Utils.encodeToString(cipher.doFinal(text.getBytes())));
 	}
 
 	@Override
 	public String doDecrypt(String text, SecretKey secretKey) throws Exception {
 		Cipher cipher = Cipher.getInstance("AES");
 		cipher.init(Cipher.DECRYPT_MODE, secretKey);
-		text = URLDecoder.decode(text, "UTF-8");
-		return new String(cipher.doFinal(text.getBytes()));
+		byte[] b = Base64Utils.decode(text.getBytes());
+		return new String(cipher.doFinal(b), "UTF-8");
 	}
 
 }

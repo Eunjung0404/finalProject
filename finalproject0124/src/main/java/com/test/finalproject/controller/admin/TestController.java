@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -64,6 +66,7 @@ public class TestController {
 		session.setAttribute("secretKey", sc);
 		String s = encoder.doEncrypt(text, sc);
 		System.out.println("암호화->"+s);
+		System.out.println("키->"+new String(Base64Utils.encodeToString(sc.getEncoded())));
 		return s;
 	}
 	
@@ -81,4 +84,15 @@ public class TestController {
 		return s;
 	}
 	
+	@RequestMapping("/test8")
+	public String test8(HttpServletRequest request, Model model) throws Exception {
+		System.out.println("컨트롤러8");
+		HttpSession session = request.getSession();
+		SecretKey sc = encoder.getSecretKey();
+		session.setAttribute("secretKey", sc);
+		String s = encoder.doEncrypt("hello", sc);
+		System.out.println("test8->" + s);
+		model.addAttribute("text", s);
+		return "admin/test.tiles";
+	}
 }

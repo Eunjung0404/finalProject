@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class MailTest {
 	@Autowired JavaMailSenderImpl mailSender;
 	
-	@Test
+//	@Test
 	public void mailAuthTest() {	
 		
 		// 메일 제목, 내용
