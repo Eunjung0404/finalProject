@@ -21,7 +21,7 @@ public class AdminService {
 
 	private final AdminMapper mapper;
 
-	public Optional<AdminVo> login(AdminLoginForm form) {
+	public AdminVo login(AdminLoginForm form) {
 		return mapper.login(form);
 	}
 	

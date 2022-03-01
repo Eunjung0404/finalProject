@@ -17,6 +17,8 @@ import com.test.finalproject.service.AdminService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Optional;
+
 @Slf4j
 @RestController
 @RequestMapping("/admin")
@@ -36,12 +38,13 @@ public class AdminLoginAPIController {
 		}
 		
 		ResultForm result = new ResultForm("fail", null);
-		
-		service.login(form).ifPresent(admin -> {
-			request.getSession().setAttribute("admin", admin);
-			log.info("관리자 로그인->{}",admin.getAid());
-			result.setCode("success");
-		});
+
+		Optional.ofNullable(service.login(form))
+				.ifPresent(admin -> {
+					request.getSession().setAttribute("admin", admin);
+					log.info("관리자 로그인->{}", admin.getAid());
+					result.setCode("success");
+				});
 		
 		return result;
 		

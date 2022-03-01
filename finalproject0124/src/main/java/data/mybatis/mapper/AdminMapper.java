@@ -10,7 +10,7 @@ import com.test.finalproject.vo.AdminVo;
 
 public interface AdminMapper {
 	
-	Optional<AdminVo> login(AdminLoginForm form);
+	AdminVo login(AdminLoginForm form);
 	
 	List<AdminInfoSelect> getList();
 	

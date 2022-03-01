@@ -1,6 +1,5 @@
 package admin.login;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.test.finalproject.form.AdminLoginForm;
 import com.test.finalproject.service.AdminService;
-import com.test.finalproject.vo.AdminVo;
+
+import java.util.Optional;
+
+import static org.junit.Assert.*;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -21,13 +23,32 @@ public class AdminLoginTest {
 	private AdminService service;
 	
 	@Test
-	public void login() {
+	public void 로그인성공() {
+		String inputId = "admin001";
+
 		AdminLoginForm form = new AdminLoginForm();
-		form.setAid("admin001");
+		form.setAid(inputId);
 		form.setApwd("qwer1234!@");
-		
-		AdminVo vo = service.login(form).orElseGet(null);
-		
-		Assert.assertNotNull(vo);
+
+		String outputId = Optional.ofNullable(service.login(form))
+				.map(v -> v.getAid())
+				.orElse("empty");
+
+		assertEquals(inputId, outputId);
+	}
+
+	@Test
+	public void 로그인실패() {
+		String inputId = "user001";
+
+		AdminLoginForm form = new AdminLoginForm();
+		form.setAid(inputId);
+		form.setApwd("qwer1234!@");
+
+		String outputId = Optional.ofNullable(service.login(form))
+				.map(v -> v.getAid())
+				.orElse("empty");
+
+		assertEquals(outputId, "empty");
 	}
 }
