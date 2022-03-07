@@ -16,7 +16,6 @@ import java.util.Optional;
 
 import static org.junit.Assert.*;
 
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"file:src/main/webapp/WEB-INF/spring/root-context.xml",
 		"file:src/main/webapp/WEB-INF/spring/security-config.xml"})
@@ -66,4 +65,5 @@ public class AdminLoginTest {
 
 		assertEquals(outputId, "empty");
 	}
+
 }

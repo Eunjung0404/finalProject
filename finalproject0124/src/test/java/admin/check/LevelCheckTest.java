@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -47,17 +48,21 @@ public class LevelCheckTest {
     @WithMockUser(roles = "ADMIN")
     public void 체크성공() throws Exception {
         mockMvc.perform(get("/admin/theater/강남").session(session))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(result -> assertEquals(
+                        result.getResolvedException(),
+                        null)
+                );
     }
 
     @Test
     @WithMockUser(roles = "ADMIN")
     public void 체크실패() throws Exception {
         mockMvc.perform(get("/admin/theater/ALL").session(session))
-                .andExpect(result -> result
-                        .getResolvedException()
-                        .getClass()
-                        .isAssignableFrom(AdminLevelCheckException.class));
+                .andExpect(result -> assertEquals(
+                        result.getResolvedException().getClass(),
+                        AdminLevelCheckException.class)
+                );
     }
 
 }
